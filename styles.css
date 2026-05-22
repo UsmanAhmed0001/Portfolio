@@ -424,7 +424,8 @@ html[data-theme="light"] .theme-toggle::after {
   50%       { transform: translate(-40px, -30px); }
 }
 
-.hero > * {
+/* Raise all direct children above the orb — but NOT the orb itself */
+.hero > *:not(.hero__orb) {
   position: relative;
   z-index: 1;
 }
