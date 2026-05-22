@@ -3,6 +3,7 @@
  * Usman — Portfolio 2026
  *
  * Sections:
+ *  0. Mobile Detection
  *  1. Custom Cursor
  *  2. Preloader
  *  3. Scroll Reveal
@@ -12,6 +13,14 @@
  *  7. Hero Orb Parallax
  *  8. Konami Code Easter Egg
  */
+
+
+/* ============================================================
+   0. MOBILE DETECTION
+   On small screens we skip heavy animations so the page
+   renders cleanly and immediately without a broken state.
+   ============================================================ */
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
 
 /* ============================================================
@@ -84,35 +93,38 @@ const loadStages = [
   { threshold: 92, label: 'Hello, world'            },
 ];
 
-let progress = 0;
+if (isMobile) {
+  // On mobile: skip preloader entirely, show content immediately
+  preloader.style.display = 'none';
+} else {
+  // Desktop: run the full preloader sequence
+  let progress = 0;
+  document.body.style.overflow = 'hidden';
 
-// Lock scroll while loading
-document.body.style.overflow = 'hidden';
+  (function tick() {
+    progress += Math.random() * 7 + 2;
+    if (progress > 100) progress = 100;
 
-(function tick() {
-  progress += Math.random() * 7 + 2;
-  if (progress > 100) progress = 100;
+    const rounded = Math.floor(progress);
+    counter.innerHTML = rounded + '<span class="pct">%</span>';
+    barFill.style.width = progress + '%';
 
-  const rounded = Math.floor(progress);
-  counter.innerHTML = rounded + '<span class="pct">%</span>';
-  barFill.style.width = progress + '%';
+    const currentStage = loadStages.find((s) => progress >= s.threshold && !s.done);
+    if (currentStage) {
+      typingEl.textContent = currentStage.label;
+      currentStage.done = true;
+    }
 
-  // Update typing label at each threshold
-  const currentStage = loadStages.find((s) => progress >= s.threshold && !s.done);
-  if (currentStage) {
-    typingEl.textContent = currentStage.label;
-    currentStage.done = true;
-  }
-
-  if (progress < 100) {
-    setTimeout(tick, 130);
-  } else {
-    setTimeout(() => {
-      preloader.classList.add('done');
-      document.body.style.overflow = '';
-    }, 450);
-  }
-})();
+    if (progress < 100) {
+      setTimeout(tick, 130);
+    } else {
+      setTimeout(() => {
+        preloader.classList.add('done');
+        document.body.style.overflow = '';
+      }, 450);
+    }
+  })();
+}
 
 
 /* ============================================================

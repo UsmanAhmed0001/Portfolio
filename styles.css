@@ -730,40 +730,78 @@ html[data-theme="light"] .hero__status {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Hero responsive */
+/* ============================================================
+   Hero responsive — tablet (≤900px)
+   ============================================================ */
 @media (max-width: 900px) {
-  .hero__body      { flex-direction: column; align-items: flex-start; gap: 36px; }
-  .hero__title     { flex: none; }
-  .hero__visual    { width: 100%; display: flex; justify-content: flex-start; }
-  .hero__tag:nth-child(even) { display: none; }
-  .hero__status    { bottom: -6px; left: 50%; transform: translateX(-50%); }
+  .hero__body   { flex-direction: column; align-items: flex-start; gap: 36px; }
+  .hero__title  { flex: none; }
+  .hero__visual { width: 100%; max-width: 300px; }
 }
 
+/* ============================================================
+   Hero responsive — mobile (≤768px)
+   Complete redesign: text-first, no floating elements.
+   !important used intentionally to override JS-triggered
+   animation inline styles that fire before CSS is parsed.
+   ============================================================ */
 @media (max-width: 768px) {
-  /* Hero top: hide middle col, clean stacking */
-  .hero__top                 { flex-direction: row; flex-wrap: wrap; gap: 16px 0; justify-content: space-between; padding-top: 90px; }
+
+  /* ── Layout ── */
+  .hero {
+    padding: 0 var(--pad);
+    min-height: 100svh;
+  }
+
+  .hero__top {
+    padding-top: 88px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+  }
+
+  /* Hide "Currently" col — too crowded */
   .hero__top .col:nth-child(2) { display: none; }
-  .hero__top .col--right     { text-align: right; }
+  .hero__top .col--right       { text-align: right; }
 
-  /* Title: no animation on mobile — just show it cleanly */
-  .hero__title               { font-size: clamp(44px, 11vw, 72px); }
-  .hero__title .line         { opacity: 1; transform: none; animation: none; }
-  .hero__title .ul::after    { animation: none; transform: scaleX(1); }
+  /* ── Title — always visible, no animation on mobile ── */
+  .hero__body {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    padding: 32px 0 24px;
+    flex: none;        /* don't stretch — let content define height */
+  }
 
-  /* Visual: small, left-aligned, no floating chaos */
-  .hero__visual              { max-width: 220px; }
-  .hero__photo               { width: 160px; height: 160px; animation: none; opacity: 1; }
-  .hero__tags                { display: none; } /* too cluttered on small screens */
-  .hero__status              { position: static; transform: none; margin-top: 16px; opacity: 1; animation: none; background: transparent; border: 1px solid var(--line-bold); padding: 10px 14px; }
-  .hero__photo::before,
-  .hero__photo::after        { display: none; } /* hide spinning rings on mobile */
+  .hero__title {
+    flex: none;
+    font-size: clamp(46px, 12vw, 68px);
+  }
 
-  /* Visual wrapper becomes a column: photo + status stacked */
-  .hero__visual              { flex-direction: column; align-items: flex-start; gap: 0; }
+  /* Force text visible — !important beats animation inline styles */
+  .hero__title .line {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    animation: none !important;
+  }
 
-  /* Meta: single column on small phones */
-  .hero__meta                { grid-template-columns: 1fr 1fr; padding-bottom: 40px; }
-  .hero__photo               { opacity: 1; animation: none; }
+  .hero__title .ul::after {
+    transform: scaleX(1) !important;
+    animation: none !important;
+  }
+
+  /* ── Hide the complex visual entirely on mobile ── */
+  /* Photo, tags, spinning rings — all gone. Text is the hero. */
+  .hero__visual { display: none !important; }
+
+  /* ── Meta row ── */
+  .hero__meta {
+    grid-template-columns: 1fr 1fr;
+    padding-bottom: 36px;
+    opacity: 1 !important;
+    animation: none !important;
+  }
 }
 
 
