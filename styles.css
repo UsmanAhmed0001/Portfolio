@@ -426,9 +426,8 @@ html[data-theme="light"] .theme-toggle::after {
   50%       { transform: translate(-30px, -20px); }
 }
 
-.hero > * { position: relative; z-index: 1; }
-/* Keep orb behind everything */
-.hero__orb { z-index: 0; }
+
+
 
 /* ── Single-line status bar ── */
 .hero__bar {
