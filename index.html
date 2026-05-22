@@ -94,71 +94,65 @@
   <section class="hero" id="top">
     <div class="hero__orb"></div>
 
-    <!-- Status bar -->
-    <div class="hero__top">
-      <div class="col">
-        <div>Software Engineer</div>
-        <span>London — 51.5074°N · 0.1278°W</span>
-      </div>
-      <div class="col">
-        <div>Currently</div>
-        <span>Building HQ &amp; dermIQ · Open to roles</span>
-      </div>
-      <div class="col col--right">
-        <div>Local time</div>
-        <span id="localTime">—:—</span>
-      </div>
+    <!-- Single-line status bar -->
+    <div class="hero__bar">
+      <span class="hero__bar-left">
+        <span class="status-dot"></span>
+        Software Engineer &middot; London
+      </span>
+      <span class="hero__bar-right" id="localTime">&mdash;:&mdash;</span>
     </div>
 
-    <!-- Title + Visual -->
-    <div class="hero__body">
+    <!-- Main grid: title + chips left | avatar right -->
+    <div class="hero__main">
 
-      <h1 class="hero__title">
-        <span class="line">Engineering</span>
-        <span class="line"><em>resilient</em> systems</span>
-        <span class="line">for the <span class="ul">AI&nbsp;era</span>.</span>
-      </h1>
+      <div class="hero__left">
+        <h1 class="hero__title">
+          <span class="line">Engineering</span>
+          <span class="line"><em>resilient</em> systems</span>
+          <span class="line">for the <span class="ul">AI&nbsp;era</span>.</span>
+        </h1>
 
-      <div class="hero__visual">
-        <div class="hero__tags">
-          <div class="hero__tag"><span class="tag-dot"></span>Next.js 16</div>
-          <div class="hero__tag"><span class="tag-dot"></span>Distributed Systems</div>
-          <div class="hero__tag"><span class="tag-dot"></span>Kafka · RabbitMQ</div>
-          <div class="hero__tag"><span class="tag-dot"></span>AWS · Azure · K8s</div>
-          <div class="hero__tag"><span class="tag-dot"></span>AI &amp; ML</div>
-          <div class="hero__tag"><span class="tag-dot"></span>PostgreSQL · Redis</div>
+        <!-- Inline skill chips — no absolute positioning -->
+        <div class="hero__chips">
+          <span>Next.js 16</span>
+          <span>Distributed Systems</span>
+          <span>Kafka &middot; RabbitMQ</span>
+          <span>AWS &middot; Azure &middot; K8s</span>
+          <span>AI &amp; ML</span>
+          <span>PostgreSQL &middot; Redis</span>
         </div>
+      </div>
 
-        <div class="hero__photo">
+      <div class="hero__right">
+        <div class="hero__avatar">
           <!--
-            TO ADD YOUR PHOTO:
-            Replace the .initials div below with:
+            ADD YOUR PHOTO:
+            Replace avatar-initial span with:
             <img src="images/usman.jpg" alt="Usman" />
           -->
-          <div class="initials">U</div>
-
-          <div class="hero__status">
-            <div class="sl">// Availability</div>
-            <div class="sv"><span class="pulse"></span>Open to roles · Hybrid / Remote / On-site</div>
-          </div>
+          <span class="avatar-initial">U</span>
+        </div>
+        <div class="hero__avail">
+          <span class="pulse"></span>Open to roles &middot; Hybrid / Remote / On-site
         </div>
       </div>
 
     </div>
 
-    <!-- Meta row -->
-    <div class="hero__meta">
-      <div>
+    <!-- Bottom meta strip -->
+    <div class="hero__foot">
+      <div class="hero__foot-item">
         <div class="lbl">// Discipline</div>
-        <div class="val">Backend · Distributed Systems · AI</div>
+        <div class="val">Backend &middot; Distributed Systems &middot; AI</div>
       </div>
-      <div>
+      <div class="hero__foot-item">
         <div class="lbl">// Status</div>
-        <div class="val"><span class="epulse"></span>Open to roles · UK</div>
+        <div class="val"><span class="epulse"></span>Open to roles &middot; UK</div>
       </div>
-      <div>
+      <div class="hero__foot-item">
         <div class="lbl">// Arrangement</div>
-        <div class="val">Hybrid · Remote · On-site</div>
+        <div class="val">Hybrid &middot; Remote &middot; On-site</div>
       </div>
     </div>
 
