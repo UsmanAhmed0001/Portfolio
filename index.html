@@ -1,553 +1,415 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0a0908" />
-  <meta name="description" content="Usman — Software engineer crafting AI-native products and resilient distributed systems. London." />
-  <title>Usman — Software Engineer · London</title>
+  <title>Usman Ahmed — Software Engineer</title>
+  <meta name="description" content="Usman Ahmed — London-based software engineer. Founder of dermIQ, Co-Founder & CTO of HQ. Full-stack, distributed systems and applied AI." />
+  <meta name="theme-color" content="#0d0d0e" />
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=JetBrains+Mono:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-  <!-- Styles -->
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
 </head>
 <body>
 
-  <!-- Grain overlay -->
-  <div class="grain"></div>
-
-  <!-- Custom cursor -->
-  <div class="cursor"      id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-
+  <div class="progress" id="progress"></div>
 
   <!-- ============================================================
-       PRELOADER
+       NAV — floating pill
        ============================================================ -->
-  <div class="preloader" id="preloader">
-    <div class="preloader__top">
-      <span>Index — Portfolio · 2026</span>
-      <span>v1.0 — Boot Sequence</span>
-    </div>
-    <div class="preloader__center">
-      <div class="preloader__count" id="counter">0<span class="pct">%</span></div>
-      <div class="preloader__bar">
-        <div class="preloader__bar-fill" id="barFill"></div>
-      </div>
-    </div>
-    <div class="preloader__bottom">
-      <span>
-        <span class="typing" id="typing">Initializing</span>
-        <span class="cursor-blink"></span>
-      </span>
-      <span>Usman · London · Available</span>
-    </div>
-  </div>
-
-
-  <!-- ============================================================
-       EASTER EGG  (Konami code: ↑↑↓↓←→←→BA)
-       ============================================================ -->
-  <div class="egg" id="egg">
-    <p style="color: var(--mute);">// Hidden track unlocked</p>
-    <h1>You found <em>it.</em></h1>
-    <p>
-      You typed the Konami code. I respect a thorough audit.<br />
-      If you're a hiring manager — that attention to detail is exactly how I write software.<br />
-      Drop me a line. Let's build something.
-    </p>
-    <button onclick="document.getElementById('egg').classList.remove('show')">
-      Close · ESC
-    </button>
-  </div>
-
-
-  <!-- ============================================================
-       NAVIGATION
-       ============================================================ -->
-  <nav class="nav">
-    <a href="#top" class="nav__logo" data-cursor-hover>
-      Usman<span class="dot">.</span>
-    </a>
-
-    <div class="nav__links">
-      <a href="#work"    class="nav__link" data-cursor-hover>Work</a>
-      <a href="#about"   class="nav__link" data-cursor-hover>About</a>
-      <a href="#exp"     class="nav__link" data-cursor-hover>Experience</a>
-      <a href="#contact" class="nav__link" data-cursor-hover>Contact</a>
+  <header class="nav" id="nav">
+    <div class="nav__pill">
+      <a href="#top" class="nav__name">Usman</a>
+      <button class="nav__tldr" id="tldrOpen" type="button">
+        <span class="live-dot"></span>30-sec read
+      </button>
+      <button class="nav__icon" id="themeToggle" type="button" aria-label="Toggle light / dark">
+        <svg class="i-sun" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="nav__menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
 
-    <div class="nav__right">
-      <a href="UsmanAhmed_Resume.pdf" download class="nav__cv" data-cursor-hover>CV ↓</a>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" data-cursor-hover></button>
-    </div>
-  </nav>
+    <nav class="nav__menu" id="menu" aria-label="Main">
+      <a href="#about">About</a>
+      <a href="#stack">Tech Stack</a>
+      <a href="#work">Projects</a>
+      <a href="#exp">Experience</a>
+      <a href="#contact">Contact</a>
+      <a href="UsmanAhmed_Resume.pdf" download class="nav__menu-cv">Download CV ↓</a>
+    </nav>
+  </header>
 
 
   <!-- ============================================================
        HERO
        ============================================================ -->
   <section class="hero" id="top">
-    <div class="hero__orb"></div>
+    <div class="hero__code" id="heroCode" aria-hidden="true"></div>
 
-    <!-- Single-line status bar -->
-    <div class="hero__bar">
-      <span class="hero__bar-left">
-        <span class="status-dot"></span>
-        Software Engineer &middot; London
-      </span>
-      <span class="hero__bar-right" id="localTime">&mdash;:&mdash;</span>
+    <div class="hero__inner">
+      <p class="hero__kicker mono">
+        <span class="live-dot"></span>Open to roles<span class="k-loc"> · London</span> · Hybrid / Remote / On-site
+      </p>
+
+      <h1 class="hero__title" aria-label="Software Engineer">
+        <span class="hero__row">
+          <span class="hero__br hero__br--l" aria-hidden="true">&lt;</span><span class="hero__word" data-split>SOFTWARE</span>
+        </span>
+        <span class="hero__row hero__row--2">
+          <span class="hero__word" data-split>ENGINEER</span><span class="hero__br hero__br--r" aria-hidden="true">/&gt;</span>
+        </span>
+      </h1>
     </div>
 
-    <!-- Main grid: title + chips left | avatar right -->
-    <div class="hero__main">
+    <figure class="hero__photo">
+      <img src="images/usman.jpg" alt="Portrait of Usman Ahmed" width="800" height="1000" fetchpriority="high" />
+    </figure>
 
-      <div class="hero__left">
-        <h1 class="hero__title">
-          <span class="line">Engineering</span>
-          <span class="line"><em>resilient</em> systems</span>
-          <span class="line">for the <span class="ul">AI&nbsp;era</span>.</span>
-        </h1>
-
-        <!-- Inline skill chips — no absolute positioning -->
-        <div class="hero__chips">
-          <span>Next.js 16</span>
-          <span>Distributed Systems</span>
-          <span>Kafka &middot; RabbitMQ</span>
-          <span>AWS &middot; Azure &middot; K8s</span>
-          <span>AI &amp; ML</span>
-          <span>PostgreSQL &middot; Redis</span>
-        </div>
-      </div>
-
-      <div class="hero__right">
-        <div class="hero__avatar">
-          <!--
-            ADD YOUR PHOTO:
-            Replace avatar-initial span with:
-            <img src="images/usman.jpg" alt="Usman" />
-          -->
-          <span class="avatar-initial">U</span>
-        </div>
-        <div class="hero__avail">
-          <span class="pulse"></span>Open to roles &middot; Hybrid / Remote / On-site
-        </div>
-      </div>
-
+    <div class="hero__corner hero__corner--l">
+      <span class="hero__year">&copy;2026</span>
+      <span class="mono">Usman Ahmed</span>
     </div>
-
-    <!-- Bottom meta strip -->
-    <div class="hero__foot">
-      <div class="hero__foot-item">
-        <div class="lbl">// Discipline</div>
-        <div class="val">Backend &middot; Distributed Systems &middot; AI</div>
-      </div>
-      <div class="hero__foot-item">
-        <div class="lbl">// Status</div>
-        <div class="val"><span class="epulse"></span>Open to roles &middot; UK</div>
-      </div>
-      <div class="hero__foot-item">
-        <div class="lbl">// Arrangement</div>
-        <div class="val">Hybrid &middot; Remote &middot; On-site</div>
-      </div>
-    </div>
-
+    <div class="hero__corner hero__corner--r mono" id="scramble">{{ /AI &amp; FULL-STACK DEVELOPMENT }}</div>
   </section>
 
 
   <!-- ============================================================
-       MARQUEE
+       ABOUT — Hi, I'm Usman.
        ============================================================ -->
-  <div class="marquee">
-    <div class="marquee__track">
-      <span>
-        Software Engineering <span class="mdot"></span>
-        <em>Distributed Systems</em> <span class="mdot"></span>
-        Cloud Architecture <span class="mdot"></span>
-        <em>AI &amp; ML</em> <span class="mdot"></span>
-        Microservices <span class="mdot"></span>
-      </span>
-      <span>
-        Software Engineering <span class="mdot"></span>
-        <em>Distributed Systems</em> <span class="mdot"></span>
-        Cloud Architecture <span class="mdot"></span>
-        <em>AI &amp; ML</em> <span class="mdot"></span>
-        Microservices <span class="mdot"></span>
-      </span>
+  <section class="section about" id="about">
+    <div class="wrap about__grid">
+
+      <div class="about__left" data-reveal>
+        <h2 class="display">Hi, I&rsquo;m<br />Usman.</h2>
+        <p class="about__role">Software Engineer<br />&amp; Founder.</p>
+        <div class="about__now">
+          <div class="label">Currently</div>
+          <p><strong>Founder</strong> — dermIQ</p>
+          <p><strong>Co-Founder &amp; CTO</strong> — HQ</p>
+          <p class="muted">London, United Kingdom</p>
+        </div>
+      </div>
+
+      <figure class="about__photo" data-reveal>
+        <img src="images/usman.jpg" alt="" loading="lazy" width="800" height="1000" />
+      </figure>
+
+      <div class="about__right" data-reveal>
+        <p class="about__lead">
+          I build <strong>AI-native products</strong> and the <strong>distributed backends</strong>
+          beneath them — from enterprise systems for <strong>HSBC</strong> and <strong>Samsung Europe</strong>
+          to a skin-lesion triage model I designed, trained and shipped myself.
+        </p>
+        <p class="muted">
+          MSc AI &amp; Data Science (Distinction, University of Hull). BSc Computer Science
+          (Dean&rsquo;s Honours List, FAST-NUCES). I care about the joints — the queue between
+          two services, the migration that won&rsquo;t lock a table, the last pixel of a UI.
+        </p>
+        <div class="btn-row">
+          <a href="#work" class="btn btn--solid">Explore projects ↗</a>
+          <a href="UsmanAhmed_Resume.pdf" download class="btn">Download CV ↓</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="wrap stats" data-reveal>
+      <div class="stat"><div class="stat__num"><span data-count="3">3</span>+</div><div class="stat__lbl">Years in production</div></div>
+      <div class="stat"><div class="stat__num"><span data-count="7">7</span></div><div class="stat__lbl">Products live on the web</div></div>
+      <div class="stat"><div class="stat__num"><span data-count="2">2</span></div><div class="stat__lbl">Startups founded</div></div>
+      <div class="stat"><div class="stat__num">MSc</div><div class="stat__lbl">AI &amp; Data Science · Distinction</div></div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       CLIENTS & ORGANISATIONS — marquee
+       ============================================================ -->
+  <div class="ticker" aria-label="Clients and organisations">
+    <div class="ticker__track">
+      <span>HSBC</span><i>✦</i><span>Samsung Europe</span><i>✦</i><span>Delta Airlines</span><i>✦</i><span>Banorte</span><i>✦</i><span>IBA Karachi</span><i>✦</i><span>University of Hull</span><i>✦</i>
+      <span>HSBC</span><i>✦</i><span>Samsung Europe</span><i>✦</i><span>Delta Airlines</span><i>✦</i><span>Banorte</span><i>✦</i><span>IBA Karachi</span><i>✦</i><span>University of Hull</span><i>✦</i>
     </div>
   </div>
 
 
   <!-- ============================================================
-       01 / ABOUT
+       TECH STACK
        ============================================================ -->
-  <section class="section" id="about">
-    <div class="container">
-
-      <div class="section__head" data-reveal>
-        <div class="section__label">01 / About</div>
+  <section class="section" id="stack">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <h2 class="display">Tech Stack</h2>
+        <p class="head__aside">The tools behind<br />my work.</p>
       </div>
 
-      <div class="about">
-        <p class="about__intro" data-reveal>
-          I build <em>thoughtful</em> software at the seam between distributed backends and AI.
-          Two years shipping enterprise systems for clients like <em>HSBC</em> and <em>Samsung Europe</em>.
-          Now co-founding AI-native products, and chasing the kind of <em>quiet rigour</em> that makes hard problems look obvious.
-        </p>
-        <div class="about__side" data-reveal>
-          <p>
-            MSc Artificial Intelligence &amp; Data Science (Distinction) from the University of Hull.
-            BSc Computer Science from FAST-NUCES, Dean&rsquo;s Honourable List.
-            Comfortable across Java, .NET Core, Python, TypeScript, and the cloud beneath them.
-          </p>
-          <p>
-            I care about the joints — the queue between two services, the schema migration
-            that won&rsquo;t lock the table, the typography on a marketing page. Detail is the work.
-          </p>
-          <p>
-            Outside the editor I write GCSE and A-Level Computer Science material, and I&rsquo;m
-            building <em>HQ</em> and <em>dermIQ</em> — two AI-native products — across London &amp; Kyiv.
-          </p>
+      <div class="stack">
+        <div class="stack__col" data-reveal>
+          <h3>AI &amp; Machine<br />Learning</h3>
+          <p>Model training, fine-tuning, inference APIs and LLM integration.</p>
+          <div class="chips"><span>PyTorch</span><span>Vision Transformers</span><span>Hugging Face</span><span>scikit-learn</span><span>LLM APIs</span><span>Flask</span></div>
+        </div>
+        <div class="stack__col" data-reveal>
+          <h3>Languages &amp;<br />Frameworks</h3>
+          <p>Full-stack product work and enterprise backend services.</p>
+          <div class="chips"><span>TypeScript</span><span>Python</span><span>Java</span><span>C# / .NET Core</span><span>Next.js</span><span>React</span><span>Node / Express</span><span>Spring Boot</span></div>
+        </div>
+        <div class="stack__col" data-reveal>
+          <h3>Data &amp;<br />Messaging</h3>
+          <p>Relational modelling, caching and event-driven pipelines.</p>
+          <div class="chips"><span>PostgreSQL</span><span>Prisma</span><span>Redis</span><span>Kafka</span><span>RabbitMQ</span><span>SQLite</span></div>
+        </div>
+        <div class="stack__col" data-reveal>
+          <h3>Cloud &amp;<br />DevOps</h3>
+          <p>Containerised deploys, infrastructure as code, edge hosting.</p>
+          <div class="chips"><span>AWS</span><span>Azure</span><span>Docker</span><span>Kubernetes</span><span>Terraform</span><span>Vercel</span><span>Neon</span></div>
         </div>
       </div>
-
-      <div class="stats" data-reveal>
-        <div class="stat">
-          <div class="stat__num">2<span class="plus">+</span></div>
-          <div class="stat__label">Years in Production</div>
-        </div>
-        <div class="stat">
-          <div class="stat__num">6<span class="plus">+</span></div>
-          <div class="stat__label">Deployed Projects</div>
-        </div>
-        <div class="stat">
-          <div class="stat__num">∞</div>
-          <div class="stat__label">Curiosity Constant</div>
-        </div>
-      </div>
-
     </div>
   </section>
 
 
   <!-- ============================================================
-       02 / WORK
+       FEATURED PROJECTS — folders
        ============================================================ -->
   <section class="section" id="work">
-    <div class="container">
-
-      <div class="section__head" data-reveal>
+    <div class="wrap">
+      <div class="head" data-reveal>
         <div>
-          <div class="section__label">02 / Selected Work</div>
-          <h2 class="section__title">Things I&rsquo;ve <em>built</em>.</h2>
+          <h2 class="display">Featured<br />Projects</h2>
+          <p class="muted head__sub">Seven products, all live. Open a folder for the case study.</p>
         </div>
-        <div style="font-family: var(--mono); font-size: 11px; color: var(--mute); letter-spacing: 0.1em; text-transform: uppercase;">
-          2024 — 2026
-        </div>
+        <a class="head__link" href="https://github.com/UsmanAhmed0001" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
 
-      <div class="projects">
-
-        <a class="project" href="https://derm-iq-three.vercel.app" target="_blank" rel="noopener" data-cursor-label="Live →" data-reveal>
-          <div class="project__info">
-            <div class="project__num">// 01</div>
-            <div class="project__name">derm<em>IQ</em></div>
-            <div class="project__role">Founder · AI Dermatology Platform</div>
-          </div>
-          <div class="project__visual v-dermiq">
-            <div class="project__chip">Vercel · Live</div>
-            <div class="project__stack">
-              <span>Next.js</span><span>TypeScript</span><span>AI / ML</span><span>Vercel</span>
-            </div>
-          </div>
-        </a>
-
-        <a class="project" href="https://southshore-projects.vercel.app" target="_blank" rel="noopener" data-cursor-label="Visit →" data-reveal>
-          <div class="project__info">
-            <div class="project__num">// 02</div>
-            <div class="project__name">South<em>Shore</em></div>
-            <div class="project__role">Property Development Showcase</div>
-          </div>
-          <div class="project__visual v-southshore">
-            <div class="project__chip">Vercel · Live</div>
-            <div class="project__stack">
-              <span>React</span><span>TypeScript</span><span>Tailwind</span><span>Vercel</span>
-            </div>
-          </div>
-        </a>
-
-        <a class="project" href="https://idea-forge-liart.vercel.app" target="_blank" rel="noopener" data-cursor-label="Open →" data-reveal>
-          <div class="project__info">
-            <div class="project__num">// 03</div>
-            <div class="project__name">Idea<em>Forge</em></div>
-            <div class="project__role">Startup Idea Validation Tool</div>
-          </div>
-          <div class="project__visual v-ideaforge">
-            <div class="project__chip">Vercel · Live</div>
-            <div class="project__stack">
-              <span>Next.js</span><span>TypeScript</span><span>LLM API</span><span>Vercel</span>
-            </div>
-          </div>
-        </a>
-
-        <a class="project" href="https://kreston-estate.vercel.app" target="_blank" rel="noopener" data-cursor-label="Open →" data-reveal>
-          <div class="project__info">
-            <div class="project__num">// 04</div>
-            <div class="project__name">Kreston <em>Estates</em></div>
-            <div class="project__role">Full-Stack Property Management</div>
-          </div>
-          <div class="project__visual v-kreston">
-            <div class="project__chip">Vercel · Live</div>
-            <div class="project__stack">
-              <span>React</span><span>Vite</span><span>Express</span><span>SQLite</span><span>JWT</span>
-            </div>
-          </div>
-        </a>
-
-        <a class="project" href="https://hq-sigma-ten.vercel.app/design.html" target="_blank" rel="noopener" data-cursor-label="Open →" data-reveal>
-          <div class="project__info">
-            <div class="project__num">// 05</div>
-            <div class="project__name"><em>HQ</em></div>
-            <div class="project__role">Co-Founder · Corporate AI Wellness</div>
-          </div>
-          <div class="project__visual v-hq">
-            <div class="project__chip">Vercel · Live</div>
-            <div class="project__stack">
-              <span>Next.js 16</span><span>Prisma 7</span><span>PostgreSQL</span><span>Neon</span>
-            </div>
-          </div>
-        </a>
-
-        <a class="project" href="https://casebridge-beta.vercel.app" target="_blank" rel="noopener" data-cursor-label="Open →" data-reveal>
-          <div class="project__info">
-            <div class="project__num">// 06</div>
-            <div class="project__name">Case<em>Bridge</em></div>
-            <div class="project__role">Legal Case Management Platform</div>
-          </div>
-          <div class="project__visual v-casebridge">
-            <div class="project__chip">Vercel · Beta</div>
-            <div class="project__stack">
-              <span>Next.js</span><span>TypeScript</span><span>Prisma</span><span>Vercel</span>
-            </div>
-          </div>
-        </a>
-
+      <div class="folders" id="folders">
+        <!-- Rendered by main.js from the PROJECTS data -->
       </div>
     </div>
   </section>
 
 
   <!-- ============================================================
-       03 / STACK
-       ============================================================ -->
-  <section class="section">
-    <div class="container">
-
-      <div class="section__head" data-reveal>
-        <div>
-          <div class="section__label">03 / Stack</div>
-          <h2 class="section__title">Tools of the <em>trade</em>.</h2>
-        </div>
-      </div>
-
-      <div class="skills" data-reveal>
-
-        <div class="skill-group">
-          <div class="skill-group__title">Languages</div>
-          <ul>
-            <li><span>TypeScript</span><span>Daily</span></li>
-            <li><span>Python</span><span>Daily</span></li>
-            <li><span>Java</span><span>Production</span></li>
-            <li><span>C# / .NET Core</span><span>Production</span></li>
-            <li><span>SQL</span><span>Daily</span></li>
-            <li><span>Bash</span><span>Daily</span></li>
-          </ul>
-        </div>
-
-        <div class="skill-group">
-          <div class="skill-group__title">Frameworks</div>
-          <ul>
-            <li><span>Next.js</span><span>v15 · v16</span></li>
-            <li><span>React</span><span>5y+</span></li>
-            <li><span>Node / Express</span><span>Daily</span></li>
-            <li><span>Spring Boot</span><span>Production</span></li>
-            <li><span>FastAPI</span><span>AI Services</span></li>
-            <li><span>Prisma</span><span>v7</span></li>
-          </ul>
-        </div>
-
-        <div class="skill-group">
-          <div class="skill-group__title">Infrastructure</div>
-          <ul>
-            <li><span>AWS</span><span>EC2 · RDS · S3</span></li>
-            <li><span>Azure</span><span>Production</span></li>
-            <li><span>Docker</span><span>Daily</span></li>
-            <li><span>Kubernetes</span><span>Production</span></li>
-            <li><span>Terraform</span><span>IaC</span></li>
-            <li><span>Vercel · Neon</span><span>Edge</span></li>
-          </ul>
-        </div>
-
-        <div class="skill-group">
-          <div class="skill-group__title">Data &amp; AI</div>
-          <ul>
-            <li><span>PostgreSQL</span><span>Daily</span></li>
-            <li><span>Redis</span><span>Caching</span></li>
-            <li><span>Kafka</span><span>Streaming</span></li>
-            <li><span>RabbitMQ</span><span>Queues</span></li>
-            <li><span>scikit-learn</span><span>MSc</span></li>
-            <li><span>LLM APIs</span><span>HQ / dermIQ</span></li>
-          </ul>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ============================================================
-       04 / EXPERIENCE
+       EXPERIENCE
        ============================================================ -->
   <section class="section" id="exp">
-    <div class="container">
-
-      <div class="section__head" data-reveal>
-        <div>
-          <div class="section__label">04 / Experience</div>
-          <h2 class="section__title">A short <em>history</em>.</h2>
-        </div>
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <h2 class="display">Experience.</h2>
+        <p class="head__aside">Current work.<br />Back to the foundations.</p>
       </div>
 
-      <div class="timeline">
-
-        <div class="tl-item" data-reveal>
-          <div class="tl-date">2025 — Present</div>
-          <div class="tl-body">
-            <h3>Founder — dermIQ</h3>
-            <div class="org">AI Dermatology Platform · London</div>
-            <p>Sole technical founder. Took dermIQ from concept to a live, deployed product — owning the full stack, infrastructure, and product decisions. Built the AI diagnostic pipeline, integrated LLM APIs for clinical reasoning support, and shipped to production on Vercel with zero third-party engineering resource.</p>
+      <div class="exp">
+        <article class="exp__row" data-reveal>
+          <div class="exp__date mono">2025 — Now</div>
+          <div class="exp__main">
+            <h3>Founder <span>· dermIQ</span></h3>
+            <p>Sole technical founder of an AI skin-lesion triage platform. Fine-tuned a Vision Transformer across 7 lesion classes with risk banding, served it from a Dockerised Flask + PyTorch API, and shipped the Next.js product end to end — now working with NHS-connected collaborators on the next phase.</p>
           </div>
-          <div class="tl-tags"><span>Founder</span><span>AI</span><span>Full-Stack</span></div>
-        </div>
+          <div class="exp__tags"><span>Founder</span><span>ML</span><span>Full-stack</span></div>
+        </article>
 
-        <div class="tl-item" data-reveal>
-          <div class="tl-date">2026 — Present</div>
-          <div class="tl-body">
-            <h3>Co-Founder &amp; CTO — HQ</h3>
-            <div class="org">B2B SaaS · Corporate AI Wellness · London &amp; Kyiv</div>
-            <p>Co-founding HQ, a B2B SaaS platform bringing AI-native psychological support to enterprise teams. Responsible for all technical decisions: stack selection, data architecture, security model, and go-to-market infrastructure. Building on Next.js 16, Prisma 7, and PostgreSQL on Neon — designing for GDPR compliance and enterprise-grade reliability from day one.</p>
+        <article class="exp__row" data-reveal>
+          <div class="exp__date mono">2026 — Now</div>
+          <div class="exp__main">
+            <h3>Co-Founder &amp; CTO <span>· HQ</span></h3>
+            <p>Own every technical decision for a B2B corporate-wellness SaaS: stack, data architecture, security model and delivery. Building on Next.js 16, Prisma 7 and PostgreSQL on Neon, designed GDPR-first for enterprise buyers.</p>
           </div>
-          <div class="tl-tags"><span>CTO</span><span>B2B SaaS</span><span>AI</span></div>
-        </div>
+          <div class="exp__tags"><span>CTO</span><span>B2B SaaS</span><span>GDPR</span></div>
+        </article>
 
-        <div class="tl-item" data-reveal>
-          <div class="tl-date">2023 — 2025</div>
-          <div class="tl-body">
-            <h3>Software Engineer</h3>
-            <div class="org">Wavetec FZCO · Enterprise Technology</div>
-            <p>Delivered production microservices powering queue management and customer flow systems for <strong>HSBC</strong> and <strong>Samsung Europe</strong> — organisations operating at a scale where downtime costs millions. Built and maintained event-driven pipelines on Kafka and RabbitMQ handling high-throughput transactional workloads, hardened Kubernetes deployments across AWS and Azure, and authored Terraform modules that cut environment provisioning time significantly. Worked across Java, .NET Core, and Python in a team shipping to enterprise clients across multiple continents.</p>
+        <article class="exp__row" data-reveal>
+          <div class="exp__date mono">2023 — Now</div>
+          <div class="exp__main">
+            <h3>Software Engineer <span>· Wavetec</span></h3>
+            <p>Distributed backend services for enterprise clients including <strong>HSBC</strong>, <strong>Samsung Europe</strong>, Delta Airlines and Banorte — systems where downtime is a board-level problem. Event-driven pipelines on Kafka and RabbitMQ, Kubernetes on AWS and Azure, Terraform modules, across Java, .NET Core and Python. Client-facing with the teams who run them.</p>
           </div>
-          <div class="tl-tags"><span>HSBC</span><span>Samsung</span><span>Kafka</span><span>K8s</span></div>
-        </div>
+          <div class="exp__tags"><span>HSBC</span><span>Samsung</span><span>Kafka</span><span>K8s</span></div>
+        </article>
 
+        <article class="exp__row" data-reveal>
+          <div class="exp__date mono">Before</div>
+          <div class="exp__main">
+            <h3>Foundations <span>· Ovrlod · Bits and Code · Astera</span></h3>
+            <p>Enterprise CMS builds on Sitecore and Optimizely for brands like City Walk and The Beach JBR; migrated a SaaS product to .NET Core with a React front end; data-integration QA at Astera Software.</p>
+          </div>
+          <div class="exp__tags"><span>.NET</span><span>React</span><span>CMS</span></div>
+        </article>
+      </div>
+
+      <div class="edu" data-reveal>
+        <div class="edu__item">
+          <div class="label">Masters</div>
+          <h4>MSc Artificial Intelligence &amp; Data Science</h4>
+          <p class="muted">University of Hull · Distinction</p>
+        </div>
+        <div class="edu__item">
+          <div class="label">Bachelors</div>
+          <h4>BSc Computer Science</h4>
+          <p class="muted">FAST-NUCES · Dean&rsquo;s Honours List</p>
+        </div>
       </div>
     </div>
   </section>
 
 
   <!-- ============================================================
-       05 / EDUCATION
+       CONTACT — Let's talk.
        ============================================================ -->
-  <section class="section">
-    <div class="container">
+  <section class="section contact" id="contact">
+    <div class="wrap contact__grid">
+      <div data-reveal>
+        <h2 class="display">Let&rsquo;s talk.</h2>
+        <p class="muted contact__sub">Whether it&rsquo;s a full-time role or a conversation about one — my inbox is open.</p>
 
-      <div class="section__head" data-reveal>
-        <div>
-          <div class="section__label">05 / Education</div>
-          <h2 class="section__title">Where I <em>studied</em>.</h2>
+        <div class="contact__mail">
+          <a href="mailto:usmanahmedwork@outlook.com">usmanahmedwork@outlook.com ↗</a>
+          <button type="button" class="copy" id="copyEmail" aria-label="Copy email address">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          </button>
+        </div>
+
+        <div class="contact__links">
+          <a href="https://www.linkedin.com/in/usman--ahmed/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/UsmanAhmed0001" target="_blank" rel="noopener">GitHub</a>
+          <a href="UsmanAhmed_Resume.pdf" download>Resume ↓</a>
         </div>
       </div>
 
-      <div class="bento" data-reveal>
-
-        <div class="bento__card big">
-          <div class="b-label">// Masters</div>
-          <h4>MSc Artificial Intelligence &amp; <em>Data Science</em></h4>
-          <div class="meta">University of Hull · 2024 — 2025</div>
-          <div class="award">Awarded with <em>Distinction</em>, December 2025</div>
-          <div class="bento__deco">M</div>
+      <form class="form" id="contactForm" data-reveal novalidate>
+        <div class="form__row">
+          <label>Your name<input name="name" type="text" placeholder="What should I call you?" autocomplete="name" /></label>
+          <label>Email address<input name="email" type="email" placeholder="you@company.com" autocomplete="email" /></label>
         </div>
-
-        <div class="bento__card">
-          <div class="b-label">// Recognition</div>
-          <h4>Dean&rsquo;s Honourable <em>List</em></h4>
-          <div class="meta">FAST-NUCES · Academic excellence across the BSc programme.</div>
-        </div>
-
-        <div class="bento__card">
-          <div class="b-label">// Bachelors</div>
-          <h4>BSc <em>Computer</em> Science</h4>
-          <div class="meta">FAST-NUCES · Pakistan</div>
-        </div>
-
-        <div class="bento__card big">
-          <div class="b-label">// Current</div>
-          <h4>Self-directed <em>research</em></h4>
-          <div class="meta">
-            Distributed systems · LLM agent architectures · Latency-sensitive backend design ·
-            Re-reading <em>Designing Data-Intensive Applications</em>.
-          </div>
-          <div class="bento__deco" style="font-size: 280px;">∞</div>
-        </div>
-
-      </div>
+        <label>What do you have in mind?<textarea name="msg" rows="4" placeholder="A little about the role or project…"></textarea></label>
+        <button class="btn btn--solid" type="submit">Create email draft ↗</button>
+      </form>
     </div>
   </section>
 
 
   <!-- ============================================================
-       CONTACT
-       ============================================================ -->
-  <section class="contact" id="contact">
-    <div class="contact__pre" data-reveal>
-      <span class="dot"></span>Available for full-time roles &mdash; UK &middot; Hybrid · Remote · On-site
-    </div>
-
-    <h2 class="contact__title" data-reveal>
-      Let&rsquo;s build<br /><em>something</em> good.
-    </h2>
-
-    <a class="contact__mail" href="mailto:usmanahmedwork@outlook.com" data-cursor-hover>
-      usmanahmedwork@outlook.com
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <path d="M5 15L15 5M15 5H7M15 5V13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-    </a>
-
-    <div class="contact__socials" data-reveal>
-      <a href="https://github.com/UsmanAhmed0001"          target="_blank" rel="noopener" data-cursor-hover>GitHub</a>
-      <a href="https://www.linkedin.com/in/usman--ahmed/"  target="_blank" rel="noopener" data-cursor-hover>LinkedIn</a>
-      <a href="UsmanAhmed_Resume.pdf" download data-cursor-hover>Resume ↓</a>
-    </div>
-  </section>
-
-
-  <!-- ============================================================
-       FOOTER
+       FOOTER — the main character
        ============================================================ -->
   <footer class="footer">
-    <div>&copy; 2026 Usman &middot; Designed &amp; built in London</div>
-    <div class="clock" id="footClock">&mdash; &middot; &mdash;</div>
-    <div>&uarr; Konami code, if you&rsquo;re curious</div>
+    <div class="wrap footer__top">
+      <div>
+        <div class="footer__brand">Usman.</div>
+        <p class="muted">Software Engineer &amp;<br />Founder, London.</p>
+      </div>
+      <div class="footer__col">
+        <div class="label">Explore</div>
+        <a href="#about">About</a><a href="#stack">Stack</a><a href="#work">Projects</a><a href="#exp">Experience</a><a href="#contact">Contact</a>
+      </div>
+      <div class="footer__col">
+        <div class="label">Get in touch</div>
+        <a href="mailto:usmanahmedwork@outlook.com">Email ↗</a>
+        <a href="https://www.linkedin.com/in/usman--ahmed/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <span class="muted mono" id="clock">London —:—</span>
+      </div>
+    </div>
+
+    <div class="wrap footer__bye">
+      <p>See you around.</p>
+      <a href="#top">Back to top ↑</a>
+    </div>
+
+    <div class="bigname" id="bigname" aria-hidden="true">
+      <div class="bigname__word" data-letters>USMAN.</div>
+      <div class="bigname__caption mono">Hand-built · No templates · © 2026 Usman Ahmed</div>
+    </div>
   </footer>
 
 
-  <!-- Scripts — deferred so they run after the DOM is ready -->
-  <script src="main.js" defer></script>
+  <!-- ============================================================
+       OVERLAYS
+       ============================================================ -->
 
+  <!-- 30-second read -->
+  <div class="drawer" id="tldr" role="dialog" aria-modal="true" aria-labelledby="tldrTitle" hidden>
+    <div class="drawer__scrim" data-close></div>
+    <aside class="drawer__panel">
+      <button class="x" type="button" data-close aria-label="Close">✕</button>
+      <div class="label">For hiring managers</div>
+      <h3 id="tldrTitle">Usman in 30 seconds.</h3>
+      <dl class="tldr">
+        <div><dt>Role</dt><dd>Software Engineer — full-stack, backend, applied AI</dd></div>
+        <div><dt>Where</dt><dd>London, UK · Hybrid, Remote or On-site</dd></div>
+        <div><dt>Experience</dt><dd>3+ years production · enterprise clients incl. HSBC &amp; Samsung Europe</dd></div>
+        <div><dt>Ownership</dt><dd>Founder of dermIQ · Co-Founder &amp; CTO of HQ</dd></div>
+        <div><dt>Shipped</dt><dd>7 live products — from ML inference APIs to multi-role SaaS</dd></div>
+        <div><dt>Education</dt><dd>MSc AI &amp; Data Science (Distinction) · BSc Computer Science</dd></div>
+        <div><dt>Core stack</dt><dd>TypeScript · Next.js · Node · Python · Java · .NET · PostgreSQL · Kafka · Docker · K8s · AWS / Azure</dd></div>
+      </dl>
+      <div class="btn-row">
+        <a href="UsmanAhmed_Resume.pdf" download class="btn btn--solid">Download CV ↓</a>
+        <a href="mailto:usmanahmedwork@outlook.com" class="btn">Email ↗</a>
+        <button type="button" class="btn" id="copySummary">Copy summary</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Project case study -->
+  <div class="modal" id="caseModal" role="dialog" aria-modal="true" aria-labelledby="caseTitle" hidden>
+    <div class="modal__scrim" data-close></div>
+    <article class="modal__panel">
+      <button class="x" type="button" data-close aria-label="Close">✕</button>
+      <div class="modal__shot" id="caseShot"></div>
+      <div class="modal__body">
+        <div class="label" id="caseIdx"></div>
+        <h3 id="caseTitle"></h3>
+        <p class="modal__role" id="caseRole"></p>
+        <p id="caseSummary"></p>
+        <ul class="modal__list" id="casePoints"></ul>
+        <div class="chips" id="caseStack"></div>
+        <div class="btn-row">
+          <a class="btn btn--solid" id="caseLink" target="_blank" rel="noopener">Visit live site ↗</a>
+          <button class="btn" type="button" id="caseNext">Next project →</button>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <!-- Ask AI -->
+  <button class="ask" id="askBtn" type="button" aria-expanded="false" aria-controls="askPanel">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>
+    Ask AI
+  </button>
+  <section class="askp" id="askPanel" aria-label="Portfolio assistant" hidden>
+    <header class="askp__head">
+      <div class="askp__avatar">U</div>
+      <div><strong>Usman&rsquo;s Assistant</strong><span>Projects, skills &amp; experience</span></div>
+      <button class="x" type="button" id="askClose" aria-label="Close">✕</button>
+    </header>
+    <div class="askp__log" id="askLog">
+      <div class="askp__empty">
+        <p>Get to know<br />Usman&rsquo;s work.</p>
+        <div class="askp__sugg">
+          <button type="button">What has he built?</button>
+          <button type="button">Is he open to roles?</button>
+          <button type="button">Tell me about dermIQ</button>
+          <button type="button">What&rsquo;s his tech stack?</button>
+        </div>
+      </div>
+    </div>
+    <form class="askp__form" id="askForm">
+      <input id="askInput" type="text" placeholder="Ask about Usman…" autocomplete="off" />
+      <button type="submit" aria-label="Send">↑</button>
+    </form>
+    <p class="askp__note">Scripted assistant · answers come from this portfolio.</p>
+  </section>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="main.js" defer></script>
 </body>
 </html>
