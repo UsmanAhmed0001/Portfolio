@@ -18,15 +18,15 @@
 /* 1. DATA -------------------------------------------------------- */
 const PROJECTS = [
   {
-    id: 'dermiq', name: 'dermIQ', img: 'images/dermIQ.png', url: 'https://derm-iq-three.vercel.app',
-    badge: 'Founder', when: '2025 — now',
-    pitch: 'AI skin-lesion triage. Upload a photo; a fine-tuned vision model returns one of 7 lesion classes with a risk band, so people know how urgently to seek care.',
+    id: 'munik', name: 'MUNIK XVII', img: 'images/munik.png', url: 'https://munik-xvii.vercel.app',
+    badge: 'Lead developer', when: 'Live · Jan 2027 event',
+    pitch: 'The official site for Model United Nations at IBA Karachi — built for a real organising team and served on the university’s own domain.',
     built: [
-      'Fine-tuned a Vision Transformer on HAM10000, with risk banding on top of raw predictions',
-      'Dockerised Flask + PyTorch inference API on Hugging Face Spaces — moved off Railway to run at zero cost',
-      'Next.js + TypeScript product on Vercel, now with NHS-connected clinicians',
+      'Delivered for a live conference: committees, team, letters, registration',
+      'Custom domain munik.iba.edu.pk set up with IBA IT, pointing at Vercel',
+      'Live countdown, editorial typography and motion',
     ],
-    stack: ['Next.js', 'TypeScript', 'PyTorch', 'ViT', 'Flask', 'Docker'],
+    stack: ['Front end', 'Vercel', 'DNS', 'Custom domain'],
   },
   {
     id: 'southshore', name: 'SouthShore', img: 'images/southshore.png', url: 'https://southshore-projects.vercel.app',
@@ -38,6 +38,17 @@ const PROJECTS = [
       'Content structure the client can keep extending',
     ],
     stack: ['React', 'TypeScript', 'Tailwind', 'Vercel'],
+  },
+  {
+    id: 'dermiq', name: 'dermIQ', img: 'images/dermIQ.png', url: 'https://derm-iq-three.vercel.app',
+    badge: 'Founder', when: '2025 — now',
+    pitch: 'AI skin-lesion triage. Upload a photo; a fine-tuned vision model returns one of 7 lesion classes with a risk band, so people know how urgently to seek care.',
+    built: [
+      'Fine-tuned a Vision Transformer on HAM10000, with risk banding on top of raw predictions',
+      'Dockerised Flask + PyTorch inference API on Hugging Face Spaces — moved off Railway to run at zero cost',
+      'Next.js + TypeScript product on Vercel, now with NHS-connected clinicians',
+    ],
+    stack: ['Next.js', 'TypeScript', 'PyTorch', 'ViT', 'Flask', 'Docker'],
   },
   {
     id: 'ideaforge', name: 'IdeaForge', img: 'images/ideaForge.png', url: 'https://idea-forge-liart.vercel.app',
@@ -83,17 +94,7 @@ const PROJECTS = [
     ],
     stack: ['Next.js', 'TypeScript', 'Prisma', 'Vercel'],
   },
-  {
-    id: 'munik', name: 'MUNIK XVII', img: 'images/munik.png', url: 'https://munik-xvii.vercel.app',
-    badge: 'Lead developer', when: 'Live · Jan 2027 event',
-    pitch: 'The official site for Model United Nations at IBA Karachi — built for a real organising team and served on the university’s own domain.',
-    built: [
-      'Delivered for a live conference: committees, team, letters, registration',
-      'Custom domain munik.iba.edu.pk set up with IBA IT, pointing at Vercel',
-      'Live countdown, editorial typography and motion',
-    ],
-    stack: ['Front end', 'Vercel', 'DNS', 'Custom domain'],
-  },
+
 ];
 
 // Skill → where it has actually been used
@@ -493,7 +494,7 @@ $('#askClose').addEventListener('click', () => toggleAsk(false));
 new IntersectionObserver(([e]) => askBtn.classList.toggle('away', e.isIntersecting && askPanel.hidden)).observe($('#contact'));
 
 const KB = [
-  { k: ['built', 'projects', 'project', 'portfolio', 'made', 'work'], a: 'Seven live products:\n• dermIQ — AI skin-lesion triage (founder)\n• HQ — B2B wellness SaaS (co-founder & CTO)\n• SouthShore — design & construction site\n• IdeaForge — startup idea validation\n• Kreston Estates — property management\n• CaseBridge — legal case management\n• MUNIK XVII — Model UN site for IBA Karachi\nEach has a case-study card in Work.' },
+  { k: ['built', 'projects', 'project', 'portfolio', 'made', 'work'], a: 'Seven live products:\n• MUNIK XVII — Model UN site for IBA Karachi\n• SouthShore — design & construction site\n• dermIQ — AI skin-lesion triage (founder)\n• IdeaForge — startup idea validation\n• Kreston Estates — property management\n• HQ — B2B wellness SaaS (co-founder & CTO)\n• CaseBridge — legal case management\nEach has a case-study card in Work.' },
   { k: ['open', 'available', 'hire', 'roles', 'role', 'job', 'remote', 'hybrid', 'on-site', 'onsite', 'notice', 'start'], a: 'Yes — Usman is open to full-time software engineering roles, based in London and happy with hybrid, remote or on-site. Fastest route: usmanahmedwork@outlook.com.' },
   { k: ['dermiq', 'derm', 'skin', 'lesion', 'medical', 'health', 'nhs'], a: 'dermIQ is Usman’s own startup. He fine-tuned a Vision Transformer to classify skin photos across 7 lesion classes with a risk band, serves it from a Dockerised Flask + PyTorch API, and shipped the Next.js product himself.' },
   { k: ['hq', 'cto', 'co-founder', 'cofounder', 'saas', 'wellness'], a: 'HQ is a B2B corporate-wellness SaaS where Usman is Co-Founder & CTO — Next.js 16, Prisma 7 and PostgreSQL on Neon, designed GDPR-first for enterprise customers.' },
