@@ -628,6 +628,7 @@ addEventListener('keydown', (e) => {
   (function parallaxLoop() {
     const vh = innerHeight;
     imgs.forEach((img) => {
+      if (!img.isConnected) return;   // screenshot failed to load and was removed
       const r = img.parentElement.getBoundingClientRect();
       if (r.bottom < 0 || r.top > vh) return;
       const p = (r.top + r.height / 2 - vh / 2) / vh;  // -0.5 … 0.5
@@ -713,4 +714,15 @@ addEventListener('keydown', (e) => {
       <span class="mono">${r.language ? r.language + ' · ' : ''}${ago(r.pushed_at)}</span></li>`).join('');
     box.hidden = false;
   } catch (e) { /* offline or rate-limited: stay hidden */ }
+})();
+
+/* 15. INK MARKS — draw like the monogram, redraw on hover -------- */
+(function ink() {
+  const draw = (svg) => { svg.classList.remove('draw'); void svg.getBoundingClientRect(); svg.classList.add('draw', 'drawn'); };
+  const marks = $$('.ink');
+  marks.forEach((svg, i) => {
+    setTimeout(() => draw(svg), 1300 + i * 250);
+    const host = svg.closest('.ink-host');
+    if (host) host.addEventListener('mouseenter', () => draw(svg));
+  });
 })();

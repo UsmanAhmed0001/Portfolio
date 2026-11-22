@@ -733,3 +733,32 @@ html[data-theme="light"] .nav__mark .mk--bar { stroke: var(--acc-text); }
 .js .nav__mark .mk--bar { animation: draw 0.5s 1.05s var(--ease) both; }
 @keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 .nav__brand:hover .mk--bar { transform: scaleX(1.35); }
+
+/* 20. No status dots — quieter, plainer cues */
+.dot, .ask__dot, .exp__when .live { display: none !important; }
+.now li::before { display: none; }
+.now li b { min-width: 92px; display: inline-block; }
+.status__top { gap: 0; }
+.ask { padding: 0 18px; }
+
+/* 21. INK MARKS — pen-stroke drawing instead of blinking dots */
+.ink { width: 18px; height: 16px; flex-shrink: 0; overflow: visible; margin-right: 9px; }
+.ink path, .ink circle { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.ink--ua path { stroke-width: 3.4; }
+.ink--clock { width: 15px; height: 15px; margin-right: 8px; }
+.ink--clock circle, .ink--clock path { stroke-width: 1.7; }
+.ink .ink__acc { stroke: var(--acc-text); }
+.status__top .ink { width: 22px; height: 19px; margin-right: 10px; }
+.ask .ink { margin-right: 8px; }
+.ask .ink .ink__acc { stroke: var(--acc); }
+html:not([data-theme="light"]) .ask .ink .ink__acc { stroke: #5b7d00; }
+.js .ink:not(.drawn) path, .js .ink:not(.drawn) circle { stroke-dashoffset: 1; }
+.ink.draw path, .ink.draw circle { animation: draw 0.75s var(--ease) both; }
+.ink.draw > :nth-child(2) { animation-delay: 0.3s; }
+.ink.draw > :nth-child(3) { animation-delay: 0.65s; animation-duration: 0.45s; }
+
+/* "Now" list: a short green stroke draws in front of each line */
+.now li::before { display: block !important; content: ""; width: 16px; height: 2px; border-radius: 2px; background: var(--acc-text); transform: scaleX(0) translateY(-4px); transform-origin: 0 50%; transition: transform 0.7s var(--ease); flex-shrink: 0; }
+.now.in li::before { transform: scaleX(1) translateY(-4px); }
+.now.in li:nth-child(2)::before { transition-delay: 0.15s; }
+.now.in li:nth-child(3)::before { transition-delay: 0.3s; }
