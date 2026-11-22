@@ -73,17 +73,6 @@ const PROJECTS = [
     stack: ['React', 'Vite', 'Express', 'SQLite', 'JWT'],
   },
   {
-    id: 'hq', name: 'HQ', img: 'images/HQ.png', url: 'https://hq-sigma-ten.vercel.app/design.html',
-    badge: 'Co-Founder & CTO', when: '2026 — now',
-    pitch: 'B2B corporate-wellness SaaS bringing AI-native support to enterprise teams. I own every technical decision.',
-    built: [
-      'Architecture on Next.js 16, Prisma 7 and PostgreSQL on Neon',
-      'GDPR-first data model and security design for enterprise buyers',
-      'Built with a co-founder across London and Kyiv',
-    ],
-    stack: ['Next.js 16', 'Prisma 7', 'PostgreSQL', 'Neon'],
-  },
-  {
     id: 'casebridge', name: 'CaseBridge', img: 'images/casebridge.png', url: 'https://casebridge-beta.vercel.app',
     badge: 'Solo build', when: 'Beta',
     pitch: 'Legal case management that keeps cases, documents and deadlines in one place — so small firms stop running matters from inboxes.',
@@ -105,26 +94,25 @@ const SKILLS = [
   { group: 'AI & data', items: {
     'PyTorch': [use('dermiq', 'Fine-tuned ViT classifier, 7 lesion classes'), job('MSc AI · Hull', 'Deep learning coursework & dissertation work')],
     'Vision Transformers': [use('dermiq', 'Fine-tuned on HAM10000 with risk banding')],
-    'LLM APIs': [use('ideaforge', 'Structured idea analysis pipeline'), use('hq', 'AI-native support product')],
+    'LLM APIs': [use('ideaforge', 'Structured idea analysis pipeline')],
     'Hugging Face': [use('dermiq', 'Model hosting + Dockerised Space for inference')],
     'scikit-learn': [job('MSc AI · Hull', 'Classical ML, evaluation & pipelines')],
   }},
   { group: 'Languages', items: {
-    'TypeScript': [use('dermiq', 'Product front end'), use('hq', 'Full-stack app'), use('ideaforge', 'App + API routes'), use('casebridge', 'Typed domain model'), use('southshore', 'Site rebuild')],
+    'TypeScript': [use('dermiq', 'Product front end'), use('ideaforge', 'App + API routes'), use('casebridge', 'Typed domain model'), use('southshore', 'Site rebuild')],
     'Python': [use('dermiq', 'Flask + PyTorch inference API'), job('Wavetec', 'Backend services for enterprise clients')],
     'Java': [job('Wavetec', 'Distributed services for HSBC & Samsung Europe')],
     'C# / .NET': [job('Wavetec', 'Enterprise backend services'), job('Bits and Code', 'Migrated a SaaS product to .NET Core')],
-    'SQL': [use('hq', 'PostgreSQL schema design'), use('kreston', 'SQLite records')],
+    'SQL': [use('kreston', 'SQLite records'), job('Wavetec', 'Relational data for enterprise services')],
   }},
   { group: 'Frameworks', items: {
-    'Next.js': [use('dermiq', 'Next.js 14 product'), use('hq', 'Next.js 16 app'), use('ideaforge', 'App router'), use('casebridge', 'Dashboard app')],
+    'Next.js': [use('dermiq', 'Next.js 14 product'), use('ideaforge', 'App router'), use('casebridge', 'Dashboard app')],
     'React': [use('southshore', 'Site rebuild'), use('kreston', 'React + Vite front end'), job('Bits and Code', 'Blazor → React migration')],
     'Node / Express': [use('kreston', 'REST API with JWT auth')],
     'Flask': [use('dermiq', 'Inference API')],
   }},
   { group: 'Data & messaging', items: {
-    'PostgreSQL': [use('hq', 'Primary store on Neon')],
-    'Prisma': [use('hq', 'Prisma 7 data layer'), use('casebridge', 'Cases, parties, documents')],
+    'Prisma': [use('casebridge', 'Cases, parties, documents')],
     'Kafka': [job('Wavetec', 'Event-driven pipelines for enterprise clients')],
     'RabbitMQ': [job('Wavetec', 'Queue-based service messaging')],
   }},
@@ -140,7 +128,10 @@ const SKILLS = [
 /* 2. HELPERS ----------------------------------------------------- */
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Reduce Motion (macOS/iOS setting): keep fades, reveals and hovers,
+// switch off only large movement — smooth scroll, parallax, tilt.
+const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduced = false;
 const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
 const desktop = () => innerWidth > 860;
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
@@ -188,7 +179,7 @@ setInterval(tickClocks, 20000);
   const ctx = cv.getContext('2d');
   let W, H, dpr, nodes = [], packets = [], rgb = '242,239,232', running = true;
   const mouse = { x: -9999, y: -9999 };
-  const ACC = '212,255,58';
+  const ACC = getComputedStyle(document.documentElement).getPropertyValue('--acc-rgb').trim() || '255,90,31';
 
   function readColor() { rgb = getComputedStyle(document.documentElement).getPropertyValue('--net').trim() || rgb; }
   function size() {
@@ -259,7 +250,7 @@ setInterval(tickClocks, 20000);
 
 // Depth parallax: name drifts against the portrait (pointer + scroll)
 (function parallax() {
-  if (reduced) return;
+  if (calm) return;
   const name = $('#heroName'), me = $('#heroMe');
   let px = 0, py = 0, tx = 0, ty = 0;
   if (fine) addEventListener('pointermove', (e) => { tx = (e.clientX / innerWidth - 0.5); ty = (e.clientY / innerHeight - 0.5); });
@@ -312,7 +303,7 @@ $('#themeToggle').addEventListener('click', (e) => {
     try { localStorage.setItem('theme', next); } catch (err) {}
     document.dispatchEvent(new Event('themechange'));
   };
-  if (!document.startViewTransition || reduced) return apply();
+  if (!document.startViewTransition) return apply();
   const r = e.currentTarget.getBoundingClientRect();
   document.documentElement.style.setProperty('--tx', r.left + r.width / 2 + 'px');
   document.documentElement.style.setProperty('--ty', r.top + r.height / 2 + 'px');
@@ -341,7 +332,7 @@ const io = new IntersectionObserver((entries) => {
 /* 6. MANIFESTO --------------------------------------------------- */
 (function manifesto() {
   const el = $('#manifesto');
-  const HL = ['unglamorous', 'dermIQ,', 'HQ.', 'joints:'];
+  const HL = ['London.', 'dermIQ,'];
   const words = el.textContent.trim().split(/\s+/);
   el.innerHTML = words.map((w) => `<span class="w${HL.includes(w) ? ' hl' : ''}">${w}</span>`).join(' ');
   const spans = $$('.w', el);
@@ -390,10 +381,10 @@ const cta = document.createElement('article');
 cta.className = 'card card--cta';
 cta.style.setProperty('--i', PROJECTS.length);
 cta.innerHTML = `
-  <div class="card__top"><span>08 / ??</span><span>Your team</span></div>
+  <div class="card__top"><span>07 / ??</span><span>Your team</span></div>
   <div>
-    <h3 class="card__name">Project 08<br />could be yours.</h3>
-    <p class="card__pitch">I’m looking for a full-time team that ships real systems. If that’s you, let’s talk this week.</p>
+    <h3 class="card__name">Project 07<br />could be yours.</h3>
+    <p class="card__pitch">I’m looking for a full-time team that ships real systems. If that’s yours, drop me a line.</p>
   </div>
   <a class="btn" href="#contact">Start the conversation →</a>`;
 stack.appendChild(cta);
@@ -501,15 +492,14 @@ $('#askClose').addEventListener('click', () => toggleAsk(false));
 new IntersectionObserver(([e]) => askBtn.classList.toggle('away', e.isIntersecting && askPanel.hidden)).observe($('#contact'));
 
 const KB = [
-  { k: ['built', 'projects', 'project', 'portfolio', 'made', 'work'], a: 'Seven live products:\n• MUNIK XVII — Model UN site for IBA Karachi\n• SouthShore — design & construction site\n• dermIQ — AI skin-lesion triage (founder)\n• IdeaForge — startup idea validation\n• Kreston Estates — property management\n• HQ — B2B wellness SaaS (co-founder & CTO)\n• CaseBridge — legal case management\nEach has a case-study card in Work.' },
+  { k: ['built', 'projects', 'project', 'portfolio', 'made', 'work'], a: 'Six live products:\n• MUNIK XVII — Model UN site for IBA Karachi\n• SouthShore — design & construction site\n• dermIQ — AI skin-lesion triage (founder)\n• IdeaForge — startup idea validation\n• Kreston Estates — property management\n• CaseBridge — legal case management\nEach has a card in the Work section.' },
   { k: ['open', 'available', 'hire', 'roles', 'role', 'job', 'remote', 'hybrid', 'on-site', 'onsite', 'notice', 'start'], a: 'Yes — Usman is open to full-time software engineering roles, based in London and happy with hybrid, remote or on-site. Fastest route: usmanahmedwork@outlook.com.' },
   { k: ['dermiq', 'derm', 'skin', 'lesion', 'medical', 'health', 'nhs'], a: 'dermIQ is Usman’s own startup. He fine-tuned a Vision Transformer to classify skin photos across 7 lesion classes with a risk band, serves it from a Dockerised Flask + PyTorch API, and shipped the Next.js product himself.' },
-  { k: ['hq', 'cto', 'co-founder', 'cofounder', 'saas', 'wellness'], a: 'HQ is a B2B corporate-wellness SaaS where Usman is Co-Founder & CTO — Next.js 16, Prisma 7 and PostgreSQL on Neon, designed GDPR-first for enterprise customers.' },
   { k: ['stack', 'tech', 'language', 'framework', 'skills', 'tools', 'know'], a: 'Core: TypeScript, Next.js, React, Node, Python, Java and C#/.NET. Data: PostgreSQL, Prisma, Kafka, RabbitMQ. Cloud: Docker, Kubernetes, Terraform, AWS, Azure, Vercel. ML: PyTorch, Hugging Face, LLM APIs. The Skills section shows where each one was used.' },
   { k: ['hsbc', 'samsung', 'wavetec', 'enterprise', 'experience', 'years', 'backend', 'distributed', 'kafka', 'bank'], a: 'At Wavetec, Usman builds distributed backend services for HSBC, Samsung Europe, Delta Air Lines and Banorte — event-driven pipelines on Kafka and RabbitMQ, Kubernetes on AWS and Azure, in Java, .NET Core and Python.' },
   { k: ['munik', 'model un', 'iba', 'karachi', 'conference'], a: 'MUNIK XVII is the official site for Model United Nations at IBA Karachi — built for a real organising team and served on the university’s domain, munik.iba.edu.pk.' },
   { k: ['education', 'degree', 'msc', 'master', 'university', 'hull', 'study', 'bsc'], a: 'MSc Artificial Intelligence & Data Science with Distinction from the University of Hull, and a BSc in Computer Science from FAST-NUCES (Dean’s Honours List).' },
-  { k: ['ai', 'ml', 'machine learning', 'model', 'llm', 'pytorch'], a: 'Applied AI runs through his work: training and serving a vision model (dermIQ), and LLM features in IdeaForge and HQ — backed by an MSc in AI with Distinction.' },
+  { k: ['ai', 'ml', 'machine learning', 'model', 'llm', 'pytorch'], a: 'Applied AI runs through his work: training and serving a vision model (dermIQ), and an LLM analysis pipeline in IdeaForge — backed by an MSc in AI with Distinction.' },
   { k: ['contact', 'email', 'reach', 'linkedin', 'cv', 'resume', 'call', 'phone'], a: 'Email usmanahmedwork@outlook.com or LinkedIn (linkedin.com/in/usman--ahmed). The CV is one click away — “CV ↓” in the top bar.' },
   { k: ['why', 'hire him', 'why hire', 'strength', 'different', 'stand out', 'best', 'good'], a: 'Three things in one hire: he’s built production backends for global brands, he’s founded and shipped his own AI product end to end, and he has the MSc depth to back the ML.' },
   { k: ['hi', 'hello', 'hey', 'salam'], a: 'Hi! Ask about Usman’s projects, stack, enterprise experience — or whether he’s open to roles.' },
@@ -555,7 +545,7 @@ addEventListener('keydown', (e) => {
 (function motion() {
   // 13a. Smooth scroll (desktop pointer only — phones keep native momentum)
   let lenis = null;
-  if (window.Lenis && fine && !reduced) {
+  if (window.Lenis && fine && !calm) {
     lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1, smoothWheel: true });
     (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
     document.documentElement.classList.add('lenis');
@@ -634,7 +624,7 @@ addEventListener('keydown', (e) => {
     $$('.card__built li, .chips span', c).forEach((el, k) => el.style.setProperty('--k', k));
     cardIO.observe(c);
   });
-  const imgs = $$('.card__img img');
+  const imgs = calm ? [] : $$('.card__img img');
   (function parallaxLoop() {
     const vh = innerHeight;
     imgs.forEach((img) => {
@@ -645,7 +635,7 @@ addEventListener('keydown', (e) => {
     });
     requestAnimationFrame(parallaxLoop);
   })();
-  if (fine) {
+  if (fine && !calm) {
     $$('.card__shot').forEach((s) => {
       s.addEventListener('pointermove', (e) => {
         const r = s.getBoundingClientRect();
@@ -696,4 +686,31 @@ addEventListener('keydown', (e) => {
     const o = clamp(1 - scrollY / (innerHeight * 0.45), 0, 1);
     fadeEls.forEach((el) => (el.style.opacity = o));
   }, { passive: true });
+})();
+
+/* 14. PERSONAL TOUCHES ------------------------------------------- */
+// "Now" list is dated so visitors know it's current
+(function () {
+  const d = $('#nowDate');
+  if (d) d.textContent = new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+})();
+
+// Latest public repos, straight from GitHub (hidden if the API is unavailable)
+(async function github() {
+  const box = $('#gh'), list = $('#ghList');
+  if (!box) return;
+  try {
+    const res = await fetch('https://api.github.com/users/UsmanAhmed0001/repos?sort=pushed&per_page=4');
+    if (!res.ok) return;
+    const repos = (await res.json()).filter((r) => !r.fork).slice(0, 4);
+    if (!repos.length) return;
+    const ago = (iso) => {
+      const d = Math.round((Date.now() - new Date(iso)) / 864e5);
+      return d < 1 ? 'today' : d === 1 ? 'yesterday' : d < 30 ? `${d} days ago` : new Date(iso).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+    };
+    list.innerHTML = repos.map((r) => `
+      <li><a href="${r.html_url}" target="_blank" rel="noopener">${r.name}</a>
+      <span class="mono">${r.language ? r.language + ' · ' : ''}${ago(r.pushed_at)}</span></li>`).join('');
+    box.hidden = false;
+  } catch (e) { /* offline or rate-limited: stay hidden */ }
 })();
