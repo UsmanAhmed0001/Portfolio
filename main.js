@@ -305,11 +305,18 @@ function setMenu(open) {
 menuBtn.addEventListener('click', () => setMenu(menu.hidden));
 $$('a', menu).forEach((a) => a.addEventListener('click', () => setMenu(false)));
 
-$('#themeToggle').addEventListener('click', () => {
+$('#themeToggle').addEventListener('click', (e) => {
   const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-  document.documentElement.setAttribute('data-theme', next);
-  try { localStorage.setItem('theme', next); } catch (e) {}
-  document.dispatchEvent(new Event('themechange'));
+  const apply = () => {
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (err) {}
+    document.dispatchEvent(new Event('themechange'));
+  };
+  if (!document.startViewTransition || reduced) return apply();
+  const r = e.currentTarget.getBoundingClientRect();
+  document.documentElement.style.setProperty('--tx', r.left + r.width / 2 + 'px');
+  document.documentElement.style.setProperty('--ty', r.top + r.height / 2 + 'px');
+  document.startViewTransition(apply);
 });
 
 /* 5. REVEAL + COUNTERS ------------------------------------------- */
@@ -433,8 +440,8 @@ function showSkill(name, animate = true) {
   const rows = ALL[name];
   $('#rcSkill').textContent = name;
   $('#rcNo').textContent = '#' + String(receiptNo++).padStart(4, '0');
-  $('#rcLines').innerHTML = rows.map((r) => `
-    <li><span>${r.url ? `<a href="${r.url}" target="_blank" rel="noopener">${r.where}</a>` : r.where}</span><span>✓</span><small>${r.note}</small></li>`).join('');
+  $('#rcLines').innerHTML = rows.map((r, k) => `
+    <li style="--k:${k}"><span>${r.url ? `<a href="${r.url}" target="_blank" rel="noopener">${r.where}</a>` : r.where}</span><span>✓</span><small>${r.note}</small></li>`).join('');
   $('#rcTotal').textContent = `${rows.length} ${rows.length === 1 ? 'item' : 'items'}`;
   if (animate && !reduced) { const rc = $('#receipt'); rc.classList.remove('print'); void rc.offsetWidth; rc.classList.add('print'); }
 }
@@ -543,3 +550,150 @@ addEventListener('keydown', (e) => {
   if (!askPanel.hidden) toggleAsk(false);
   if (!menu.hidden) setMenu(false);
 });
+
+/* 13. MOTION LAYER ----------------------------------------------- */
+(function motion() {
+  // 13a. Smooth scroll (desktop pointer only — phones keep native momentum)
+  let lenis = null;
+  if (window.Lenis && fine && !reduced) {
+    lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1, smoothWheel: true });
+    (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
+    document.documentElement.classList.add('lenis');
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      const id = a.getAttribute('href');
+      const el = id === '#top' ? 0 : document.querySelector(id);
+      if (el === null) return;
+      e.preventDefault();
+      lenis.scrollTo(el, { offset: id === '#top' ? 0 : -70, duration: 1.4 });
+      history.replaceState(null, '', id);
+    });
+    // freeze page scroll while an overlay is open
+    new MutationObserver(() => {
+      const open = !$('#tldr').hidden || !$('#menu').hidden;
+      open ? lenis.stop() : lenis.start();
+    }).observe(document.body, { subtree: true, attributes: true, attributeFilter: ['hidden'] });
+  }
+
+  // 13b. Headings: split into words that rise in
+  $$('[data-words]').forEach((h) => {
+    let d = 0;
+    const walk = (node) => {
+      [...node.childNodes].forEach((n) => {
+        if (n.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach((part) => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+            const w = document.createElement('span'); w.className = 'wd';
+            const s = document.createElement('span'); s.textContent = part; s.style.setProperty('--d', d++);
+            w.appendChild(s); frag.appendChild(w);
+          });
+          n.replaceWith(frag);
+        } else if (n.nodeType === 1 && n.tagName !== 'BR') walk(n);
+      });
+    };
+    walk(h);
+    io.observe(h);
+  });
+
+  // 13c. Rolling text on links & buttons
+  const rollTargets = $$('.nav__links a, .contact__links a, .footer__row a, .nav__cv, .btn, .menu__foot a');
+  rollTargets.forEach((el) => {
+    const t = [...el.childNodes].find((n) => n.nodeType === 3 && n.textContent.trim());
+    if (!t) return;
+    const label = t.textContent.trim();
+    const wrap = document.createElement('span'); wrap.className = 'roll';
+    const inner = document.createElement('span'); inner.textContent = label;
+    wrap.appendChild(inner);
+    t.replaceWith(wrap, document.createTextNode(t.textContent.endsWith(' ') ? ' ' : ''));
+  });
+
+  if (reduced) { $$('.card').forEach((c) => c.classList.add('shown')); return; }
+
+  // 13d. Magnetic buttons
+  if (fine) {
+    $$('.btn, .nav__cv, .icon-btn, .ask, .nav__mono, .nav__tldr').forEach((el) => {
+      el.classList.add('mag');
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) * 0.3, y = (e.clientY - r.top - r.height / 2) * 0.35;
+        el.classList.add('pull');
+        el.style.transform = `translate(${x}px, ${y}px)`;
+      });
+      el.addEventListener('pointerleave', () => { el.classList.remove('pull'); el.style.transform = ''; });
+    });
+  }
+
+  // 13e. Cards: reveal, inner parallax, tilt + glare
+  const cardIO = new IntersectionObserver((entries) => {
+    entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('shown'); cardIO.unobserve(en.target); } });
+  }, { threshold: 0.18 });
+  $$('.card').forEach((c) => {
+    $$('.card__built li, .chips span', c).forEach((el, k) => el.style.setProperty('--k', k));
+    cardIO.observe(c);
+  });
+  const imgs = $$('.card__img img');
+  (function parallaxLoop() {
+    const vh = innerHeight;
+    imgs.forEach((img) => {
+      const r = img.parentElement.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      const p = (r.top + r.height / 2 - vh / 2) / vh;  // -0.5 … 0.5
+      img.style.setProperty('--py', (p * -40).toFixed(1) + 'px');
+    });
+    requestAnimationFrame(parallaxLoop);
+  })();
+  if (fine) {
+    $$('.card__shot').forEach((s) => {
+      s.addEventListener('pointermove', (e) => {
+        const r = s.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        s.style.setProperty('--ry', ((x - 0.5) * 7).toFixed(2) + 'deg');
+        s.style.setProperty('--rx', ((0.5 - y) * 6).toFixed(2) + 'deg');
+        s.style.setProperty('--gx', x * 100 + '%');
+        s.style.setProperty('--gy', y * 100 + '%');
+      });
+      s.addEventListener('pointerleave', () => { s.style.setProperty('--rx', '0deg'); s.style.setProperty('--ry', '0deg'); });
+    });
+  }
+
+  // 13f. Eyebrows decode like a terminal when they enter
+  const glyphs = '01<>/{}[]#$%&*+=?';
+  const scramble = (el) => {
+    const node = [...el.childNodes].find((n) => n.nodeType === 3 && n.textContent.trim());
+    if (!node) return;
+    const final = node.textContent; let f = 0; const total = 22;
+    (function step() {
+      node.textContent = [...final].map((ch, i) => (ch === ' ' || f / total > i / final.length) ? ch : glyphs[(Math.random() * glyphs.length) | 0]).join('');
+      if (++f <= total) requestAnimationFrame(step); else node.textContent = final;
+    })();
+  };
+  const eyeIO = new IntersectionObserver((entries) => {
+    entries.forEach((en) => { if (en.isIntersecting) { scramble(en.target); eyeIO.unobserve(en.target); } });
+  }, { threshold: 1 });
+  $$('section .eyebrow').forEach((e) => eyeIO.observe(e));
+
+  // 13g. Cursor dot with blend mode
+  const dot = $('#dotc');
+  if (fine) {
+    let dx = -100, dy = -100, x = -100, y = -100;
+    addEventListener('pointermove', (e) => { dx = e.clientX; dy = e.clientY; dot.classList.add('on'); });
+    document.addEventListener('pointerleave', () => dot.classList.remove('on'));
+    (function f() { x += (dx - x) * 0.25; y += (dy - y) * 0.25; dot.style.transform = `translate(${x}px, ${y}px)`; requestAnimationFrame(f); })();
+    document.addEventListener('pointerover', (e) => {
+      const t = e.target;
+      dot.classList.toggle('big', !!t.closest('a, button, .skill, input, textarea'));
+      dot.classList.toggle('hide', !!t.closest('.card__shot'));
+    });
+  }
+
+  // 13h. Hero content eases out as you scroll away
+  const fadeEls = [$('.hero__intro'), $('.hero__status')];
+  addEventListener('scroll', () => {
+    if (!desktop()) { fadeEls.forEach((el) => (el.style.opacity = '')); return; }
+    const o = clamp(1 - scrollY / (innerHeight * 0.45), 0, 1);
+    fadeEls.forEach((el) => (el.style.opacity = o));
+  }, { passive: true });
+})();

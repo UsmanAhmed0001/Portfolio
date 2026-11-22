@@ -25,6 +25,8 @@
 
   <div class="progress" id="progress" aria-hidden="true"></div>
   <div class="cursor" id="cursor" aria-hidden="true"><span>View</span></div>
+  <div class="dotc" id="dotc" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
 
   <!-- ============================================================
        NAV
@@ -146,7 +148,7 @@
     <div class="wrap work__head">
       <div>
         <p class="eyebrow"><span class="sq"></span>Selected work · 2024 — 2026</p>
-        <h2 class="h2">Seven products.<br /><em>All live.</em> All mine.</h2>
+        <h2 class="h2" data-words>Seven products.<br /><em>All live.</em> All mine.</h2>
       </div>
       <p class="work__note">Each card is a short case study — the problem, what I built, and the stack. Every one links to the live product.</p>
     </div>
@@ -165,7 +167,7 @@
       <div class="skills__head">
         <div>
           <p class="eyebrow"><span class="sq"></span>Skills</p>
-          <h2 class="h2">Skills, <em>with receipts.</em></h2>
+          <h2 class="h2" data-words>Skills, <em>with receipts.</em></h2>
         </div>
         <p class="work__note">Anyone can list tools. Pick one and see exactly where I&rsquo;ve used it.</p>
       </div>
@@ -203,7 +205,7 @@
       <div class="skills__head">
         <div>
           <p class="eyebrow"><span class="sq"></span>Experience</p>
-          <h2 class="h2">Where I&rsquo;ve <em>shipped.</em></h2>
+          <h2 class="h2" data-words>Where I&rsquo;ve <em>shipped.</em></h2>
         </div>
       </div>
 
@@ -264,7 +266,7 @@
   <section class="contact" id="contact">
     <div class="wrap">
       <p class="eyebrow"><span class="sq"></span>Contact</p>
-      <h2 class="contact__big">Let&rsquo;s build<br /><em>something real.</em></h2>
+      <h2 class="contact__big" data-words>Let&rsquo;s build<br /><em>something real.</em></h2>
 
       <div class="contact__grid">
         <div class="contact__left" data-reveal>
@@ -366,6 +368,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
   <script src="main.js" defer></script>
 </body>
 </html>
