@@ -604,7 +604,7 @@ addEventListener('keydown', (e) => {
 
   // 13d. Magnetic buttons
   if (fine) {
-    $$('.btn, .nav__cv, .icon-btn, .ask, .nav__mono, .nav__tldr').forEach((el) => {
+    $$('.btn, .nav__cv, .icon-btn, .ask, .nav__mark, .nav__tldr').forEach((el) => {
       el.classList.add('mag');
       el.addEventListener('pointermove', (e) => {
         const r = el.getBoundingClientRect();

@@ -722,3 +722,14 @@ a:hover > .roll > span, button:hover > .roll > span, .roll-host:hover .roll > sp
   .footer__info { grid-template-columns: 1fr; }
   .colophon { grid-column: auto; justify-self: start; }
 }
+
+/* 19. MONOGRAM — U and A share one stem; drawn like a pen stroke */
+.nav__mark { width: 34px; height: 29px; overflow: visible; color: var(--fg); transition: transform 0.45s var(--ease); }
+.nav__mark .mk { fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.nav__mark .mk--bar { stroke: var(--acc); transform-origin: 14px 15px; transition: transform 0.5s var(--ease); }
+html[data-theme="light"] .nav__mark .mk--bar { stroke: var(--acc-text); }
+.js .nav__mark .mk--u { animation: draw 0.9s 0.15s var(--ease) both; }
+.js .nav__mark .mk--a { animation: draw 0.9s 0.55s var(--ease) both; }
+.js .nav__mark .mk--bar { animation: draw 0.5s 1.05s var(--ease) both; }
+@keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+.nav__brand:hover .mk--bar { transform: scaleX(1.35); }
