@@ -18,7 +18,7 @@
 /* 1. DATA -------------------------------------------------------- */
 const PROJECTS = [
   {
-    id: 'munik', name: 'MUNIK XVII', img: 'images/munik.png', url: 'https://munik-xvii.vercel.app',
+    id: 'munik', name: 'MUNIK XVII', img: 'images/munik.jpg', url: 'https://munik.iba.edu.pk',
     badge: 'Lead developer', when: 'Live · Jan 2027 event',
     pitch: 'The official site for Model United Nations at IBA Karachi — built for a real organising team and served on the university’s own domain.',
     built: [
@@ -29,7 +29,7 @@ const PROJECTS = [
     stack: ['Front end', 'Vercel', 'DNS', 'Custom domain'],
   },
   {
-    id: 'southshore', name: 'SouthShore', img: 'images/southshore.png', url: 'https://southshore-projects.vercel.app',
+    id: 'southshore', name: 'SouthShore', img: 'images/southshore.jpg', url: 'https://southshoreprojects.com',
     badge: 'Lead developer', when: 'Client · live',
     pitch: 'A full rebuild for a design & construction company — a portfolio-led site that sells craftsmanship through photography and clean type.',
     built: [
@@ -40,7 +40,7 @@ const PROJECTS = [
     stack: ['React', 'TypeScript', 'Tailwind', 'Vercel'],
   },
   {
-    id: 'dermiq', name: 'dermIQ', img: 'images/dermIQ.png', url: 'https://derm-iq-three.vercel.app',
+    id: 'dermiq', name: 'dermIQ', img: 'images/dermIQ.jpg', url: 'https://derm-iq-three.vercel.app',
     badge: 'Founder', when: '2025 — now',
     pitch: 'AI skin-lesion triage. Upload a photo; a fine-tuned vision model returns one of 7 lesion classes with a risk band, so people know how urgently to seek care.',
     built: [
@@ -51,7 +51,7 @@ const PROJECTS = [
     stack: ['Next.js', 'TypeScript', 'PyTorch', 'ViT', 'Flask', 'Docker'],
   },
   {
-    id: 'ideaforge', name: 'IdeaForge', img: 'images/ideaForge.png', url: 'https://idea-forge-liart.vercel.app',
+    id: 'ideaforge', name: 'IdeaForge', img: 'images/ideaForge.jpg', url: 'https://idea-forge-liart.vercel.app',
     badge: 'Solo build', when: 'Product',
     pitch: 'Pressure-tests startup ideas — turns a one-line pitch into a structured analysis so founders see the weak spots before they build.',
     built: [
@@ -62,7 +62,7 @@ const PROJECTS = [
     stack: ['Next.js', 'TypeScript', 'LLM API', 'Vercel'],
   },
   {
-    id: 'kreston', name: 'Kreston Estates', img: 'images/krestonEstate.png', url: 'https://kreston-estate.vercel.app',
+    id: 'kreston', name: 'Kreston Estates', img: 'images/krestonEstate.jpg', url: 'https://kreston-estate.vercel.app',
     badge: 'Full-stack', when: 'Client · live',
     pitch: 'A property-management platform for a lettings business — listings, tenants and admin workflows behind role-aware access.',
     built: [
@@ -73,7 +73,7 @@ const PROJECTS = [
     stack: ['React', 'Vite', 'Express', 'SQLite', 'JWT'],
   },
   {
-    id: 'casebridge', name: 'CaseBridge', img: 'images/casebridge.png', url: 'https://casebridge-beta.vercel.app',
+    id: 'casebridge', name: 'CaseBridge', img: 'images/casebridge.jpg', url: 'https://casebridge-beta.vercel.app',
     badge: 'Solo build', when: 'Beta',
     pitch: 'Legal case management that keeps cases, documents and deadlines in one place — so small firms stop running matters from inboxes.',
     built: [
