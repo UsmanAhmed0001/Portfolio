@@ -762,3 +762,14 @@ html:not([data-theme="light"]) .ask .ink .ink__acc { stroke: #5b7d00; }
 .now.in li::before { transform: scaleX(1) translateY(-4px); }
 .now.in li:nth-child(2)::before { transition-delay: 0.15s; }
 .now.in li:nth-child(3)::before { transition-delay: 0.3s; }
+
+/* 22. Looping monogram before section labels — draws, holds, erases, repeats */
+.ualoop { width: 17px; height: 15px; flex-shrink: 0; overflow: visible; color: var(--fg); }
+.ualoop path { fill: none; stroke: currentColor; stroke-width: 3.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; animation: uaLoop 4.8s var(--ease) infinite both; }
+.ualoop path:nth-child(2) { animation-delay: 0.25s; }
+.ualoop .ualoop__bar { stroke: var(--acc-text); animation-delay: 0.5s; }
+@keyframes uaLoop {
+  0%        { stroke-dashoffset: 1; }
+  28%, 72%  { stroke-dashoffset: 0; }
+  100%      { stroke-dashoffset: -1; }
+}
