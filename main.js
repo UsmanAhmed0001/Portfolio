@@ -347,7 +347,7 @@ const io = new IntersectionObserver((entries) => {
 /* 6. MANIFESTO --------------------------------------------------- */
 (function manifesto() {
   const el = $('#manifesto');
-  const HL = ['London.', 'dermIQ,'];
+  const HL = ['London.', 'dermIQ'];
   const words = el.textContent.trim().split(/\s+/);
   el.innerHTML = words.map((w) => `<span class="w${HL.includes(w) ? ' hl' : ''}">${w}</span>`).join(' ');
   const spans = $$('.w', el);
@@ -387,10 +387,11 @@ PROJECTS.forEach((p, i) => {
       <div class="card__chrome"><i></i><i></i><i></i><span>${host}</span>${p.live ? '<b class="card__live">live</b>' : ''}</div>
       <div class="card__img">
         <div class="fallback">${p.name}</div>
-        <img src="${p.img}" alt="Screenshot of ${p.name}" loading="lazy" onerror="this.remove()" />${p.live ? `<div class="card__frame" data-src="${p.url}" data-title="${p.name} running live"${p.heavyVideo ? ' data-heavy' : ''}></div>` : ''}
+        <img src="${p.img}" alt="Screenshot of ${p.name}" loading="lazy" />${p.live ? `<div class="card__frame" data-src="${p.url}" data-title="${p.name} running live"${p.heavyVideo ? ' data-heavy' : ''}></div>` : ''}
       </div>
     </a>`;
   stack.appendChild(card);
+  const im = card.querySelector('.card__img img'); if (im) im.addEventListener('error', () => im.remove());
 });
 const cta = document.createElement('article');
 cta.className = 'card card--cta';
@@ -520,9 +521,9 @@ new IntersectionObserver(([e]) => askBtn.classList.toggle('away', e.isIntersecti
 const KB = [
   { k: ['built', 'projects', 'project', 'portfolio', 'made', 'work'], a: 'Six products — three live client sites, two of his own in development and one prototype:\n• MUNIK XVII — Model UN site for IBA Karachi\n• SouthShore — design & construction company site\n• Kreston Estates — Tooting lettings, sales & property management agency site\n• dermIQ — AI skin-lesion triage (founder, in development)\n• IdeaForge — give it a YouTube channel, get this week’s posts for 5 platforms (founder, in development)\n• CaseBridge — clickable prototype of a legal case-management tool\nEach has a card in the Work section.' },
   { k: ['salary', 'salary expectation', 'compensation', 'pay', 'paid', 'rate', 'expectations'], a: 'Usman prefers to talk about salary once he knows more about the role and team. Email ahmedusman0001@outlook.com and he’ll reply directly.' },
-  { k: ['sponsorship', 'sponsor', 'visa', 'right to work', 'work permit', 'eligible'], a: 'That’s best confirmed with Usman directly, so you get an exact answer. Email ahmedusman0001@outlook.com.' },
-  { k: ['notice', 'notice period', 'start date', 'when can he start', 'availability'], a: 'Usman can confirm his notice period and earliest start date directly. Email ahmedusman0001@outlook.com.' },
-  { k: ['open', 'available', 'hire', 'roles', 'role', 'job', 'remote', 'hybrid', 'on-site', 'onsite', 'start'], a: 'Yes — Usman is open to full-time software engineering roles, based in London and happy with hybrid, remote or on-site. Fastest route: ahmedusman0001@outlook.com.' },
+  { k: ['sponsorship', 'sponsor', 'visa', 'right to work', 'work permit', 'eligible'], a: 'No sponsorship needed — Usman has the right to work in the UK, now and long-term.' },
+  { k: ['notice', 'notice period', 'start date', 'when can he start', 'availability'], a: 'Two weeks’ notice. He’s based in London and open to hybrid, remote or on-site roles.' },
+  { k: ['open', 'available', 'hire', 'roles', 'role', 'job', 'remote', 'hybrid', 'on-site', 'onsite', 'start'], a: 'Yes — Usman is open to full-time software engineering roles, based in London and happy with hybrid, remote or on-site. No sponsorship needed, and two weeks’ notice. Fastest route: ahmedusman0001@outlook.com.' },
   { k: ['dermiq', 'derm', 'skin', 'lesion', 'medical', 'health', 'nhs'], a: 'dermIQ is Usman’s own startup, currently in development. He fine-tuned a Vision Transformer to classify skin photos across 7 lesion classes with a risk band, serves it from a Dockerised Flask + PyTorch API, and is building the Next.js product himself.' },
   { k: ['stack', 'tech', 'language', 'framework', 'skills', 'tools', 'know'], a: 'Languages: Java, C#/.NET Core, Python, TypeScript, C++, SQL. Backend: Spring Boot, ASP.NET Core, Node/Express, Flask. Frontend: React, Next.js, Tailwind, Blazor. Data: PostgreSQL, Kafka, RabbitMQ. Cloud: AWS, Azure, Docker, Kubernetes, Terraform. AI/ML: PyTorch, TensorFlow, ViT, ResNet, U-Net, YOLO. CMS: Sitecore, Optimizely. The Skills section shows where each one was used.' },
   { k: ['hsbc', 'samsung', 'wavetec', 'enterprise', 'experience', 'years', 'backend', 'distributed', 'kafka', 'bank'], a: 'At Wavetec, Usman builds distributed backend services for HSBC, Samsung Europe, Delta Air Lines and Banorte — event-driven pipelines on Kafka and RabbitMQ, Kubernetes on AWS and Azure, in Java, .NET Core and Python.' },

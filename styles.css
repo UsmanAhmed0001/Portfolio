@@ -1,3 +1,9 @@
+/* Self-hosted fonts: no third-party request before first paint */
+@font-face { font-family: "Geist"; src: url("fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Geist Mono"; src: url("fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Instrument Serif"; font-style: normal; src: url("fonts/InstrumentSerif-Regular.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Instrument Serif"; font-style: italic; src: url("fonts/InstrumentSerif-Italic.woff2") format("woff2"); font-display: swap; }
+
 /* ==============================================================
    styles.css — Usman Ahmed · Portfolio 2026
    1 Tokens  2 Base  3 Nav + menu  4 Hero  5 Proof  6 Manifesto
@@ -879,3 +885,28 @@ html[data-theme="light"] .hero__status .status__row span { color: rgba(13, 13, 1
 /* 30. "LIVE" only appears once the site is actually running in the frame */
 .card__live { opacity: 0; transition: opacity 0.4s; }
 .card__live.on { opacity: 1; }
+
+/* 32. About: intro on the left, quick facts on the right */
+.about2 { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(280px, 1fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+.about2 .manifesto__text { font-size: clamp(26px, 2.9vw, 44px); line-height: 1.16; max-width: none; }
+.facts { position: sticky; top: calc(var(--nav-h) + 32px); padding: 26px 26px 22px; border: 1px solid var(--line-2); border-radius: 22px; background: var(--bg-2); }
+.facts__list > div { display: grid; grid-template-columns: 112px 1fr; gap: 14px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 15px; }
+.facts__list > div:first-child { border-top: 0; padding-top: 0; }
+.facts__list dt { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mute); padding-top: 2px; }
+.facts__list dd b { color: var(--acc-text); font-weight: 600; }
+.facts .now { margin-top: 18px; padding-top: 18px; grid-template-columns: 1fr; gap: 12px; max-width: none; }
+.facts .now li { font-size: 15px; }
+.facts .now li b { min-width: 0; margin-right: 2px; }
+@media (max-width: 900px) {
+  .about2 { grid-template-columns: 1fr; gap: 36px; }
+  .facts { position: relative; top: auto; }
+}
+
+/* 33. Inputs at 16px on phones so iOS doesn't zoom on focus */
+@media (max-width: 860px) { input, textarea, select { font-size: 16px !important; } }
+.facts .now li { display: block; position: relative; padding-left: 26px; line-height: 1.45; }
+.facts .now li::before { position: absolute; left: 0; top: 0.72em; }
+.facts .now li b { display: inline; min-width: 0; margin-right: 0; }
+.facts.in .now li::before { transform: scaleX(1) translateY(-4px); }
+.facts.in .now li:nth-child(2)::before { transition-delay: 0.15s; }
+.facts.in .now li:nth-child(3)::before { transition-delay: 0.3s; }

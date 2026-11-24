@@ -21,9 +21,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="preload" href="fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin />
 
   <link rel="stylesheet" href="styles.css" />
   <script type="application/ld+json">
@@ -148,22 +146,34 @@
        MANIFESTO — words light up as you scroll
        ============================================================ -->
   <section class="manifesto" id="about">
-    <div class="wrap">
-      <p class="eyebrow"><svg class="ualoop" viewBox="-2 -2 32 28" aria-hidden="true"><path pathLength="1" d="M2 0 V17 A6 6 0 0 0 14 17 V24"/><path pathLength="1" d="M14 24 V6 A6 6 0 0 1 26 6 V24"/><path class="ualoop__bar" pathLength="1" d="M14 15 H26"/></svg>About</p>
-      <p class="manifesto__text" id="manifesto">
-        I studied computer science in Pakistan, came to the UK for an MSc in AI at Hull, and stayed in London.
-        Most days I&rsquo;m writing Java and .NET services that move data for HSBC and Samsung Europe.
-        The rest of the time I&rsquo;m building dermIQ, a skin-lesion triage tool where I&rsquo;m training the model and building the product myself.
-        I like the parts nobody demos: queues, migrations, and the error state of a form.
-      </p>
-      <div class="now" data-reveal>
-        <span class="now__lbl mono">Now · <span id="nowDate"></span></span>
-        <ul>
-          <li><b>Building</b> the next version of dermIQ with NHS-connected clinicians</li>
-          <li><b>Shipping</b> backend services for Wavetec&rsquo;s enterprise clients</li>
-          <li><b>Looking for</b> a full-time engineering team in London</li>
-        </ul>
+    <div class="wrap about2">
+      <div class="about2__main">
+        <p class="eyebrow"><svg class="ualoop" viewBox="-2 -2 32 28" aria-hidden="true"><path pathLength="1" d="M2 0 V17 A6 6 0 0 0 14 17 V24"/><path pathLength="1" d="M14 24 V6 A6 6 0 0 1 26 6 V24"/><path class="ualoop__bar" pathLength="1" d="M14 15 H26"/></svg>About</p>
+        <p class="manifesto__text" id="manifesto">
+          I&rsquo;m Usman, a backend engineer based in London.
+          By day I build Java and .NET services that move data for HSBC and Samsung Europe.
+          Outside that, I&rsquo;m building dermIQ end to end, from training the model to shipping the interface.
+          I like the parts nobody demos: queues, migrations, and the error state of a form.
+        </p>
       </div>
+
+      <aside class="facts" data-reveal aria-label="Quick facts">
+        <dl class="facts__list">
+          <div><dt>Based</dt><dd>London, UK</dd></div>
+          <div><dt>Right to work</dt><dd>UK &middot; no sponsorship needed</dd></div>
+          <div><dt>Notice</dt><dd>2 weeks</dd></div>
+          <div><dt>Focus</dt><dd>Backend systems &middot; applied AI</dd></div>
+          <div><dt>Education</dt><dd>MSc AI &amp; Data Science, <b>Distinction</b><br />BSc Computer Science</dd></div>
+        </dl>
+        <div class="now">
+          <span class="now__lbl mono">Now &middot; <span id="nowDate"></span></span>
+          <ul>
+            <li><b>Building</b> the next version of dermIQ with NHS-connected clinicians</li>
+            <li><b>Shipping</b> backend services for Wavetec&rsquo;s enterprise clients</li>
+            <li><b>Looking for</b> a full-time engineering team in London</li>
+          </ul>
+        </div>
+      </aside>
     </div>
   </section>
 
@@ -174,10 +184,10 @@
   <section class="work" id="work">
     <div class="wrap work__head">
       <div>
-        <p class="eyebrow"><svg class="ualoop" viewBox="-2 -2 32 28" aria-hidden="true"><path pathLength="1" d="M2 0 V17 A6 6 0 0 0 14 17 V24"/><path pathLength="1" d="M14 24 V6 A6 6 0 0 1 26 6 V24"/><path class="ualoop__bar" pathLength="1" d="M14 15 H26"/></svg>Selected work · 2024 to 2026</p>
+        <p class="eyebrow"><svg class="ualoop" viewBox="-2 -2 32 28" aria-hidden="true"><path pathLength="1" d="M2 0 V17 A6 6 0 0 0 14 17 V24"/><path pathLength="1" d="M14 24 V6 A6 6 0 0 1 26 6 V24"/><path class="ualoop__bar" pathLength="1" d="M14 15 H26"/></svg>Selected work · 2025 to 2026</p>
         <h2 class="h2" data-words>Things I&rsquo;ve<br /><em>built.</em></h2>
       </div>
-      <p class="work__note">Three live sites for real clients, and three products of my own that are still in development. Each card says what the problem is and what I built.</p>
+      <p class="work__note">Three live sites for real clients, two products of my own in development, and one prototype. Each card says what the problem is and what I built.</p>
     </div>
 
     <div class="wrap stack" id="stack">
@@ -351,6 +361,7 @@
       <dl class="tldr">
         <div><dt>Role</dt><dd>Software Engineer — full-stack, backend, applied AI</dd></div>
         <div><dt>Where</dt><dd>London, UK · Hybrid, Remote or On-site</dd></div>
+        <div><dt>Right to work</dt><dd>UK, no sponsorship needed · 2 weeks&rsquo; notice</dd></div>
         <div><dt>Experience</dt><dd>3+ years production · distributed systems for HSBC, Samsung Europe, Delta Air Lines &amp; Banorte</dd></div>
         <div><dt>Ownership</dt><dd>Founder of dermIQ (AI skin-lesion triage) and IdeaForge (content ideas from a YouTube channel)</dd></div>
         <div><dt>Built</dt><dd>6 products: 3 live client sites, 2 of my own in development (dermIQ, IdeaForge) and a CaseBridge prototype</dd></div>
