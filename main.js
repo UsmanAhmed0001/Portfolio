@@ -18,7 +18,7 @@
 /* 1. DATA -------------------------------------------------------- */
 const PROJECTS = [
   {
-    id: 'munik', name: 'MUNIK XVII', img: 'images/munik.jpg', url: 'https://munik.iba.edu.pk', live: true,
+    id: 'munik', name: 'MUNIK XVII', img: 'images/munik.jpg', url: 'https://munik.iba.edu.pk', live: true, heavyVideo: true,
     badge: 'Lead developer', when: 'Live · Jan 2027 event',
     pitch: 'The official site for Model United Nations at IBA Karachi — built for a real organising team and served on the university’s own domain.',
     built: [
@@ -387,7 +387,7 @@ PROJECTS.forEach((p, i) => {
       <div class="card__chrome"><i></i><i></i><i></i><span>${host}</span>${p.live ? '<b class="card__live">live</b>' : ''}</div>
       <div class="card__img">
         <div class="fallback">${p.name}</div>
-        <img src="${p.img}" alt="Screenshot of ${p.name}" loading="lazy" onerror="this.remove()" />${p.live ? `<div class="card__frame" data-src="${p.url}" data-title="${p.name} running live"></div>` : ''}
+        <img src="${p.img}" alt="Screenshot of ${p.name}" loading="lazy" onerror="this.remove()" />${p.live ? `<div class="card__frame" data-src="${p.url}" data-title="${p.name} running live"${p.heavyVideo ? ' data-heavy' : ''}></div>` : ''}
       </div>
     </a>`;
   stack.appendChild(card);
@@ -770,13 +770,19 @@ addEventListener('keydown', (e) => {
   });
 })();
 
-/* 17. LIVE PREVIEWS — the real site runs inside the card's browser frame.
-   Rendered at 1440px wide and scaled to fit. Desktop keeps a site loaded once
-   it has started; phones load a site only while its card is on screen and
-   unload it once it is well out of view, so only one or two run at a time. */
+/* 17. LIVE PREVIEWS — the real site runs inside the card's browser frame,
+   rendered at 1440px wide and scaled to fit. A site runs only while its tile
+   is actually visible (on screen and not buried under the next stacked card)
+   and stops as soon as it isn't. Phones run at most one site at a time, the
+   most visible one, because iOS Safari kills tabs that use too much memory. */
 (function livePreviews() {
-  const VW = 1440;
   const phone = !fine || innerWidth < 900;
+  // phones render the site at a narrower desktop width: far less to paint and hold in memory
+  const VW = phone ? 1024 : 1440;
+  const MAX = phone ? 1 : 2;
+  const boxes = $$('.card__frame');
+  if (!boxes.length) return;
+  const cardsAll = $$('.card');
   const fit = (box, f) => {
     const s = box.clientWidth / VW;
     f.style.transform = `scale(${s})`;
@@ -797,25 +803,59 @@ addEventListener('keydown', (e) => {
     f.setAttribute('referrerpolicy', 'no-referrer');
     f.style.width = VW + 'px';
     f.addEventListener('load', () => setTimeout(() => {
+      if (!f.isConnected) return;
       box.classList.add('ready');
       const t = tagOf(box); if (t) t.classList.add('on');
-    }, 700));
+    }, 600));
     box.appendChild(f);
     fit(box, f);
     ro.observe(box);
   }
+  let lastUnload = 0;
   function unload(box) {
     const f = box.querySelector('iframe');
     if (!f) return;
+    lastUnload = performance.now();
     box.classList.remove('ready');
     const t = tagOf(box); if (t) t.classList.remove('on');
-    setTimeout(() => { if (!box.classList.contains('ready')) f.remove(); }, 800);
+    f.src = 'about:blank';               // release the page's memory straight away
+    f.remove();
   }
-  const near = new IntersectionObserver((entries) => entries.forEach((en) => {
-    if (en.isIntersecting) { load(en.target); if (!phone) near.unobserve(en.target); }
-  }), { rootMargin: phone ? '10% 0px' : '100% 0px' });
-  const far = phone ? new IntersectionObserver((entries) => entries.forEach((en) => {
-    if (!en.isIntersecting) unload(en.target);
-  }), { rootMargin: '35% 0px' }) : null;
-  $$('.card__frame').forEach((b) => { near.observe(b); if (far) far.observe(b); });
+  // How much of a tile can actually be seen (0–1): clipped by the viewport
+  // and by any later stacked card sliding over it.
+  function visible(box) {
+    const r = box.getBoundingClientRect();
+    if (!r.height) return 0;
+    let top = Math.max(r.top, 0), bottom = Math.min(r.bottom, innerHeight);
+    const card = box.closest('.card');
+    const idx = cardsAll.indexOf(card);
+    for (let i = idx + 1; i < cardsAll.length; i++) {
+      const t = cardsAll[i].getBoundingClientRect().top;
+      if (t < bottom) bottom = Math.max(top, t);
+    }
+    return Math.max(0, bottom - top) / r.height;
+  }
+  let timer = 0;
+  function update() {
+    const scored = boxes.map((b) => [b, visible(b)]).filter(([, v]) => v >= 0.35)
+      .sort((a, b) => b[1] - a[1]).slice(0, MAX).map(([b]) => b);
+    boxes.forEach((b) => { if (!scored.includes(b)) unload(b); });
+    // phones: give Safari a moment to free the previous site's memory before starting the next
+    const gap = phone ? (boxes.some((b) => b.hasAttribute('data-heavy') && scored.includes(b)) ? 1600 : 1000) : 0;
+    const wait = gap - (performance.now() - lastUnload);
+    if (wait > 0) { clearTimeout(timer); timer = setTimeout(update, wait); return; }
+    scored.forEach(load);
+  }
+  // settle briefly after scrolling stops, so fast flicks don't start sites
+  let last = 0;
+  const schedule = () => {
+    clearTimeout(timer);
+    const now = performance.now();
+    if (now - last > 500) { last = now; update(); }          // keep up during slow, steady scrolling
+    timer = setTimeout(() => { last = performance.now(); update(); }, phone ? 250 : 150);  // and settle when it stops
+  };
+  addEventListener('scroll', schedule, { passive: true });
+  addEventListener('resize', schedule);
+  document.addEventListener('visibilitychange', () => (document.hidden ? boxes.forEach(unload) : schedule()));
+  schedule();
 })();
