@@ -40,6 +40,17 @@ const PROJECTS = [
     stack: ['React', 'TypeScript', 'Tailwind', 'Vercel'],
   },
   {
+    id: 'kreston', name: 'Kreston Estates', img: 'images/krestonEstate.jpg', url: 'https://kreston-estate.vercel.app',
+    badge: 'Lead developer', when: 'Client · live',
+    pitch: 'The website for a London lettings and sales agency, which I build and maintain. Listings, tenants and admin tools sit behind role-aware access.',
+    built: [
+      'React + Vite front end over an Express REST API',
+      'JWT authentication with role-based access control',
+      'SQLite persistence for listings and records',
+    ],
+    stack: ['React', 'Vite', 'Express', 'SQLite', 'JWT'],
+  },
+  {
     id: 'dermiq', name: 'dermIQ', img: 'images/dermIQ.jpg', url: 'https://derm-iq-three.vercel.app',
     badge: 'Founder', when: '2025 — now',
     pitch: 'AI skin-lesion triage. Upload a photo; a fine-tuned vision model returns one of 7 lesion classes with a risk band, so people know how urgently to seek care.',
@@ -52,25 +63,14 @@ const PROJECTS = [
   },
   {
     id: 'ideaforge', name: 'IdeaForge', img: 'images/ideaForge.jpg', url: 'https://idea-forge-liart.vercel.app',
-    badge: 'Solo build', when: 'Product',
-    pitch: 'Pressure-tests startup ideas — turns a one-line pitch into a structured analysis so founders see the weak spots before they build.',
+    badge: 'Founder', when: 'My startup · live',
+    pitch: 'Type in a YouTube channel and get post ideas for YouTube, Instagram, TikTok, LinkedIn and Facebook, grounded in this week’s news and Reddit.',
     built: [
-      'LLM-backed analysis pipeline with structured outputs',
-      'Guided flow from raw idea to an actionable breakdown',
-      'Lightweight Next.js stack, deployed on Vercel',
+      'One input, ideas for five platforms, each written for how that platform works',
+      'Ideas are grounded in what is happening this week: news and Reddit',
+      'LLM-backed generation in a Next.js app on Vercel',
     ],
-    stack: ['Next.js', 'TypeScript', 'LLM API', 'Vercel'],
-  },
-  {
-    id: 'kreston', name: 'Kreston Estates', img: 'images/krestonEstate.jpg', url: 'https://kreston-estate.vercel.app',
-    badge: 'Full-stack', when: 'Client · live',
-    pitch: 'A property-management platform for a lettings business — listings, tenants and admin workflows behind role-aware access.',
-    built: [
-      'React + Vite front end over an Express REST API',
-      'JWT authentication with role-based access control',
-      'SQLite persistence for listings and records',
-    ],
-    stack: ['React', 'Vite', 'Express', 'SQLite', 'JWT'],
+    stack: ['Next.js', 'TypeScript', 'LLM API', 'News + Reddit data', 'Vercel'],
   },
   {
     id: 'casebridge', name: 'CaseBridge', img: 'images/casebridge.jpg', url: 'https://casebridge-beta.vercel.app',
@@ -94,7 +94,7 @@ const SKILLS = [
   { group: 'AI & data', items: {
     'PyTorch': [use('dermiq', 'Fine-tuned ViT classifier, 7 lesion classes'), job('MSc AI · Hull', 'Deep learning coursework & dissertation work')],
     'Vision Transformers': [use('dermiq', 'Fine-tuned on HAM10000 with risk banding')],
-    'LLM APIs': [use('ideaforge', 'Structured idea analysis pipeline')],
+    'LLM APIs': [use('ideaforge', 'Post ideas grounded in news & Reddit')],
     'Hugging Face': [use('dermiq', 'Model hosting + Dockerised Space for inference')],
     'scikit-learn': [job('MSc AI · Hull', 'Classical ML, evaluation & pipelines')],
     'TensorFlow': [job('MSc AI · Hull', 'Deep learning models')],
@@ -102,7 +102,7 @@ const SKILLS = [
     'YOLO': [job('MSc AI · Hull', 'Object detection')],
   }},
   { group: 'Languages', items: {
-    'TypeScript': [use('dermiq', 'Product front end'), use('ideaforge', 'App + API routes'), use('casebridge', 'Typed domain model'), use('southshore', 'Site rebuild')],
+    'TypeScript': [use('dermiq', 'Product front end'), use('ideaforge', 'Next.js app'), use('casebridge', 'Typed domain model'), use('southshore', 'Site rebuild')],
     'Python': [use('dermiq', 'Flask + PyTorch inference API'), job('Wavetec', 'Backend services for enterprise clients')],
     'Java': [job('Wavetec', 'Distributed services for HSBC & Samsung Europe')],
     'C# / .NET': [job('Wavetec', 'Enterprise backend services'), job('Bits and Code', 'Migrated a SaaS product to .NET Core')],
@@ -506,14 +506,14 @@ $('#askClose').addEventListener('click', () => toggleAsk(false));
 new IntersectionObserver(([e]) => askBtn.classList.toggle('away', e.isIntersecting && askPanel.hidden)).observe($('#contact'));
 
 const KB = [
-  { k: ['built', 'projects', 'project', 'portfolio', 'made', 'work'], a: 'Six live products:\n• MUNIK XVII — Model UN site for IBA Karachi\n• SouthShore — design & construction site\n• dermIQ — AI skin-lesion triage (founder)\n• IdeaForge — startup idea validation\n• Kreston Estates — property management\n• CaseBridge — legal case management\nEach has a card in the Work section.' },
+  { k: ['built', 'projects', 'project', 'portfolio', 'made', 'work'], a: 'Six live products:\n• MUNIK XVII — Model UN site for IBA Karachi\n• SouthShore — design & construction company site\n• Kreston Estates — London lettings & sales agency site\n• dermIQ — AI skin-lesion triage (founder)\n• IdeaForge — YouTube channel → post ideas for 5 platforms (founder)\n• CaseBridge — legal case management\nEach has a card in the Work section.' },
   { k: ['open', 'available', 'hire', 'roles', 'role', 'job', 'remote', 'hybrid', 'on-site', 'onsite', 'notice', 'start'], a: 'Yes — Usman is open to full-time software engineering roles, based in London and happy with hybrid, remote or on-site. Fastest route: usmanahmedwork@outlook.com.' },
   { k: ['dermiq', 'derm', 'skin', 'lesion', 'medical', 'health', 'nhs'], a: 'dermIQ is Usman’s own startup. He fine-tuned a Vision Transformer to classify skin photos across 7 lesion classes with a risk band, serves it from a Dockerised Flask + PyTorch API, and shipped the Next.js product himself.' },
   { k: ['stack', 'tech', 'language', 'framework', 'skills', 'tools', 'know'], a: 'Languages: Java, C#/.NET Core, Python, TypeScript, C++, SQL. Backend: Spring Boot, ASP.NET Core, Node/Express, Flask. Frontend: React, Next.js, Tailwind, Blazor. Data: PostgreSQL, Kafka, RabbitMQ. Cloud: AWS, Azure, Docker, Kubernetes, Terraform. AI/ML: PyTorch, TensorFlow, ViT, ResNet, U-Net, YOLO. CMS: Sitecore, Optimizely. The Skills section shows where each one was used.' },
   { k: ['hsbc', 'samsung', 'wavetec', 'enterprise', 'experience', 'years', 'backend', 'distributed', 'kafka', 'bank'], a: 'At Wavetec, Usman builds distributed backend services for HSBC, Samsung Europe, Delta Air Lines and Banorte — event-driven pipelines on Kafka and RabbitMQ, Kubernetes on AWS and Azure, in Java, .NET Core and Python.' },
   { k: ['munik', 'model un', 'iba', 'karachi', 'conference'], a: 'MUNIK XVII is the official site for Model United Nations at IBA Karachi — built for a real organising team and served on the university’s domain, munik.iba.edu.pk.' },
   { k: ['education', 'degree', 'msc', 'master', 'university', 'hull', 'study', 'bsc'], a: 'MSc Artificial Intelligence & Data Science from the University of Hull, awarded with Distinction in 2026, and a BSc in Computer Science from FAST-NUCES on the Dean’s Honours List.' },
-  { k: ['ai', 'ml', 'machine learning', 'model', 'llm', 'pytorch'], a: 'Applied AI runs through his work: training and serving a vision model (dermIQ), and an LLM analysis pipeline in IdeaForge — backed by an MSc in AI with Distinction.' },
+  { k: ['ai', 'ml', 'machine learning', 'model', 'llm', 'pytorch'], a: 'Applied AI runs through his work: training and serving a vision model (dermIQ), and LLM-generated post ideas grounded in news and Reddit in IdeaForge — backed by an MSc in AI with Distinction.' },
   { k: ['contact', 'email', 'reach', 'linkedin', 'cv', 'resume', 'call', 'phone'], a: 'Email usmanahmedwork@outlook.com or LinkedIn (linkedin.com/in/usman--ahmed). The CV is one click away — “CV ↓” in the top bar.' },
   { k: ['why', 'hire him', 'why hire', 'strength', 'different', 'stand out', 'best', 'good'], a: 'Three things in one hire: he’s built production backends for global brands, he’s founded and shipped his own AI product end to end, and he has the MSc depth to back the ML.' },
   { k: ['hi', 'hello', 'hey', 'salam'], a: 'Hi! Ask about Usman’s projects, stack, enterprise experience — or whether he’s open to roles.' },
