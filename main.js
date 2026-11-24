@@ -42,44 +42,44 @@ const PROJECTS = [
   {
     id: 'kreston', name: 'Kreston Estates', img: 'images/krestonEstate.jpg', url: 'https://kreston-estate.vercel.app',
     badge: 'Lead developer', when: 'Client · live',
-    pitch: 'The website for a London lettings and sales agency, which I build and maintain. Listings, tenants and admin tools sit behind role-aware access.',
+    pitch: 'The website for Kreston Estates, an independent lettings, sales and property management agency on Tooting High Street. I build and maintain it.',
     built: [
-      'React + Vite front end over an Express REST API',
-      'JWT authentication with role-based access control',
-      'SQLite persistence for listings and records',
+      'Lettings, sales, services, about and contact pages, all leading to one action: book a free valuation',
+      'Clearly priced service packages and a step-by-step process for landlords',
+      'Trust signals up front: The Property Ombudsman, Client Money Protect and mydeposits',
     ],
-    stack: ['React', 'Vite', 'Express', 'SQLite', 'JWT'],
+    stack: ['React', 'Vite', 'Vercel'],
   },
   {
     id: 'dermiq', name: 'dermIQ', img: 'images/dermIQ.jpg', url: 'https://derm-iq-three.vercel.app',
-    badge: 'Founder', when: '2025 — now',
+    badge: 'Founder', when: '2025 — now', dev: true,
     pitch: 'AI skin-lesion triage. Upload a photo; a fine-tuned vision model returns one of 7 lesion classes with a risk band, so people know how urgently to seek care.',
     built: [
       'Fine-tuned a Vision Transformer on HAM10000, with risk banding on top of raw predictions',
       'Dockerised Flask + PyTorch inference API on Hugging Face Spaces — moved off Railway to run at zero cost',
-      'Next.js + TypeScript product on Vercel, now with NHS-connected clinicians',
+      'Next.js + TypeScript product with a preview on Vercel, developed with NHS-connected clinicians',
     ],
     stack: ['Next.js', 'TypeScript', 'PyTorch', 'ViT', 'Flask', 'Docker'],
   },
   {
     id: 'ideaforge', name: 'IdeaForge', img: 'images/ideaForge.jpg', url: 'https://idea-forge-liart.vercel.app',
-    badge: 'Founder', when: 'My startup · live',
-    pitch: 'Type in a YouTube channel and get post ideas for YouTube, Instagram, TikTok, LinkedIn and Facebook, grounded in this week’s news and Reddit.',
+    badge: 'Founder', when: 'My startup', dev: true,
+    pitch: 'Give it a YouTube channel and it drafts what to post this week: five posts each for YouTube, Instagram, TikTok, LinkedIn and Facebook.',
     built: [
-      'One input, ideas for five platforms, each written for how that platform works',
-      'Ideas are grounded in what is happening this week: news and Reddit',
-      'LLM-backed generation in a Next.js app on Vercel',
+      'Reads the channel’s recent uploads, this week’s news and what people are discussing on Reddit',
+      'Drafts five posts per platform, written in the channel’s own title style',
+      'Previews every draft in the native look of its platform: Reels, TikTok, LinkedIn',
     ],
-    stack: ['Next.js', 'TypeScript', 'LLM API', 'News + Reddit data', 'Vercel'],
+    stack: ['Next.js', 'TypeScript', 'LLM API', 'YouTube + News + Reddit', 'Vercel'],
   },
   {
     id: 'casebridge', name: 'CaseBridge', img: 'images/casebridge.jpg', url: 'https://casebridge-beta.vercel.app',
-    badge: 'Solo build', when: 'Beta',
+    badge: 'Solo build', when: 'Solo project', dev: true,
     pitch: 'Legal case management that keeps cases, documents and deadlines in one place — so small firms stop running matters from inboxes.',
     built: [
       'Typed data model for cases, parties and documents with Prisma',
       'Dense, fast dashboard UI in Next.js',
-      'Live in beta on Vercel',
+      'Preview deployed on Vercel while in development',
     ],
     stack: ['Next.js', 'TypeScript', 'Prisma', 'Vercel'],
   },
@@ -107,12 +107,11 @@ const SKILLS = [
     'Java': [job('Wavetec', 'Distributed services for HSBC & Samsung Europe')],
     'C# / .NET': [job('Wavetec', 'Enterprise backend services'), job('Bits and Code', 'Migrated a SaaS product to .NET Core')],
     'C++': [job('Earlier work', 'Worked extensively in C++')],
-    'SQL': [use('kreston', 'SQLite records'), job('Wavetec', 'Relational data for enterprise services')],
+    'SQL': [job('Wavetec', 'Relational data for enterprise services')],
   }},
   { group: 'Frameworks', items: {
     'Next.js': [use('dermiq', 'Next.js 14 product'), use('ideaforge', 'App router'), use('casebridge', 'Dashboard app')],
-    'React': [use('southshore', 'Site rebuild'), use('kreston', 'React + Vite front end'), job('Bits and Code', 'Blazor → React migration')],
-    'Node / Express': [use('kreston', 'REST API with JWT auth')],
+    'React': [use('southshore', 'Site rebuild'), use('kreston', 'React + Vite site'), job('Bits and Code', 'Blazor → React migration')],
     'Flask': [use('dermiq', 'Inference API')],
     'Spring Boot': [job('Wavetec', 'Java services for enterprise clients')],
     'ASP.NET Core': [job('Wavetec', '.NET services'), job('Bits and Code', 'SaaS backend on .NET Core')],
@@ -131,7 +130,7 @@ const SKILLS = [
     'Kubernetes': [job('Wavetec', 'Deployments on AWS & Azure')],
     'Terraform': [job('Wavetec', 'Infrastructure as code modules')],
     'AWS / Azure': [job('Wavetec', 'Production environments for enterprise clients')],
-    'Vercel': PROJECTS.map((p) => use(p.id, 'Deployed & live')),
+    'Vercel': PROJECTS.map((p) => use(p.id, p.dev ? 'Preview deployment' : 'Deployed & live')),
   }},
   { group: 'CMS', items: {
     'Sitecore': [job('Ovrlod', 'Enterprise builds for City Walk, The Beach JBR')],
@@ -265,7 +264,7 @@ setInterval(tickClocks, 20000);
 // Depth parallax: name drifts against the portrait (pointer + scroll)
 (function parallax() {
   if (calm) return;
-  const name = $('#heroName'), me = $('#heroMe');
+  const name = $('#heroName'), me = $('#heroMe') || document.createElement('div');
   let px = 0, py = 0, tx = 0, ty = 0;
   if (fine) addEventListener('pointermove', (e) => { tx = (e.clientX / innerWidth - 0.5); ty = (e.clientY / innerHeight - 0.5); });
   (function loop() {
@@ -371,14 +370,14 @@ PROJECTS.forEach((p, i) => {
   card.style.setProperty('--i', i);
   card.innerHTML = `
     <div class="card__info">
-      <div class="card__top"><span class="card__badge">${p.badge}</span><span>${String(i + 1).padStart(2, '0')} / ${total} · ${p.when}</span></div>
+      <div class="card__top"><span class="card__badge">${p.badge}</span><span>${p.dev ? '<i class="card__dev">In development</i>' : ''}${String(i + 1).padStart(2, '0')} / ${total} · ${p.when}</span></div>
       <h3 class="card__name">${p.name}</h3>
       <p class="card__pitch">${p.pitch}</p>
       <ul class="card__built">${p.built.map((b) => `<li>${b}</li>`).join('')}</ul>
       <div class="card__foot">
         <div class="chips">${p.stack.map((s) => `<span>${s}</span>`).join('')}</div>
         <div class="card__actions">
-          <a class="btn btn--acc" href="${p.url}" target="_blank" rel="noopener">Visit live site ↗</a>
+          <a class="btn btn--acc" href="${p.url}" target="_blank" rel="noopener">${p.dev ? 'See the preview ↗' : 'Visit live site ↗'}</a>
         </div>
       </div>
     </div>
@@ -506,16 +505,16 @@ $('#askClose').addEventListener('click', () => toggleAsk(false));
 new IntersectionObserver(([e]) => askBtn.classList.toggle('away', e.isIntersecting && askPanel.hidden)).observe($('#contact'));
 
 const KB = [
-  { k: ['built', 'projects', 'project', 'portfolio', 'made', 'work'], a: 'Six live products:\n• MUNIK XVII — Model UN site for IBA Karachi\n• SouthShore — design & construction company site\n• Kreston Estates — London lettings & sales agency site\n• dermIQ — AI skin-lesion triage (founder)\n• IdeaForge — YouTube channel → post ideas for 5 platforms (founder)\n• CaseBridge — legal case management\nEach has a card in the Work section.' },
+  { k: ['built', 'projects', 'project', 'portfolio', 'made', 'work'], a: 'Six products — three live client sites and three of his own in development:\n• MUNIK XVII — Model UN site for IBA Karachi\n• SouthShore — design & construction company site\n• Kreston Estates — Tooting lettings, sales & property management agency site\n• dermIQ — AI skin-lesion triage (founder, in development)\n• IdeaForge — give it a YouTube channel, get this week’s posts for 5 platforms (founder, in development)\n• CaseBridge — legal case management (in development)\nEach has a card in the Work section.' },
   { k: ['open', 'available', 'hire', 'roles', 'role', 'job', 'remote', 'hybrid', 'on-site', 'onsite', 'notice', 'start'], a: 'Yes — Usman is open to full-time software engineering roles, based in London and happy with hybrid, remote or on-site. Fastest route: usmanahmedwork@outlook.com.' },
-  { k: ['dermiq', 'derm', 'skin', 'lesion', 'medical', 'health', 'nhs'], a: 'dermIQ is Usman’s own startup. He fine-tuned a Vision Transformer to classify skin photos across 7 lesion classes with a risk band, serves it from a Dockerised Flask + PyTorch API, and shipped the Next.js product himself.' },
+  { k: ['dermiq', 'derm', 'skin', 'lesion', 'medical', 'health', 'nhs'], a: 'dermIQ is Usman’s own startup, currently in development. He fine-tuned a Vision Transformer to classify skin photos across 7 lesion classes with a risk band, serves it from a Dockerised Flask + PyTorch API, and is building the Next.js product himself.' },
   { k: ['stack', 'tech', 'language', 'framework', 'skills', 'tools', 'know'], a: 'Languages: Java, C#/.NET Core, Python, TypeScript, C++, SQL. Backend: Spring Boot, ASP.NET Core, Node/Express, Flask. Frontend: React, Next.js, Tailwind, Blazor. Data: PostgreSQL, Kafka, RabbitMQ. Cloud: AWS, Azure, Docker, Kubernetes, Terraform. AI/ML: PyTorch, TensorFlow, ViT, ResNet, U-Net, YOLO. CMS: Sitecore, Optimizely. The Skills section shows where each one was used.' },
   { k: ['hsbc', 'samsung', 'wavetec', 'enterprise', 'experience', 'years', 'backend', 'distributed', 'kafka', 'bank'], a: 'At Wavetec, Usman builds distributed backend services for HSBC, Samsung Europe, Delta Air Lines and Banorte — event-driven pipelines on Kafka and RabbitMQ, Kubernetes on AWS and Azure, in Java, .NET Core and Python.' },
   { k: ['munik', 'model un', 'iba', 'karachi', 'conference'], a: 'MUNIK XVII is the official site for Model United Nations at IBA Karachi — built for a real organising team and served on the university’s domain, munik.iba.edu.pk.' },
   { k: ['education', 'degree', 'msc', 'master', 'university', 'hull', 'study', 'bsc'], a: 'MSc Artificial Intelligence & Data Science from the University of Hull, awarded with Distinction in 2026, and a BSc in Computer Science from FAST-NUCES on the Dean’s Honours List.' },
   { k: ['ai', 'ml', 'machine learning', 'model', 'llm', 'pytorch'], a: 'Applied AI runs through his work: training and serving a vision model (dermIQ), and LLM-generated post ideas grounded in news and Reddit in IdeaForge — backed by an MSc in AI with Distinction.' },
   { k: ['contact', 'email', 'reach', 'linkedin', 'cv', 'resume', 'call', 'phone'], a: 'Email usmanahmedwork@outlook.com or LinkedIn (linkedin.com/in/usman--ahmed). The CV is one click away — “CV ↓” in the top bar.' },
-  { k: ['why', 'hire him', 'why hire', 'strength', 'different', 'stand out', 'best', 'good'], a: 'Three things in one hire: he’s built production backends for global brands, he’s founded and shipped his own AI product end to end, and he has the MSc depth to back the ML.' },
+  { k: ['why', 'hire him', 'why hire', 'strength', 'different', 'stand out', 'best', 'good'], a: 'Three things in one hire: he’s built production backends for global brands, he’s founded his own AI product and is building it end to end, and he has the MSc depth to back the ML.' },
   { k: ['hi', 'hello', 'hey', 'salam'], a: 'Hi! Ask about Usman’s projects, stack, enterprise experience — or whether he’s open to roles.' },
 ];
 function answer(q) {

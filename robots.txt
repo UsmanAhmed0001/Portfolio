@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portfolio-blue-two-67.vercel.app/sitemap.xml

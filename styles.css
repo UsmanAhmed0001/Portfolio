@@ -773,3 +773,22 @@ html:not([data-theme="light"]) .ask .ink .ink__acc { stroke: #5b7d00; }
   28%, 72%  { stroke-dashoffset: 0; }
   100%      { stroke-dashoffset: -1; }
 }
+
+/* 23. In-development tag on project cards */
+.card__dev { font-style: normal; display: inline-block; margin-right: 10px; padding: 4px 9px; border: 1px dashed var(--line-2); border-radius: 999px; color: var(--fg-2); }
+
+/* 24. Smaller portrait — present, not dominant */
+.hero__me { height: min(54svh, 600px); }
+@media (max-width: 860px) {
+  .hero__me { width: min(52vw, 280px); margin-top: -12vw; }
+  .hero__intro { margin-top: -4px; }
+}
+
+/* 25. Outline name uses a static Geist cut: the variable font's overlapping
+   contours show through -webkit-text-stroke (stray marks inside the H). */
+@font-face { font-family: "Geist Static"; src: url("fonts/Geist-Black.woff2") format("woff2"); font-weight: 800 900; font-display: swap; }
+@font-face { font-family: "Geist Static"; src: url("fonts/Geist-Bold.woff2") format("woff2"); font-weight: 600 700; font-display: swap; }
+.hero__line--outline, .bigname__word { font-family: "Geist Static", var(--sans); }
+@media (max-width: 860px) {
+  .hero__me { height: auto; margin-top: -10vw; }
+}
