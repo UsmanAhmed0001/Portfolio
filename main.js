@@ -40,7 +40,7 @@ const PROJECTS = [
     stack: ['React', 'Vite', 'Tailwind', 'Framer Motion'],
   },
   {
-    id: 'kreston', name: 'Kreston Estates', img: 'images/krestonEstate.jpg', url: 'https://kreston-estate.vercel.app',
+    id: 'kreston', name: 'Kreston Estates', img: 'images/krestonEstate.jpg', url: 'https://kreston-estate.vercel.app', live: true,
     badge: 'Lead developer', when: 'Client · live',
     pitch: 'The website for Kreston Estates, an independent lettings, sales and property management agency on Tooting High Street. I build and maintain it.',
     built: [
@@ -51,7 +51,7 @@ const PROJECTS = [
     stack: ['React', 'Vite', 'Vercel'],
   },
   {
-    id: 'dermiq', name: 'dermIQ', img: 'images/dermIQ.jpg', url: 'https://derm-iq-three.vercel.app',
+    id: 'dermiq', name: 'dermIQ', img: 'images/dermIQ.jpg', url: 'https://derm-iq-three.vercel.app', live: true,
     badge: 'Founder', when: '2025 — now', dev: true,
     pitch: 'AI skin-lesion triage. Upload a photo; a fine-tuned vision model returns one of 7 lesion classes with a risk band, so people know how urgently to seek care.',
     built: [
@@ -62,7 +62,7 @@ const PROJECTS = [
     stack: ['Next.js', 'TypeScript', 'PyTorch', 'ViT', 'Flask', 'Docker'],
   },
   {
-    id: 'ideaforge', name: 'IdeaForge', img: 'images/ideaForge.jpg', url: 'https://idea-forge-liart.vercel.app',
+    id: 'ideaforge', name: 'IdeaForge', img: 'images/ideaForge.jpg', url: 'https://idea-forge-liart.vercel.app', live: true,
     badge: 'Founder', when: 'My startup', dev: true,
     pitch: 'Give it a YouTube channel and it drafts what to post this week: five posts each for YouTube, Instagram, TikTok, LinkedIn and Facebook.',
     built: [
@@ -73,7 +73,7 @@ const PROJECTS = [
     stack: ['Next.js', 'TypeScript', 'LLM API', 'YouTube + News + Reddit', 'Vercel'],
   },
   {
-    id: 'casebridge', name: 'CaseBridge', img: 'images/casebridge.jpg', url: 'https://casebridge-beta.vercel.app',
+    id: 'casebridge', name: 'CaseBridge', img: 'images/casebridge.jpg', url: 'https://casebridge-beta.vercel.app', live: true,
     badge: 'Prototype', when: 'Solo project', dev: true, devLabel: 'Prototype',
     pitch: 'A clickable prototype of a legal case-management tool: intake, a dashboard and case views, built to test the workflow before building the real backend.',
     built: [
@@ -384,10 +384,10 @@ PROJECTS.forEach((p, i) => {
       </div>
     </div>
     <a class="card__shot" href="${p.url}" target="_blank" rel="noopener" aria-label="Open ${p.name} live site">
-      <div class="card__chrome"><i></i><i></i><i></i><span>${host}</span></div>
+      <div class="card__chrome"><i></i><i></i><i></i><span>${host}</span>${p.live ? '<b class="card__live">live</b>' : ''}</div>
       <div class="card__img">
         <div class="fallback">${p.name}</div>
-        <img src="${p.img}" alt="Screenshot of ${p.name}" loading="lazy" onerror="this.remove()" />
+        <img src="${p.img}" alt="Screenshot of ${p.name}" loading="lazy" onerror="this.remove()" />${p.live ? `<div class="card__frame" data-src="${p.url}" data-title="${p.name} running live"></div>` : ''}
       </div>
     </a>`;
   stack.appendChild(card);
@@ -757,4 +757,51 @@ addEventListener('keydown', (e) => {
     const host = svg.closest('.ink-host');
     if (host) host.addEventListener('mouseenter', () => draw(svg));
   });
+})();
+
+/* 16. Glass card: the highlight follows the pointer like light on glass */
+(function glass() {
+  const card = $('.hero__status');
+  if (!card || !fine) return;
+  card.addEventListener('pointermove', (e) => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--gx', ((e.clientX - r.left) / r.width) * 100 + '%');
+    card.style.setProperty('--gy', ((e.clientY - r.top) / r.height) * 100 + '%');
+  });
+})();
+
+/* 17. LIVE PREVIEWS — the real site runs inside the card's browser frame.
+   Desktop only (phones keep the lightweight screenshot). Each site loads
+   when its card is ~1 screen away, rendered at 1440px wide and scaled to fit. */
+(function livePreviews() {
+  if (!fine || innerWidth < 900) return;
+  const VW = 1440;
+  const fit = (box, f) => {
+    const s = box.clientWidth / VW;
+    f.style.transform = `scale(${s})`;
+    f.style.height = box.clientHeight / s + 'px';
+  };
+  const ro = new ResizeObserver((entries) => entries.forEach((e) => {
+    const f = e.target.querySelector('iframe'); if (f) fit(e.target, f);
+  }));
+  const io2 = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (!en.isIntersecting) return;
+      const box = en.target; io2.unobserve(box);
+      const f = document.createElement('iframe');
+      f.src = box.dataset.src;
+      f.title = box.dataset.title;
+      f.loading = 'lazy';
+      f.tabIndex = -1;
+      f.setAttribute('aria-hidden', 'true');
+      f.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+      f.setAttribute('referrerpolicy', 'no-referrer');
+      f.style.width = VW + 'px';
+      f.addEventListener('load', () => setTimeout(() => box.classList.add('ready'), 700));
+      box.appendChild(f);
+      fit(box, f);
+      ro.observe(box);
+    });
+  }, { rootMargin: '100% 0px' });
+  $$('.card__frame').forEach((b) => io2.observe(b));
 })();
