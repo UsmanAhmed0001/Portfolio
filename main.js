@@ -37,7 +37,7 @@ const PROJECTS = [
       'Image-heavy galleries tuned to load fast on mobile',
       'Content structure the client can keep extending',
     ],
-    stack: ['React', 'TypeScript', 'Tailwind', 'Vercel'],
+    stack: ['React', 'Vite', 'Tailwind', 'Framer Motion'],
   },
   {
     id: 'kreston', name: 'Kreston Estates', img: 'images/krestonEstate.jpg', url: 'https://kreston-estate.vercel.app',
@@ -74,14 +74,14 @@ const PROJECTS = [
   },
   {
     id: 'casebridge', name: 'CaseBridge', img: 'images/casebridge.jpg', url: 'https://casebridge-beta.vercel.app',
-    badge: 'Solo build', when: 'Solo project', dev: true,
-    pitch: 'Legal case management that keeps cases, documents and deadlines in one place — so small firms stop running matters from inboxes.',
+    badge: 'Prototype', when: 'Solo project', dev: true, devLabel: 'Prototype',
+    pitch: 'A clickable prototype of a legal case-management tool: intake, a dashboard and case views, built to test the workflow before building the real backend.',
     built: [
-      'Typed data model for cases, parties and documents with Prisma',
-      'Dense, fast dashboard UI in Next.js',
-      'Preview deployed on Vercel while in development',
+      'Clickable React prototype of the intake, dashboard and case views',
+      'Used to test the case workflow with no backend yet, so nothing is saved',
+      'Next step: a real backend so new cases persist',
     ],
-    stack: ['Next.js', 'TypeScript', 'Prisma', 'Vercel'],
+    stack: ['React', 'Create React App', 'Vercel'],
   },
 
 ];
@@ -102,7 +102,7 @@ const SKILLS = [
     'YOLO': [job('MSc AI · Hull', 'Object detection')],
   }},
   { group: 'Languages', items: {
-    'TypeScript': [use('dermiq', 'Product front end'), use('ideaforge', 'Next.js app'), use('casebridge', 'Typed domain model'), use('southshore', 'Site rebuild')],
+    'TypeScript': [use('dermiq', 'Product front end'), use('ideaforge', 'Next.js app')],
     'Python': [use('dermiq', 'Flask + PyTorch inference API'), job('Wavetec', 'Backend services for enterprise clients')],
     'Java': [job('Wavetec', 'Distributed services for HSBC & Samsung Europe')],
     'C# / .NET': [job('Wavetec', 'Enterprise backend services'), job('Bits and Code', 'Migrated a SaaS product to .NET Core')],
@@ -110,8 +110,8 @@ const SKILLS = [
     'SQL': [job('Wavetec', 'Relational data for enterprise services')],
   }},
   { group: 'Frameworks', items: {
-    'Next.js': [use('dermiq', 'Next.js 14 product'), use('ideaforge', 'App router'), use('casebridge', 'Dashboard app')],
-    'React': [use('southshore', 'Site rebuild'), use('kreston', 'React + Vite site'), job('Bits and Code', 'Blazor → React migration')],
+    'Next.js': [use('dermiq', 'Next.js 14 product'), use('ideaforge', 'App router')],
+    'React': [use('southshore', 'Site rebuild'), use('casebridge', 'Clickable prototype'), use('kreston', 'React + Vite site'), job('Bits and Code', 'Blazor → React migration')],
     'Flask': [use('dermiq', 'Inference API')],
     'Spring Boot': [job('Wavetec', 'Java services for enterprise clients')],
     'ASP.NET Core': [job('Wavetec', '.NET services'), job('Bits and Code', 'SaaS backend on .NET Core')],
@@ -120,7 +120,6 @@ const SKILLS = [
     'Blazor': [job('Bits and Code', 'Legacy front end, migrated to React')],
   }},
   { group: 'Data & messaging', items: {
-    'Prisma': [use('casebridge', 'Cases, parties, documents')],
     'PostgreSQL': [job('Personal projects', 'Hosted on Neon')],
     'Kafka': [job('Wavetec', 'Event-driven pipelines for enterprise clients')],
     'RabbitMQ': [job('Wavetec', 'Queue-based service messaging')],
@@ -272,9 +271,12 @@ setInterval(tickClocks, 20000);
     const s = Math.min(scrollY, innerHeight);
     if (desktop()) {
       name.style.transform = `translate3d(${px * -24}px, ${py * -14 + s * 0.35}px, 0)`;
-      me.style.transform = `translate3d(calc(-50% + ${px * 16}px), ${py * 8 + s * 0.12}px, 0)`;
+      me.style.transform = `translate3d(${px * 16}px, ${py * 8 + s * 0.12}px, 0)`;
     } else {
-      name.style.transform = ''; me.style.transform = '';
+      // phones: vertical scroll depth only — the name drifts up slower than the page
+      name.style.transform = `translate3d(0, ${s * 0.22}px, 0)`;
+      name.style.opacity = String(Math.max(0, 1 - s / (innerHeight * 0.9)));
+      me.style.transform = `translate3d(0, ${s * 0.06}px, 0)`;
     }
     requestAnimationFrame(loop);
   })();
@@ -370,14 +372,14 @@ PROJECTS.forEach((p, i) => {
   card.style.setProperty('--i', i);
   card.innerHTML = `
     <div class="card__info">
-      <div class="card__top"><span class="card__badge">${p.badge}</span><span>${p.dev ? '<i class="card__dev">In development</i>' : ''}${String(i + 1).padStart(2, '0')} / ${total} · ${p.when}</span></div>
+      <div class="card__top"><span class="card__badge">${p.badge}</span><span>${p.dev ? `<i class="card__dev">${p.devLabel || 'In development'}</i>` : ''}${String(i + 1).padStart(2, '0')} / ${total} · ${p.when}</span></div>
       <h3 class="card__name">${p.name}</h3>
       <p class="card__pitch">${p.pitch}</p>
       <ul class="card__built">${p.built.map((b) => `<li>${b}</li>`).join('')}</ul>
       <div class="card__foot">
         <div class="chips">${p.stack.map((s) => `<span>${s}</span>`).join('')}</div>
         <div class="card__actions">
-          <a class="btn btn--acc" href="${p.url}" target="_blank" rel="noopener">${p.dev ? 'See the preview ↗' : 'Visit live site ↗'}</a>
+          <a class="btn btn--acc" href="${p.url}" target="_blank" rel="noopener">${p.devLabel ? 'Open the prototype ↗' : p.dev ? 'See the preview ↗' : 'Visit live site ↗'}</a>
         </div>
       </div>
     </div>
@@ -405,7 +407,18 @@ stack.appendChild(cta);
 // Scale cards back as the next one slides over them (desktop sticky only)
 const cards = $$('.card', stack);
 function stackFx() {
-  if (!desktop() || reduced) { cards.forEach((c) => (c.style.transform = c.style.filter = '')); return; }
+  if (!desktop()) {
+    const vh = innerHeight;
+    cards.forEach((c) => {
+      const t = c.getBoundingClientRect().top;
+      const p = clamp((vh - t) / (vh * 0.45), 0, 1);           // 0 when just below the fold, 1 once well in
+      c.style.transform = `translateY(${(1 - p) * 48}px) scale(${0.93 + p * 0.07})`;
+      c.style.opacity = String(0.35 + p * 0.65);
+      c.style.filter = '';
+    });
+    return;
+  }
+  cards.forEach((c) => (c.style.opacity = ''));
   cards.forEach((c, i) => {
     const next = cards[i + 1];
     if (!next) return;
@@ -435,12 +448,12 @@ picker.innerHTML = SKILLS.map((g) => `
   <div class="skills__group">
     <h3>${g.group}</h3>
     <div class="skills__chips">
-      ${Object.entries(g.items).map(([k, v]) => `<button class="skill" type="button" role="tab" aria-selected="false" data-skill="${k}">${k}<small>${v.length}</small></button>`).join('')}
+      ${Object.entries(g.items).map(([k, v]) => `<button class="skill" type="button" aria-pressed="false" data-skill="${k}">${k}<small>${v.length}</small></button>`).join('')}
     </div>
   </div>`).join('');
 const ALL = Object.assign({}, ...SKILLS.map((g) => g.items));
 function showSkill(name, animate = true) {
-  $$('.skill', picker).forEach((b) => b.setAttribute('aria-selected', String(b.dataset.skill === name)));
+  $$('.skill', picker).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.skill === name)));
   const rows = ALL[name];
   $('#rcSkill').textContent = name;
   $('#rcNo').textContent = '#' + String(receiptNo++).padStart(4, '0');
@@ -456,16 +469,16 @@ showSkill('TypeScript', false);
 const tldr = $('#tldr');
 let lastFocus = null;
 function openLayer(layer) { lastFocus = document.activeElement; layer.hidden = false; document.body.style.overflow = 'hidden'; $('.x', layer).focus(); }
-function closeLayer(layer) { layer.hidden = true; document.body.style.overflow = ''; if (lastFocus) lastFocus.focus(); }
-$('#tldrOpen').addEventListener('click', () => openLayer(tldr));
+function closeLayer(layer) { $('#tldrOpen').setAttribute('aria-expanded', 'false'); layer.hidden = true; document.body.style.overflow = ''; if (lastFocus) lastFocus.focus(); }
+$('#tldrOpen').addEventListener('click', () => { openLayer(tldr); $('#tldrOpen').setAttribute('aria-expanded', 'true'); });
 $$('[data-close]', tldr).forEach((b) => b.addEventListener('click', () => closeLayer(tldr)));
 $('#copySummary').addEventListener('click', () => {
   const lines = $$('.tldr div').map((d) => `${$('dt', d).textContent}: ${$('dd', d).textContent}`);
-  copy(`Usman Ahmed — Software Engineer\n${lines.join('\n')}\nusmanahmedwork@outlook.com · linkedin.com/in/usman--ahmed`, 'Summary copied');
+  copy(`Usman Ahmed — Software Engineer\n${lines.join('\n')}\nahmedusman0001@outlook.com · linkedin.com/in/usman--ahmed`, 'Summary copied');
 });
 
 /* 10. CONTACT ---------------------------------------------------- */
-$('#copyEmail').addEventListener('click', () => copy('usmanahmedwork@outlook.com', 'Email copied'));
+$('#copyEmail').addEventListener('click', () => copy('ahmedusman0001@outlook.com', 'Email copied'));
 $('#contactForm').addEventListener('submit', (e) => {
   e.preventDefault();
   const f = e.target;
@@ -473,7 +486,7 @@ $('#contactForm').addEventListener('submit', (e) => {
   if (!msg) { f.msg.focus(); toast('Add a line about the role first'); return; }
   const subject = `Role${company ? ' at ' + company : ''} — ${name || 'hello'}`;
   const body = `Hi Usman,\n\n${msg}\n\n— ${name}${company ? ', ' + company : ''}`;
-  location.href = `mailto:usmanahmedwork@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  location.href = `mailto:ahmedusman0001@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 });
 
 /* 11. FOOTER NAME ------------------------------------------------ */
@@ -505,26 +518,32 @@ $('#askClose').addEventListener('click', () => toggleAsk(false));
 new IntersectionObserver(([e]) => askBtn.classList.toggle('away', e.isIntersecting && askPanel.hidden)).observe($('#contact'));
 
 const KB = [
-  { k: ['built', 'projects', 'project', 'portfolio', 'made', 'work'], a: 'Six products — three live client sites and three of his own in development:\n• MUNIK XVII — Model UN site for IBA Karachi\n• SouthShore — design & construction company site\n• Kreston Estates — Tooting lettings, sales & property management agency site\n• dermIQ — AI skin-lesion triage (founder, in development)\n• IdeaForge — give it a YouTube channel, get this week’s posts for 5 platforms (founder, in development)\n• CaseBridge — legal case management (in development)\nEach has a card in the Work section.' },
-  { k: ['open', 'available', 'hire', 'roles', 'role', 'job', 'remote', 'hybrid', 'on-site', 'onsite', 'notice', 'start'], a: 'Yes — Usman is open to full-time software engineering roles, based in London and happy with hybrid, remote or on-site. Fastest route: usmanahmedwork@outlook.com.' },
+  { k: ['built', 'projects', 'project', 'portfolio', 'made', 'work'], a: 'Six products — three live client sites, two of his own in development and one prototype:\n• MUNIK XVII — Model UN site for IBA Karachi\n• SouthShore — design & construction company site\n• Kreston Estates — Tooting lettings, sales & property management agency site\n• dermIQ — AI skin-lesion triage (founder, in development)\n• IdeaForge — give it a YouTube channel, get this week’s posts for 5 platforms (founder, in development)\n• CaseBridge — clickable prototype of a legal case-management tool\nEach has a card in the Work section.' },
+  { k: ['salary', 'salary expectation', 'compensation', 'pay', 'paid', 'rate', 'expectations'], a: 'Usman prefers to talk about salary once he knows more about the role and team. Email ahmedusman0001@outlook.com and he’ll reply directly.' },
+  { k: ['sponsorship', 'sponsor', 'visa', 'right to work', 'work permit', 'eligible'], a: 'That’s best confirmed with Usman directly, so you get an exact answer. Email ahmedusman0001@outlook.com.' },
+  { k: ['notice', 'notice period', 'start date', 'when can he start', 'availability'], a: 'Usman can confirm his notice period and earliest start date directly. Email ahmedusman0001@outlook.com.' },
+  { k: ['open', 'available', 'hire', 'roles', 'role', 'job', 'remote', 'hybrid', 'on-site', 'onsite', 'start'], a: 'Yes — Usman is open to full-time software engineering roles, based in London and happy with hybrid, remote or on-site. Fastest route: ahmedusman0001@outlook.com.' },
   { k: ['dermiq', 'derm', 'skin', 'lesion', 'medical', 'health', 'nhs'], a: 'dermIQ is Usman’s own startup, currently in development. He fine-tuned a Vision Transformer to classify skin photos across 7 lesion classes with a risk band, serves it from a Dockerised Flask + PyTorch API, and is building the Next.js product himself.' },
   { k: ['stack', 'tech', 'language', 'framework', 'skills', 'tools', 'know'], a: 'Languages: Java, C#/.NET Core, Python, TypeScript, C++, SQL. Backend: Spring Boot, ASP.NET Core, Node/Express, Flask. Frontend: React, Next.js, Tailwind, Blazor. Data: PostgreSQL, Kafka, RabbitMQ. Cloud: AWS, Azure, Docker, Kubernetes, Terraform. AI/ML: PyTorch, TensorFlow, ViT, ResNet, U-Net, YOLO. CMS: Sitecore, Optimizely. The Skills section shows where each one was used.' },
   { k: ['hsbc', 'samsung', 'wavetec', 'enterprise', 'experience', 'years', 'backend', 'distributed', 'kafka', 'bank'], a: 'At Wavetec, Usman builds distributed backend services for HSBC, Samsung Europe, Delta Air Lines and Banorte — event-driven pipelines on Kafka and RabbitMQ, Kubernetes on AWS and Azure, in Java, .NET Core and Python.' },
   { k: ['munik', 'model un', 'iba', 'karachi', 'conference'], a: 'MUNIK XVII is the official site for Model United Nations at IBA Karachi — built for a real organising team and served on the university’s domain, munik.iba.edu.pk.' },
   { k: ['education', 'degree', 'msc', 'master', 'university', 'hull', 'study', 'bsc'], a: 'MSc Artificial Intelligence & Data Science from the University of Hull, awarded with Distinction in 2026, and a BSc in Computer Science from FAST-NUCES on the Dean’s Honours List.' },
   { k: ['ai', 'ml', 'machine learning', 'model', 'llm', 'pytorch'], a: 'Applied AI runs through his work: training and serving a vision model (dermIQ), and LLM-generated post ideas grounded in news and Reddit in IdeaForge — backed by an MSc in AI with Distinction.' },
-  { k: ['contact', 'email', 'reach', 'linkedin', 'cv', 'resume', 'call', 'phone'], a: 'Email usmanahmedwork@outlook.com or LinkedIn (linkedin.com/in/usman--ahmed). The CV is one click away — “CV ↓” in the top bar.' },
+  { k: ['contact', 'email', 'reach', 'linkedin', 'cv', 'resume', 'call', 'phone'], a: 'Email ahmedusman0001@outlook.com or LinkedIn (linkedin.com/in/usman--ahmed). The CV is one click away — “CV ↓” in the top bar.' },
   { k: ['why', 'hire him', 'why hire', 'strength', 'different', 'stand out', 'best', 'good'], a: 'Three things in one hire: he’s built production backends for global brands, he’s founded his own AI product and is building it end to end, and he has the MSc depth to back the ML.' },
   { k: ['hi', 'hello', 'hey', 'salam'], a: 'Hi! Ask about Usman’s projects, stack, enterprise experience — or whether he’s open to roles.' },
 ];
+const NOT_IN_STACK = ['go', 'golang', 'rust', 'kotlin', 'swift', 'ruby', 'rails', 'php', 'laravel', 'scala', 'elixir', 'haskell', 'angular', 'vue', 'svelte', 'django', 'flutter', 'dart', 'perl'];
 function answer(q) {
   const s = q.toLowerCase();
+  const miss = NOT_IN_STACK.find((t) => new RegExp(`\\b${t}\\b`).test(s));
+  if (miss) return `${miss[0].toUpperCase() + miss.slice(1)} isn’t one he lists. His languages are Java, C#/.NET, Python, TypeScript, C++ and SQL — the Skills section shows where he’s used each.`;
   let best = null, score = 0;
   KB.forEach((e) => {
-    const n = e.k.reduce((acc, k) => acc + (new RegExp(`\\b${k.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}`).test(s) ? k.length : 0), 0);
+    const n = e.k.reduce((acc, k) => acc + (new RegExp(`\\b${k.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`).test(s) ? k.length : 0), 0);
     if (n > score) { score = n; best = e; }
   });
-  return best ? best.a : 'I only know what’s in this portfolio — try his projects, stack or experience, or email usmanahmedwork@outlook.com.';
+  return best ? best.a : 'I only know what’s in this portfolio — try his projects, stack or experience, or email ahmedusman0001@outlook.com.';
 }
 function bubble(text, who) {
   const empty = $('.askp__empty', askLog);
