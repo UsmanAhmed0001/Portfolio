@@ -875,3 +875,7 @@ html[data-theme="light"] .hero__status .status__row span { color: rgba(13, 13, 1
 .card__frame.ready { opacity: 1; }
 .card__frame iframe { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; pointer-events: none; background: #fff; }
 .card__live { margin-left: auto; font: 500 12px var(--mono); color: var(--acc-text); letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* 30. "LIVE" only appears once the site is actually running in the frame */
+.card__live { opacity: 0; transition: opacity 0.4s; }
+.card__live.on { opacity: 1; }

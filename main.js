@@ -771,11 +771,12 @@ addEventListener('keydown', (e) => {
 })();
 
 /* 17. LIVE PREVIEWS — the real site runs inside the card's browser frame.
-   Desktop only (phones keep the lightweight screenshot). Each site loads
-   when its card is ~1 screen away, rendered at 1440px wide and scaled to fit. */
+   Rendered at 1440px wide and scaled to fit. Desktop keeps a site loaded once
+   it has started; phones load a site only while its card is on screen and
+   unload it once it is well out of view, so only one or two run at a time. */
 (function livePreviews() {
-  if (!fine || innerWidth < 900) return;
   const VW = 1440;
+  const phone = !fine || innerWidth < 900;
   const fit = (box, f) => {
     const s = box.clientWidth / VW;
     f.style.transform = `scale(${s})`;
@@ -784,24 +785,37 @@ addEventListener('keydown', (e) => {
   const ro = new ResizeObserver((entries) => entries.forEach((e) => {
     const f = e.target.querySelector('iframe'); if (f) fit(e.target, f);
   }));
-  const io2 = new IntersectionObserver((entries) => {
-    entries.forEach((en) => {
-      if (!en.isIntersecting) return;
-      const box = en.target; io2.unobserve(box);
-      const f = document.createElement('iframe');
-      f.src = box.dataset.src;
-      f.title = box.dataset.title;
-      f.loading = 'lazy';
-      f.tabIndex = -1;
-      f.setAttribute('aria-hidden', 'true');
-      f.setAttribute('sandbox', 'allow-scripts allow-same-origin');
-      f.setAttribute('referrerpolicy', 'no-referrer');
-      f.style.width = VW + 'px';
-      f.addEventListener('load', () => setTimeout(() => box.classList.add('ready'), 700));
-      box.appendChild(f);
-      fit(box, f);
-      ro.observe(box);
-    });
-  }, { rootMargin: '100% 0px' });
-  $$('.card__frame').forEach((b) => io2.observe(b));
+  const tagOf = (box) => box.closest('.card__shot')?.querySelector('.card__live');
+  function load(box) {
+    if (box.querySelector('iframe')) return;
+    const f = document.createElement('iframe');
+    f.src = box.dataset.src;
+    f.title = box.dataset.title;
+    f.tabIndex = -1;
+    f.setAttribute('aria-hidden', 'true');
+    f.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+    f.setAttribute('referrerpolicy', 'no-referrer');
+    f.style.width = VW + 'px';
+    f.addEventListener('load', () => setTimeout(() => {
+      box.classList.add('ready');
+      const t = tagOf(box); if (t) t.classList.add('on');
+    }, 700));
+    box.appendChild(f);
+    fit(box, f);
+    ro.observe(box);
+  }
+  function unload(box) {
+    const f = box.querySelector('iframe');
+    if (!f) return;
+    box.classList.remove('ready');
+    const t = tagOf(box); if (t) t.classList.remove('on');
+    setTimeout(() => { if (!box.classList.contains('ready')) f.remove(); }, 800);
+  }
+  const near = new IntersectionObserver((entries) => entries.forEach((en) => {
+    if (en.isIntersecting) { load(en.target); if (!phone) near.unobserve(en.target); }
+  }), { rootMargin: phone ? '10% 0px' : '100% 0px' });
+  const far = phone ? new IntersectionObserver((entries) => entries.forEach((en) => {
+    if (!en.isIntersecting) unload(en.target);
+  }), { rootMargin: '35% 0px' }) : null;
+  $$('.card__frame').forEach((b) => { near.observe(b); if (far) far.observe(b); });
 })();
