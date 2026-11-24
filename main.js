@@ -18,7 +18,7 @@
 /* 1. DATA -------------------------------------------------------- */
 const PROJECTS = [
   {
-    id: 'munik', name: 'MUNIK XVII', img: 'images/munik.jpg', url: 'https://munik.iba.edu.pk',
+    id: 'munik', name: 'MUNIK XVII', img: 'images/munik.jpg', url: 'https://munik.iba.edu.pk', live: true,
     badge: 'Lead developer', when: 'Live · Jan 2027 event',
     pitch: 'The official site for Model United Nations at IBA Karachi — built for a real organising team and served on the university’s own domain.',
     built: [
@@ -29,7 +29,7 @@ const PROJECTS = [
     stack: ['Front end', 'Vercel', 'DNS', 'Custom domain'],
   },
   {
-    id: 'southshore', name: 'SouthShore', img: 'images/southshore.jpg', url: 'https://southshoreprojects.com',
+    id: 'southshore', name: 'SouthShore', img: 'images/southshore.jpg', url: 'https://southshoreprojects.com', live: true,
     badge: 'Lead developer', when: 'Client · live',
     pitch: 'A full rebuild for a design & construction company — a portfolio-led site that sells craftsmanship through photography and clean type.',
     built: [
