@@ -910,3 +910,16 @@ html[data-theme="light"] .hero__status .status__row span { color: rgba(13, 13, 1
 .facts.in .now li::before { transform: scaleX(1) translateY(-4px); }
 .facts.in .now li:nth-child(2)::before { transition-delay: 0.15s; }
 .facts.in .now li:nth-child(3)::before { transition-delay: 0.3s; }
+
+/* 34. Safari stability ---------------------------------------------------
+   - Footer is back in normal flow: Safari mis-paints a sticky footer that sits
+     under relatively-positioned sections (it showed through mid-page).
+   - Grain is a viewport-sized static texture with no blend mode: the animated
+     200%-viewport blended layer exhausted Safari's tile memory (blank areas).
+   - Cards no longer each force their own compositing layer. */
+.footer { position: relative; bottom: auto; z-index: auto; margin-top: 0; padding-top: 40px; }
+.hero, .proof, .manifesto, .work, .skills, .exp, .contact { z-index: auto; }
+.contact { box-shadow: none; }
+.grain { inset: 0; animation: none !important; mix-blend-mode: normal !important; opacity: 0.045; }
+html[data-theme="light"] .grain { opacity: 0.06; }
+.card { will-change: auto; }
