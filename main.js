@@ -480,14 +480,66 @@ $('#copySummary').addEventListener('click', () => {
 
 /* 10. CONTACT ---------------------------------------------------- */
 $('#copyEmail').addEventListener('click', () => copy('ahmedusman0001@outlook.com', 'Email copied'));
-$('#contactForm').addEventListener('submit', (e) => {
+/* Contact form — same setup as MUNIK:
+   1. Web3Forms if an access key is set (fast, reliable; free key from web3forms.com,
+      created with the address messages should go to),
+   2. otherwise FormSubmit (no account; the first message sends a one-time
+      activation email to FORM_EMAIL),
+   3. and if both fail, the visitor's own mail app, addressed to FORM_EMAIL. */
+const FORM_EMAIL = 'ahmedusman0001@outlook.com';
+const WEB3FORMS_KEY = '';   // paste your Web3Forms access key here
+
+async function sendMessage(d) {
+  const subject = `Portfolio: ${d.company ? 'role at ' + d.company : 'new message'} from ${d.name}`;
+  if (WEB3FORMS_KEY) {
+    const r = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject, from_name: d.name, replyto: d.email,
+        name: d.name, email: d.email, company: d.company || '—', message: d.msg, botcheck: '' }),
+    });
+    const j = await r.json().catch(() => ({}));
+    if (r.ok && j.success) return true;
+  }
+  const r = await fetch('https://formsubmit.co/ajax/' + FORM_EMAIL, {
+    method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify({ _subject: subject, _template: 'table', _captcha: 'false', _replyto: d.email,
+      name: d.name, email: d.email, company: d.company || '—', message: d.msg }),
+  });
+  const j = await r.json().catch(() => ({}));
+  if (r.ok && String(j.success) === 'true') return true;
+  throw new Error('send failed');
+}
+
+$('#contactForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const f = e.target;
-  const name = f.name.value.trim(), company = f.company.value.trim(), msg = f.msg.value.trim();
-  if (!msg) { f.msg.focus(); toast('Add a line about the role first'); return; }
-  const subject = `Role${company ? ' at ' + company : ''} — ${name || 'hello'}`;
-  const body = `Hi Usman,\n\n${msg}\n\n— ${name}${company ? ', ' + company : ''}`;
-  location.href = `mailto:ahmedusman0001@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const f = e.target, status = $('#formStatus'), btn = f.querySelector('button[type=submit]');
+  const d = { name: f.name.value.trim(), email: f.email.value.trim(), company: f.company.value.trim(), msg: f.msg.value.trim() };
+  if (f._honey.value) return;                                     // bot filled the hidden field
+  if (!d.name) { f.name.focus(); toast('Add your name'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) { f.email.focus(); toast('Add a valid email so I can reply'); return; }
+  if (!d.msg) { f.msg.focus(); toast('Add a line about the role first'); return; }
+  btn.disabled = true; status.textContent = 'Sending…';
+  try {
+    await sendMessage(d);
+    f.reset();
+    status.textContent = 'Thanks — your message is in my inbox. I’ll reply soon.';
+    toast('Message sent');
+  } catch (err) {
+    const body = `${d.msg}\n\n— ${d.name}${d.company ? ', ' + d.company : ''} (${d.email})`;
+    const href = `mailto:${FORM_EMAIL}?subject=${encodeURIComponent('Role' + (d.company ? ' at ' + d.company : ''))}&body=${encodeURIComponent(body)}`;
+    status.innerHTML = `Couldn’t send just now. <a href="${href}">Open it in your mail app</a> instead.`;
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+// Email links copy the address (like MUNIK) — many visitors have no mail app set up
+document.addEventListener('click', (e) => {
+  const a = e.target.closest && e.target.closest('a[href^="mailto:"]');
+  if (!a || a.closest('#formStatus')) return;
+  e.preventDefault();
+  const addr = decodeURIComponent(a.getAttribute('href').slice(7).split('?')[0]);
+  copy(addr, `Email copied: ${addr}`);
 });
 
 /* 11. FOOTER NAME ------------------------------------------------ */

@@ -315,12 +315,14 @@
 
         <form class="form" id="contactForm" data-reveal novalidate>
           <div class="form__row">
-            <label>Your name<input name="name" type="text" placeholder="Jane Smith" autocomplete="name" /></label>
-            <label>Company<input name="company" type="text" placeholder="Acme Ltd" autocomplete="organization" /></label>
+            <label>Your name<input name="name" type="text" placeholder="Jane Smith" autocomplete="name" required /></label>
+            <label>Your email<input name="email" type="email" placeholder="jane@company.com" autocomplete="email" required /></label>
           </div>
-          <label>What&rsquo;s the role?<textarea name="msg" rows="4" placeholder="A few lines about the team and the role…"></textarea></label>
-          <button class="btn btn--acc" type="submit">Draft the email ↗</button>
-          <p class="form__hint mono">Opens your mail app with everything filled in.</p>
+          <label>Company <span class="form__opt">(optional)</span><input name="company" type="text" placeholder="Acme Ltd" autocomplete="organization" /></label>
+          <label>What&rsquo;s the role?<textarea name="msg" rows="4" placeholder="A few lines about the team and the role…" required></textarea></label>
+          <input type="text" name="_honey" class="form__hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <button class="btn btn--acc" type="submit">Send message ↗</button>
+          <p class="form__hint mono" id="formStatus" role="status" aria-live="polite">Goes straight to my inbox. I usually reply the same day.</p>
         </form>
       </div>
     </div>

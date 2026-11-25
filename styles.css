@@ -923,3 +923,9 @@ html[data-theme="light"] .hero__status .status__row span { color: rgba(13, 13, 1
 .grain { inset: 0; animation: none !important; mix-blend-mode: normal !important; opacity: 0.045; }
 html[data-theme="light"] .grain { opacity: 0.06; }
 .card { will-change: auto; }
+
+/* 35. Contact form sends directly */
+.form__hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.form__opt { color: var(--mute); font-weight: 400; }
+.form .btn[disabled] { opacity: 0.6; pointer-events: none; }
+#formStatus a { text-decoration: underline; }
