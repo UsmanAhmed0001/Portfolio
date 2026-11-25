@@ -347,7 +347,7 @@ const io = new IntersectionObserver((entries) => {
 /* 6. MANIFESTO --------------------------------------------------- */
 (function manifesto() {
   const el = $('#manifesto');
-  const HL = ['London.', 'dermIQ'];
+  const HL = ['London.', 'dermIQ,', 'Distinction,'];
   const words = el.textContent.trim().split(/\s+/);
   el.innerHTML = words.map((w) => `<span class="w${HL.includes(w) ? ' hl' : ''}">${w}</span>`).join(' ');
   const spans = $$('.w', el);
