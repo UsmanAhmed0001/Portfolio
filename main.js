@@ -487,7 +487,7 @@ $('#copyEmail').addEventListener('click', () => copy('ahmedusman0001@outlook.com
       activation email to FORM_EMAIL),
    3. and if both fail, the visitor's own mail app, addressed to FORM_EMAIL. */
 const FORM_EMAIL = 'ahmedusman0001@outlook.com';
-const WEB3FORMS_KEY = '';   // paste your Web3Forms access key here
+const WEB3FORMS_KEY = '1334fa61-fdc1-4f1c-b08e-b9ca71d30c24';   // public key (safe in client code), tied to ahmedusman0001@outlook.com
 
 async function sendMessage(d) {
   const subject = `Portfolio: ${d.company ? 'role at ' + d.company : 'new message'} from ${d.name}`;
