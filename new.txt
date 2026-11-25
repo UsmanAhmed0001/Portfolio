@@ -1,8 +1,0 @@
-file_path = filedialog.askopenfilename(
-    title="Open CSV file", 
-    filetypes=[("CSV files", "*.csv"), ("Excel files", "*.xlsx"), ("All files", "*.*")]
-)
-
-if not file_path:
-    print("Error: No file was selected. Exiting the program.")
-    sys.exit()
