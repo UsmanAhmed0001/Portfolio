@@ -1,5 +1,5 @@
 /**
- * main.js — Usman Ahmed · Portfolio 2026
+ * main.js, Usman Ahmed portfolio 2026
  *
  *  1. Data (projects, skills)
  *  2. Helpers
@@ -18,68 +18,66 @@
 /* 1. DATA -------------------------------------------------------- */
 const PROJECTS = [
   {
-    id: 'munik', name: 'MUNIK XVII', img: 'images/munik.jpg', url: 'https://munik.iba.edu.pk', live: false, /* set back to true once munik.iba.edu.pk allows framing */ heavyVideo: true,
+    id: 'munik', name: 'MUNIK XVII', img: 'images/munik.jpg', url: 'https://munik.iba.edu.pk', live: true, heavyVideo: true,
     badge: 'Lead developer', when: 'Live · Jan 2027 event',
-    pitch: 'The official site for Model United Nations at IBA Karachi — built for a real organising team and served on the university’s own domain.',
+    pitch: 'The website for the 17th Model United Nations at IBA Karachi. It runs on the university’s own domain.',
     built: [
-      'Delivered for a live conference: committees, team, letters, registration',
-      'Custom domain munik.iba.edu.pk set up with IBA IT, pointing at Vercel',
-      'Live countdown, editorial typography and motion',
+      'Pages for the committees, the organising team, letters and registration',
+      'Set up munik.iba.edu.pk with IBA’s IT team, pointing at Vercel',
     ],
-    stack: ['Front end', 'Vercel', 'DNS', 'Custom domain'],
+    stack: ['Vercel', 'Custom domain'],
   },
   {
-    id: 'southshore', name: 'SouthShore', img: 'images/southshore.jpg', url: 'https://southshoreprojects.com', live: false, /* set back to true once southshoreprojects.com allows framing */
+    id: 'southshore', name: 'SouthShore', img: 'images/southshore.jpg', url: 'https://southshoreprojects.com', live: true,
     badge: 'Lead developer', when: 'Client · live',
-    pitch: 'A full rebuild for a design & construction company — a portfolio-led site that sells craftsmanship through photography and clean type.',
+    pitch: 'A rebuild of the website for SouthShore, a design and construction company. The photos do most of the selling, so the site is built around them.',
     built: [
-      'Rebuilt from scratch; I still maintain it for the business',
-      'Image-heavy galleries tuned to load fast on mobile',
-      'Content structure the client can keep extending',
+      'Rebuilt from scratch. I still look after it.',
+      'Gallery and lightbox for 36 project photos',
+      'Contact form with server-side validation and spam protection',
+      'Security headers, per-page titles and structured data for search',
     ],
     stack: ['React', 'Vite', 'Tailwind', 'Framer Motion'],
   },
   {
     id: 'kreston', name: 'Kreston Estates', img: 'images/krestonEstate.jpg', url: 'https://kreston-estate.vercel.app', live: true,
     badge: 'Lead developer', when: 'Client · live',
-    pitch: 'The website for Kreston Estates, an independent lettings, sales and property management agency on Tooting High Street. I build and maintain it.',
+    pitch: 'The website for Kreston Estates, an independent lettings and sales agency on Tooting High Street. I built it and look after it.',
     built: [
-      'Lettings, sales, services, about and contact pages, all leading to one action: book a free valuation',
-      'Clearly priced service packages and a step-by-step process for landlords',
-      'Trust signals up front: The Property Ombudsman, Client Money Protect and mydeposits',
+      'Every page leads to one thing: booking a free valuation',
+      'Service packages with clear prices, and a step-by-step guide for landlords',
+      'Membership logos up front: The Property Ombudsman, Client Money Protect and mydeposits',
     ],
     stack: ['React', 'Vite', 'Vercel'],
   },
   {
     id: 'dermiq', name: 'dermIQ', img: 'images/dermIQ.jpg', url: 'https://derm-iq-three.vercel.app', live: true,
-    badge: 'Founder', when: '2025 — now', dev: true,
-    pitch: 'AI skin-lesion triage. Upload a photo; a fine-tuned vision model returns one of 7 lesion classes with a risk band, so people know how urgently to seek care.',
+    badge: 'Founder', when: '2025 to now', dev: true,
+    pitch: 'Upload a photo of a skin lesion and dermIQ says which of 7 lesion types it most likely is, with a risk level, so people know how soon to get it checked.',
     built: [
-      'Fine-tuned a Vision Transformer on HAM10000, with risk banding on top of raw predictions',
-      'Dockerised Flask + PyTorch inference API on Hugging Face Spaces — moved off Railway to run at zero cost',
-      'Next.js + TypeScript product with a preview on Vercel, developed with NHS-connected clinicians',
+      'Fine-tuned a Vision Transformer on the HAM10000 dataset, then added risk bands on top of the raw predictions',
+      'Turns away photos that aren’t skin, or that show no clear lesion',
+      'The model runs in a Docker container (Flask and PyTorch) on Hugging Face Spaces. I moved it there from Railway so hosting costs nothing.',
+      'Next.js and TypeScript front end, being developed with clinicians connected to the NHS',
     ],
     stack: ['Next.js', 'TypeScript', 'PyTorch', 'ViT', 'Flask', 'Docker'],
   },
   {
     id: 'ideaforge', name: 'IdeaForge', img: 'images/ideaForge.jpg', url: 'https://idea-forge-liart.vercel.app', live: true,
     badge: 'Founder', when: 'My startup', dev: true,
-    pitch: 'Give it a YouTube channel and it drafts what to post this week: five posts each for YouTube, Instagram, TikTok, LinkedIn and Facebook.',
+    pitch: 'Type in a YouTube channel and IdeaForge drafts what to post this week on YouTube, Instagram, TikTok, LinkedIn and Facebook.',
     built: [
-      'Reads the channel’s recent uploads, this week’s news and what people are discussing on Reddit',
-      'Drafts five posts per platform, written in the channel’s own title style',
-      'Previews every draft in the native look of its platform: Reels, TikTok, LinkedIn',
+      'Reads the channel’s recent uploads, this week’s news and Reddit threads on the same topics',
+      'Writes five posts per platform in the channel’s own title style, and shows each one the way it would look on that platform',
     ],
     stack: ['Next.js', 'TypeScript', 'LLM API', 'YouTube + News + Reddit', 'Vercel'],
   },
   {
     id: 'casebridge', name: 'CaseBridge', img: 'images/casebridge.jpg', url: 'https://casebridge-beta.vercel.app', live: true,
     badge: 'Prototype', when: 'Solo project', dev: true, devLabel: 'Prototype',
-    pitch: 'A clickable prototype of a legal case-management tool: intake, a dashboard and case views, built to test the workflow before building the real backend.',
+    pitch: 'A clickable prototype of a case-management tool for law firms. I used it to try out the intake form, dashboard and case pages before writing a backend.',
     built: [
-      'Clickable React prototype of the intake, dashboard and case views',
-      'Used to test the case workflow with no backend yet, so nothing is saved',
-      'Next step: a real backend so new cases persist',
+      'Front end only for now, so new cases aren’t saved yet',
     ],
     stack: ['React', 'Create React App', 'Vercel'],
   },
@@ -157,7 +155,7 @@ function toast(text) {
 }
 async function copy(text, msg) {
   try { await navigator.clipboard.writeText(text); toast(msg); }
-  catch (e) { toast('Couldn’t copy — select it manually'); }
+  catch (e) { toast('Couldn’t copy. Select it instead.'); }
 }
 function londonTime() {
   return new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/London' });
@@ -347,7 +345,7 @@ const io = new IntersectionObserver((entries) => {
 /* 6. MANIFESTO --------------------------------------------------- */
 (function manifesto() {
   const el = $('#manifesto');
-  const HL = ['London.', 'dermIQ,', 'Distinction,'];
+  const HL = ['London.', 'dermIQ,', 'Distinction.'];
   const words = el.textContent.trim().split(/\s+/);
   el.innerHTML = words.map((w) => `<span class="w${HL.includes(w) ? ' hl' : ''}">${w}</span>`).join(' ');
   const spans = $$('.w', el);
@@ -475,12 +473,12 @@ $('#tldrOpen').addEventListener('click', () => { openLayer(tldr); $('#tldrOpen')
 $$('[data-close]', tldr).forEach((b) => b.addEventListener('click', () => closeLayer(tldr)));
 $('#copySummary').addEventListener('click', () => {
   const lines = $$('.tldr div').map((d) => `${$('dt', d).textContent}: ${$('dd', d).textContent}`);
-  copy(`Usman Ahmed — Software Engineer\n${lines.join('\n')}\nahmedusman0001@outlook.com · linkedin.com/in/usman--ahmed`, 'Summary copied');
+  copy(`Usman Ahmed, Software Engineer\n${lines.join('\n')}\nahmedusman0001@outlook.com · linkedin.com/in/usman--ahmed`, 'Summary copied');
 });
 
 /* 10. CONTACT ---------------------------------------------------- */
 $('#copyEmail').addEventListener('click', () => copy('ahmedusman0001@outlook.com', 'Email copied'));
-/* Contact form — same setup as MUNIK:
+/* Contact form, same setup as MUNIK:
    1. Web3Forms if an access key is set (fast, reliable; free key from web3forms.com,
       created with the address messages should go to),
    2. otherwise FormSubmit (no account; the first message sends a one-time
@@ -495,7 +493,7 @@ async function sendMessage(d) {
     const r = await fetch('https://api.web3forms.com/submit', {
       method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject, from_name: d.name, replyto: d.email,
-        name: d.name, email: d.email, company: d.company || '—', message: d.msg, botcheck: '' }),
+        name: d.name, email: d.email, company: d.company || 'n/a', message: d.msg, botcheck: '' }),
     });
     const j = await r.json().catch(() => ({}));
     if (r.ok && j.success) return true;
@@ -503,7 +501,7 @@ async function sendMessage(d) {
   const r = await fetch('https://formsubmit.co/ajax/' + FORM_EMAIL, {
     method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
     body: JSON.stringify({ _subject: subject, _template: 'table', _captcha: 'false', _replyto: d.email,
-      name: d.name, email: d.email, company: d.company || '—', message: d.msg }),
+      name: d.name, email: d.email, company: d.company || 'n/a', message: d.msg }),
   });
   const j = await r.json().catch(() => ({}));
   if (r.ok && String(j.success) === 'true') return true;
@@ -522,10 +520,10 @@ $('#contactForm').addEventListener('submit', async (e) => {
   try {
     await sendMessage(d);
     f.reset();
-    status.textContent = 'Thanks — your message is in my inbox. I’ll reply soon.';
+    status.textContent = 'Thanks, your message has arrived. I’ll reply soon.';
     toast('Message sent');
   } catch (err) {
-    const body = `${d.msg}\n\n— ${d.name}${d.company ? ', ' + d.company : ''} (${d.email})`;
+    const body = `${d.msg}\n\nFrom ${d.name}${d.company ? ', ' + d.company : ''} (${d.email})`;
     const href = `mailto:${FORM_EMAIL}?subject=${encodeURIComponent('Role' + (d.company ? ' at ' + d.company : ''))}&body=${encodeURIComponent(body)}`;
     status.innerHTML = `Couldn’t send just now. <a href="${href}">Open it in your mail app</a> instead.`;
   } finally {
@@ -533,7 +531,7 @@ $('#contactForm').addEventListener('submit', async (e) => {
   }
 });
 
-// Email links copy the address (like MUNIK) — many visitors have no mail app set up
+// Email links copy the address (like MUNIK), since many visitors have no mail app set up
 document.addEventListener('click', (e) => {
   const a = e.target.closest && e.target.closest('a[href^="mailto:"]');
   if (!a || a.closest('#formStatus')) return;
@@ -571,38 +569,38 @@ $('#askClose').addEventListener('click', () => toggleAsk(false));
 new IntersectionObserver(([e]) => askBtn.classList.toggle('away', e.isIntersecting && askPanel.hidden)).observe($('#contact'));
 
 const KB = [
-  { k: ['built', 'projects', 'project', 'portfolio', 'made', 'work'], a: 'Six products — three live client sites, two of his own in development and one prototype:\n• MUNIK XVII — Model UN site for IBA Karachi\n• SouthShore — design & construction company site\n• Kreston Estates — Tooting lettings, sales & property management agency site\n• dermIQ — AI skin-lesion triage (founder, in development)\n• IdeaForge — give it a YouTube channel, get this week’s posts for 5 platforms (founder, in development)\n• CaseBridge — clickable prototype of a legal case-management tool\nEach has a card in the Work section.' },
-  { k: ['salary', 'salary expectation', 'compensation', 'pay', 'paid', 'rate', 'expectations'], a: 'Usman prefers to talk about salary once he knows more about the role and team. Email ahmedusman0001@outlook.com and he’ll reply directly.' },
-  { k: ['sponsorship', 'sponsor', 'visa', 'right to work', 'work permit', 'eligible'], a: 'Full right to work in the UK — no sponsorship needed.' },
-  { k: ['notice', 'notice period', 'start date', 'when can he start', 'availability'], a: 'Two weeks’ notice. He’s based in London and open to hybrid, remote or on-site roles.' },
-  { k: ['open', 'available', 'roles', 'role', 'job', 'remote', 'hybrid', 'on-site', 'onsite', 'start'], a: 'Yes — Usman is open to full-time software engineering roles, based in London and happy with hybrid, remote or on-site. No sponsorship needed, and two weeks’ notice. Fastest route: ahmedusman0001@outlook.com.' },
-  { k: ['dermiq', 'derm', 'skin', 'lesion', 'medical', 'health', 'nhs'], a: 'dermIQ is Usman’s own startup, currently in development. He fine-tuned a Vision Transformer to classify skin photos across 7 lesion classes with a risk band, serves it from a Dockerised Flask + PyTorch API, and is building the Next.js product himself.' },
-  { k: ['stack', 'tech', 'language', 'framework', 'skills', 'tools', 'know'], a: 'Languages: Java, C#/.NET Core, Python, TypeScript, C++, SQL. Backend: Spring Boot, ASP.NET Core, Node/Express, Flask. Frontend: React, Next.js, Tailwind, Blazor. Data: PostgreSQL, Kafka, RabbitMQ. Cloud: AWS, Azure, Docker, Kubernetes, Terraform. AI/ML: PyTorch, TensorFlow, ViT, ResNet, U-Net, YOLO. CMS: Sitecore, Optimizely. The Skills section shows where each one was used.' },
-  { k: ['years', 'how long', 'how many years', 'experience level', 'senior', 'junior', 'mid'], a: '3+ years in production: Wavetec since Feb 2024 (distributed backends for HSBC, Samsung Europe, Delta Air Lines and Banorte), before that Ovrlod (ASP.NET Core and React CMS platforms) and Bits and Code. The Experience section has the full timeline.' },
-  { k: ['based', 'location', 'where', 'live', 'london', 'uk', 'relocate', 'commute'], a: 'Usman is based in London, UK, and open to hybrid, remote or on-site roles. No sponsorship needed.' },
-  { k: ['southshore', 'south shore', 'construction', 'design company'], a: 'SouthShore is a full rebuild for a design & construction company: a photography-led portfolio site built in React, Vite, Tailwind and Framer Motion. Usman built it from scratch and still maintains it — live at southshoreprojects.com.' },
-  { k: ['kreston', 'estate', 'estates', 'lettings', 'property', 'tooting', 'agency'], a: 'Kreston Estates is the website for an independent lettings, sales and property management agency on Tooting High Street — every page leads to booking a free valuation. Built in React and Vite on Vercel; Usman builds and maintains it.' },
-  { k: ['ideaforge', 'idea forge', 'youtube', 'content', 'creator', 'tiktok', 'instagram'], a: 'IdeaForge is Usman’s startup, in development. Give it a YouTube channel and it reads recent uploads, this week’s news and Reddit, then drafts five posts each for YouTube, Instagram, TikTok, LinkedIn and Facebook. Next.js, TypeScript and an LLM API.' },
-  { k: ['casebridge', 'case bridge', 'legal', 'law', 'case management', 'prototype'], a: 'CaseBridge is a clickable React prototype of a legal case-management tool — intake, a dashboard and case views — built to test the workflow before building the real backend.' },
-  { k: ['hsbc', 'samsung', 'wavetec', 'enterprise', 'experience', 'backend', 'distributed', 'kafka', 'bank'], a: 'At Wavetec, Usman builds distributed backend services for HSBC, Samsung Europe, Delta Air Lines and Banorte — event-driven pipelines on Kafka and RabbitMQ, Kubernetes on AWS and Azure, in Java, .NET Core and Python.' },
-  { k: ['munik', 'model un', 'iba', 'karachi', 'conference'], a: 'MUNIK XVII is the official site for Model United Nations at IBA Karachi — built for a real organising team and served on the university’s domain, munik.iba.edu.pk.' },
-  { k: ['education', 'degree', 'msc', 'master', 'university', 'hull', 'study', 'bsc'], a: 'MSc Artificial Intelligence & Data Science from the University of Hull, awarded with Distinction in 2026, and a BSc in Computer Science from FAST-NUCES on the Dean’s Honours List.' },
-  { k: ['ai', 'ml', 'machine learning', 'model', 'llm', 'pytorch'], a: 'Applied AI runs through his work: training and serving a vision model (dermIQ), and LLM-generated post ideas grounded in news and Reddit in IdeaForge — backed by an MSc in AI with Distinction.' },
-  { k: ['contact', 'email', 'reach', 'linkedin', 'cv', 'resume', 'call', 'phone'], a: 'Email ahmedusman0001@outlook.com or LinkedIn (linkedin.com/in/usman--ahmed). The CV is one click away — “CV ↓” in the top bar.' },
-  { k: ['why', 'hire him', 'why hire', 'strength', 'different', 'stand out', 'best', 'good'], a: 'Three things in one hire: he’s built production backends for global brands, he’s founded his own AI product and is building it end to end, and he has the MSc depth to back the ML.' },
-  { k: ['hi', 'hello', 'hey', 'salam'], a: 'Hi! Ask about Usman’s projects, stack, enterprise experience — or whether he’s open to roles.' },
+  { k: ['built', 'projects', 'project', 'portfolio', 'made', 'work'], a: 'Six projects:\n• MUNIK XVII, the Model UN website for IBA Karachi\n• SouthShore, a site for a design and construction company\n• Kreston Estates, a site for a lettings and sales agency in Tooting\n• dermIQ, his AI skin-lesion app (in development)\n• IdeaForge, which drafts posts from a YouTube channel (in development)\n• CaseBridge, a clickable prototype of a legal case-management tool\nEach one has a card in the Work section.' },
+  { k: ['salary', 'salary expectation', 'compensation', 'pay', 'paid', 'rate', 'expectations'], a: 'Usman would rather talk about salary once he knows more about the role. Email ahmedusman0001@outlook.com and he’ll reply directly.' },
+  { k: ['sponsorship', 'sponsor', 'visa', 'right to work', 'work permit', 'eligible'], a: 'He has full right to work in the UK, so no sponsorship is needed.' },
+  { k: ['notice', 'notice period', 'start date', 'when can he start', 'availability'], a: 'Two weeks’ notice. He’s based in London and happy with hybrid, remote or on-site work.' },
+  { k: ['open', 'available', 'roles', 'role', 'job', 'remote', 'hybrid', 'on-site', 'onsite', 'start'], a: 'Yes. Usman is open to full-time software engineering roles in London, hybrid, remote or on-site. He doesn’t need sponsorship and has two weeks’ notice. Email ahmedusman0001@outlook.com.' },
+  { k: ['dermiq', 'derm', 'skin', 'lesion', 'medical', 'health', 'nhs'], a: 'dermIQ is Usman’s own startup and still in development. He fine-tuned a Vision Transformer to sort skin photos into 7 lesion types with a risk level, serves it from a Flask and PyTorch API in Docker, and built the Next.js app himself.' },
+  { k: ['years', 'how long', 'how many years', 'experience level', 'senior', 'junior', 'mid'], a: 'Over 3 years in production. He has been at Wavetec since February 2024, building backend systems for HSBC, Samsung Europe, Delta Air Lines and Banorte. Before that he worked at Ovrlod and Bits and Code. The Experience section has the details.' },
+  { k: ['based', 'location', 'where', 'live', 'london', 'uk', 'relocate', 'commute'], a: 'He’s based in London and happy with hybrid, remote or on-site work. No sponsorship needed.' },
+  { k: ['southshore', 'south shore', 'construction', 'design company'], a: 'SouthShore is a design and construction company. Usman rebuilt their website from scratch in React, Vite, Tailwind and Framer Motion, and still looks after it. It’s live at southshoreprojects.com.' },
+  { k: ['kreston', 'estate', 'estates', 'lettings', 'property', 'tooting', 'agency'], a: 'Kreston Estates is an independent lettings and sales agency on Tooting High Street. Usman built their website in React and Vite and looks after it. Every page leads to booking a free valuation.' },
+  { k: ['ideaforge', 'idea forge', 'youtube', 'content', 'creator', 'tiktok', 'instagram'], a: 'IdeaForge is Usman’s startup and still in development. You give it a YouTube channel, it reads recent uploads, this week’s news and Reddit, and drafts posts for YouTube, Instagram, TikTok, LinkedIn and Facebook. Built with Next.js, TypeScript and an LLM API.' },
+  { k: ['casebridge', 'case bridge', 'legal', 'law', 'case management', 'prototype'], a: 'CaseBridge is a clickable React prototype of a case-management tool for law firms. He used it to try out the intake form, dashboard and case pages before writing a backend.' },
+  { k: ['stack', 'tech', 'language', 'framework', 'skills', 'tools', 'know'], a: 'Languages: Java, C#/.NET Core, Python, TypeScript, C++, SQL. Backend: Spring Boot, ASP.NET Core, Node/Express, Flask. Frontend: React, Next.js, Tailwind, Blazor. Data: PostgreSQL, Kafka, RabbitMQ. Cloud: AWS, Azure, Docker, Kubernetes, Terraform. AI/ML: PyTorch, TensorFlow, ViT, ResNet, U-Net, YOLO. CMS: Sitecore, Optimizely. The Skills section shows where he used each one.' },
+  { k: ['hsbc', 'samsung', 'wavetec', 'enterprise', 'experience', 'backend', 'distributed', 'kafka', 'bank'], a: 'At Wavetec, Usman builds backend systems for HSBC, Samsung Europe, Delta Air Lines and Banorte: event-driven pipelines on Kafka and RabbitMQ, deployed with Kubernetes on AWS and Azure, written in Java, .NET Core and Python.' },
+  { k: ['munik', 'model un', 'iba', 'karachi', 'conference'], a: 'MUNIK XVII is the website for the 17th Model United Nations at IBA Karachi. It runs on the university’s own domain, munik.iba.edu.pk.' },
+  { k: ['education', 'degree', 'msc', 'master', 'university', 'hull', 'study', 'bsc'], a: 'An MSc in Artificial Intelligence and Data Science from the University of Hull, with Distinction (2026), and a BSc in Computer Science from FAST-NUCES, on the Dean’s Honours List.' },
+  { k: ['ai', 'ml', 'machine learning', 'model', 'llm', 'pytorch'], a: 'He trained and deployed the vision model behind dermIQ, and IdeaForge uses an LLM to draft posts from news and Reddit. He also has an MSc in AI with Distinction.' },
+  { k: ['contact', 'email', 'reach', 'linkedin', 'cv', 'resume', 'call', 'phone'], a: 'Email ahmedusman0001@outlook.com or find him on LinkedIn at linkedin.com/in/usman--ahmed. You can download his CV from the top bar.' },
+  { k: ['why', 'hire him', 'why hire', 'strength', 'different', 'stand out', 'best', 'good'], a: 'He has built production backends for global companies like HSBC and Samsung Europe, and he built dermIQ on his own, from the model to the web app.' },
+  { k: ['hi', 'hello', 'hey', 'salam'], a: 'Hi! Ask me about Usman’s projects, his stack or his experience.' },
 ];
 const NOT_IN_STACK = ['go', 'golang', 'rust', 'kotlin', 'swift', 'ruby', 'rails', 'php', 'laravel', 'scala', 'elixir', 'haskell', 'angular', 'vue', 'svelte', 'django', 'flutter', 'dart', 'perl'];
 function answer(q) {
   const s = q.toLowerCase();
   const miss = NOT_IN_STACK.find((t) => new RegExp(`\\b${t}\\b`).test(s));
-  if (miss) return `${miss[0].toUpperCase() + miss.slice(1)} isn’t one he lists. His languages are Java, C#/.NET, Python, TypeScript, C++ and SQL — the Skills section shows where he’s used each.`;
+  if (miss) return `${miss[0].toUpperCase() + miss.slice(1)} isn’t one he lists. His languages are Java, C#/.NET, Python, TypeScript, C++ and SQL. The Skills section shows where he used each one.`;
   let best = null, score = 0;
   KB.forEach((e) => {
     const n = e.k.reduce((acc, k) => acc + (new RegExp(`\\b${k.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`).test(s) ? k.length : 0), 0);
     if (n > score) { score = n; best = e; }
   });
-  return best ? best.a : 'I only know what’s in this portfolio — try his projects, stack or experience, or email ahmedusman0001@outlook.com.';
+  return best ? best.a : 'I can only answer from this portfolio. Try asking about his projects, stack or experience, or email ahmedusman0001@outlook.com.';
 }
 function bubble(text, who) {
   const empty = $('.askp__empty', askLog);
