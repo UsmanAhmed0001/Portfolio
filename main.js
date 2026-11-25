@@ -18,7 +18,7 @@
 /* 1. DATA -------------------------------------------------------- */
 const PROJECTS = [
   {
-    id: 'munik', name: 'MUNIK XVII', img: 'images/munik.jpg', url: 'https://munik.iba.edu.pk', live: true, heavyVideo: true,
+    id: 'munik', name: 'MUNIK XVII', img: 'images/munik.jpg', url: 'https://munik.iba.edu.pk', live: false, /* set back to true once munik.iba.edu.pk allows framing */ heavyVideo: true,
     badge: 'Lead developer', when: 'Live · Jan 2027 event',
     pitch: 'The official site for Model United Nations at IBA Karachi — built for a real organising team and served on the university’s own domain.',
     built: [
@@ -29,7 +29,7 @@ const PROJECTS = [
     stack: ['Front end', 'Vercel', 'DNS', 'Custom domain'],
   },
   {
-    id: 'southshore', name: 'SouthShore', img: 'images/southshore.jpg', url: 'https://southshoreprojects.com', live: true,
+    id: 'southshore', name: 'SouthShore', img: 'images/southshore.jpg', url: 'https://southshoreprojects.com', live: false, /* set back to true once southshoreprojects.com allows framing */
     badge: 'Lead developer', when: 'Client · live',
     pitch: 'A full rebuild for a design & construction company — a portfolio-led site that sells craftsmanship through photography and clean type.',
     built: [
@@ -573,12 +573,18 @@ new IntersectionObserver(([e]) => askBtn.classList.toggle('away', e.isIntersecti
 const KB = [
   { k: ['built', 'projects', 'project', 'portfolio', 'made', 'work'], a: 'Six products — three live client sites, two of his own in development and one prototype:\n• MUNIK XVII — Model UN site for IBA Karachi\n• SouthShore — design & construction company site\n• Kreston Estates — Tooting lettings, sales & property management agency site\n• dermIQ — AI skin-lesion triage (founder, in development)\n• IdeaForge — give it a YouTube channel, get this week’s posts for 5 platforms (founder, in development)\n• CaseBridge — clickable prototype of a legal case-management tool\nEach has a card in the Work section.' },
   { k: ['salary', 'salary expectation', 'compensation', 'pay', 'paid', 'rate', 'expectations'], a: 'Usman prefers to talk about salary once he knows more about the role and team. Email ahmedusman0001@outlook.com and he’ll reply directly.' },
-  { k: ['sponsorship', 'sponsor', 'visa', 'right to work', 'work permit', 'eligible'], a: 'No sponsorship needed — Usman has the right to work in the UK, now and long-term.' },
+  { k: ['sponsorship', 'sponsor', 'visa', 'right to work', 'work permit', 'eligible'], a: 'Full right to work in the UK — no sponsorship needed.' },
   { k: ['notice', 'notice period', 'start date', 'when can he start', 'availability'], a: 'Two weeks’ notice. He’s based in London and open to hybrid, remote or on-site roles.' },
-  { k: ['open', 'available', 'hire', 'roles', 'role', 'job', 'remote', 'hybrid', 'on-site', 'onsite', 'start'], a: 'Yes — Usman is open to full-time software engineering roles, based in London and happy with hybrid, remote or on-site. No sponsorship needed, and two weeks’ notice. Fastest route: ahmedusman0001@outlook.com.' },
+  { k: ['open', 'available', 'roles', 'role', 'job', 'remote', 'hybrid', 'on-site', 'onsite', 'start'], a: 'Yes — Usman is open to full-time software engineering roles, based in London and happy with hybrid, remote or on-site. No sponsorship needed, and two weeks’ notice. Fastest route: ahmedusman0001@outlook.com.' },
   { k: ['dermiq', 'derm', 'skin', 'lesion', 'medical', 'health', 'nhs'], a: 'dermIQ is Usman’s own startup, currently in development. He fine-tuned a Vision Transformer to classify skin photos across 7 lesion classes with a risk band, serves it from a Dockerised Flask + PyTorch API, and is building the Next.js product himself.' },
   { k: ['stack', 'tech', 'language', 'framework', 'skills', 'tools', 'know'], a: 'Languages: Java, C#/.NET Core, Python, TypeScript, C++, SQL. Backend: Spring Boot, ASP.NET Core, Node/Express, Flask. Frontend: React, Next.js, Tailwind, Blazor. Data: PostgreSQL, Kafka, RabbitMQ. Cloud: AWS, Azure, Docker, Kubernetes, Terraform. AI/ML: PyTorch, TensorFlow, ViT, ResNet, U-Net, YOLO. CMS: Sitecore, Optimizely. The Skills section shows where each one was used.' },
-  { k: ['hsbc', 'samsung', 'wavetec', 'enterprise', 'experience', 'years', 'backend', 'distributed', 'kafka', 'bank'], a: 'At Wavetec, Usman builds distributed backend services for HSBC, Samsung Europe, Delta Air Lines and Banorte — event-driven pipelines on Kafka and RabbitMQ, Kubernetes on AWS and Azure, in Java, .NET Core and Python.' },
+  { k: ['years', 'how long', 'how many years', 'experience level', 'senior', 'junior', 'mid'], a: '3+ years in production: Wavetec since Feb 2024 (distributed backends for HSBC, Samsung Europe, Delta Air Lines and Banorte), before that Ovrlod (ASP.NET Core and React CMS platforms) and Bits and Code. The Experience section has the full timeline.' },
+  { k: ['based', 'location', 'where', 'live', 'london', 'uk', 'relocate', 'commute'], a: 'Usman is based in London, UK, and open to hybrid, remote or on-site roles. No sponsorship needed.' },
+  { k: ['southshore', 'south shore', 'construction', 'design company'], a: 'SouthShore is a full rebuild for a design & construction company: a photography-led portfolio site built in React, Vite, Tailwind and Framer Motion. Usman built it from scratch and still maintains it — live at southshoreprojects.com.' },
+  { k: ['kreston', 'estate', 'estates', 'lettings', 'property', 'tooting', 'agency'], a: 'Kreston Estates is the website for an independent lettings, sales and property management agency on Tooting High Street — every page leads to booking a free valuation. Built in React and Vite on Vercel; Usman builds and maintains it.' },
+  { k: ['ideaforge', 'idea forge', 'youtube', 'content', 'creator', 'tiktok', 'instagram'], a: 'IdeaForge is Usman’s startup, in development. Give it a YouTube channel and it reads recent uploads, this week’s news and Reddit, then drafts five posts each for YouTube, Instagram, TikTok, LinkedIn and Facebook. Next.js, TypeScript and an LLM API.' },
+  { k: ['casebridge', 'case bridge', 'legal', 'law', 'case management', 'prototype'], a: 'CaseBridge is a clickable React prototype of a legal case-management tool — intake, a dashboard and case views — built to test the workflow before building the real backend.' },
+  { k: ['hsbc', 'samsung', 'wavetec', 'enterprise', 'experience', 'backend', 'distributed', 'kafka', 'bank'], a: 'At Wavetec, Usman builds distributed backend services for HSBC, Samsung Europe, Delta Air Lines and Banorte — event-driven pipelines on Kafka and RabbitMQ, Kubernetes on AWS and Azure, in Java, .NET Core and Python.' },
   { k: ['munik', 'model un', 'iba', 'karachi', 'conference'], a: 'MUNIK XVII is the official site for Model United Nations at IBA Karachi — built for a real organising team and served on the university’s domain, munik.iba.edu.pk.' },
   { k: ['education', 'degree', 'msc', 'master', 'university', 'hull', 'study', 'bsc'], a: 'MSc Artificial Intelligence & Data Science from the University of Hull, awarded with Distinction in 2026, and a BSc in Computer Science from FAST-NUCES on the Dean’s Honours List.' },
   { k: ['ai', 'ml', 'machine learning', 'model', 'llm', 'pytorch'], a: 'Applied AI runs through his work: training and serving a vision model (dermIQ), and LLM-generated post ideas grounded in news and Reddit in IdeaForge — backed by an MSc in AI with Distinction.' },
